@@ -75,7 +75,8 @@ class OperatorNode(Node, abc.ABC):
     def to_string(self):
         string = f'( {self._children[0].to_string()}'
         for child in self._children[1:]:
-            string += f' {self._operator_symbol} {child.to_string()} )'
+            string += f' {self._operator_symbol} {child.to_string()}'
+        string += ' )'
         return string
 
     def to_string_prefix(self):
@@ -116,12 +117,13 @@ if __name__ == '__main__':
 
     tree = AndNode(
         OrNode(
-            ValueNode('A'),
-            ValueNode('B')),
+            ValueNode(1),
+            ValueNode(2)),
         NotNode(
             OrNode(
-                ValueNode('B'),
-                ValueNode('C'))
+                ValueNode(2),
+                ValueNode(3),
+                ValueNode(3))
         ))
 
     print(tree.to_string())
