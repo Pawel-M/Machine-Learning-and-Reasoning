@@ -18,8 +18,8 @@ def create_dictionaries(variables, operators, input_length, output_length):
     assert len(variables) <= output_length, \
         'Output length is too small to include variables!'
 
-    input_zeros = np.array([0 for _ in range(input_length)])
-    output_zeros = np.array([0 for _ in range(output_length)])
+    input_zeros = list([0 for _ in range(input_length)])
+    output_zeros = list([0 for _ in range(output_length)])
 
     input_dictionary = {}
     output_dictionary = {}
@@ -29,13 +29,13 @@ def create_dictionaries(variables, operators, input_length, output_length):
         output_encoding = output_zeros.copy()
         output_encoding[index] = 1
 
-        input_dictionary[str(variable)] = input_encoding
-        output_dictionary[str(variable)] = output_encoding
+        input_dictionary[str(variable)] = tuple(input_encoding)
+        output_dictionary[str(variable)] = tuple(output_encoding)
 
     for index, operator in enumerate(operators):
         input_encoding = input_zeros.copy()
-        input_encoding[index] = 1
-        input_dictionary[str(operator)] = input_encoding
+        input_encoding[input_length - index - 1] = 1
+        input_dictionary[str(operator)] = tuple(input_encoding)
 
     return input_dictionary, output_dictionary
 
@@ -66,13 +66,13 @@ def save_sentences_and_conclusions(sentences, conclusions, input_dictionary, out
         pickle.dump((sentences, conclusions, input_dictionary, output_dictionary), file)
 
 
-def encode_trees(folder, max_depth, num_variables, input_length, output_length):
+def encode_trees(folder, max_depth, num_variables, prefix, input_length, output_length):
     df = generation.load_trees(folder, max_depth=max_depth, num_variables=num_variables)
     input_dictionary, output_dictionary = create_dictionaries(tuple(range(1, num_variables + 1)),
                                                               ('and', 'or', 'not', '(', ')'),
                                                               input_length, output_length)
 
-    encoded_sentences, encoded_conclusions = encode_dataframe(df, prefix=False,
+    encoded_sentences, encoded_conclusions = encode_dataframe(df, prefix=prefix,
                                                               input_dictionary=input_dictionary,
                                                               output_dictionary=output_dictionary)
 
@@ -88,11 +88,42 @@ def load_sentences_and_conclusions(folder, max_depth, num_variables):
     return sentences, conclusions, input_dictionary, output_dictionary
 
 
-if __name__ == '__main__':
-    encode_trees('../data', max_depth=2, num_variables=5, input_length=10, output_length=5)
+def create_decoding_dictionaries(input_dictionary, output_dictionary):
+    decoding_input_dictionary = {}
+    for symbol in input_dictionary:
+        decoding_input_dictionary[input_dictionary[symbol]] = symbol
 
-    sentences, conclusions, input_dictionary, output_dictionary = load_sentences_and_conclusions('../data', max_depth=2, num_variables=5)
+    decoding_output_dictionary = {}
+    for symbol in output_dictionary:
+        decoding_output_dictionary[output_dictionary[symbol]] = symbol
+
+    return decoding_input_dictionary, decoding_output_dictionary
+
+
+def decode_sentence(sentence, decoding_input_dictionary):
+    symbols = [decoding_input_dictionary[tuple(s.tolist())] for s in sentence]
+    return ' '.join(symbols)
+
+
+def decode_conclusion(conclusion, decoding_output_dictionary):
+    return decoding_output_dictionary[tuple(conclusion.tolist())]
+
+
+if __name__ == '__main__':
+    encode_trees('../data', max_depth=2, num_variables=5, prefix=False, input_length=10, output_length=5)
+
+    sentences, conclusions, input_dictionary, output_dictionary = load_sentences_and_conclusions('../data',
+                                                                                                 max_depth=2,
+                                                                                                 num_variables=5)
     print(sentences)
     print(conclusions)
     print(input_dictionary)
     print(output_dictionary)
+
+    decoding_input_dictionary, decoding_output_dictionary = create_decoding_dictionaries(input_dictionary,
+                                                                                         output_dictionary)
+
+    decoded_sentence = decode_sentence(sentences[1], decoding_input_dictionary)
+    decoded_conclusion = decode_conclusion(conclusions[1], decoding_output_dictionary)
+    print(decoded_sentence)
+    print(decoded_conclusion)
