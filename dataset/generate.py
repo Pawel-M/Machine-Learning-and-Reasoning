@@ -100,28 +100,12 @@ def generate_random_tree(total_variables, num_used_variables, max_depth):
     pass
 
 
-def get_truth_table(variables):
-    pass
-
-
-# truth_tables = {
-#     1: [[True], [False]],
-#     2: [[False, False], [False, True], [True, False], [True, True]],
-# }
 
 def generate_truth_table(num_variables):
-    #if num_variables not in truth_tables:
-        #truth_tables[num_variables] = ...
+    table = list(itertools.product([False, True], repeat=num_variables))
 
-    #return truth_tables[num_variables]
-
-
-    # [[True], [False]] - 1 variable
-    # [[False, False], [False, True], [True, False], [True, True]] - 2 variables
-    # ...
-    pass
-    # return [[]]
-
+    return table
+  
 
 def test_for_one_conclusion(tree):
     variables = tree.variables
