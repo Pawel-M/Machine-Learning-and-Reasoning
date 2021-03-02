@@ -6,6 +6,8 @@ import pandas as pd
 
 import generation
 
+#test
+
 
 def encode(sentence, conclusion, input_dictionary, output_dictionary):
     symbols = sentence.split(' ')
