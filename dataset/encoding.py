@@ -4,7 +4,7 @@ import pickle
 import numpy as np
 import pandas as pd
 
-import generation
+import dataset.generation
 
 
 def encode(sentence, conclusion, input_dictionary, output_dictionary):
@@ -67,7 +67,7 @@ def save_sentences_and_conclusions(sentences, conclusions, input_dictionary, out
 
 
 def encode_trees(folder, max_depth, num_variables, prefix, input_length, output_length):
-    df = generation.load_trees(folder, max_depth=max_depth, num_variables=num_variables)
+    df = dataset.generation.load_trees(folder, max_depth=max_depth, num_variables=num_variables)
     input_dictionary, output_dictionary = create_dictionaries(tuple(range(1, num_variables + 1)),
                                                               ('and', 'or', 'not', '(', ')'),
                                                               input_length, output_length)
@@ -123,7 +123,7 @@ if __name__ == '__main__':
     decoding_input_dictionary, decoding_output_dictionary = create_decoding_dictionaries(input_dictionary,
                                                                                          output_dictionary)
 
-    decoded_sentence = decode_sentence(sentences[1], decoding_input_dictionary)
-    decoded_conclusion = decode_conclusion(conclusions[1], decoding_output_dictionary)
+    decoded_sentence = decode_sentence(sentences[2], decoding_input_dictionary)
+    decoded_conclusion = decode_conclusion(conclusions[2], decoding_output_dictionary)
     print(decoded_sentence)
     print(decoded_conclusion)

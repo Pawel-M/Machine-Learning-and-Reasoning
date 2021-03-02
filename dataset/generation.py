@@ -4,20 +4,20 @@ import random
 import numpy as np
 import pandas as pd
 
-import logic_tree
+import dataset.logic_tree
 
 pd.set_option('display.max_columns', 100)
 
 OPERATION_NODES = (
-    (logic_tree.NotNode, 1),
-    (logic_tree.AndNode, 2),
-    (logic_tree.OrNode, 2),
+    (dataset.logic_tree.NotNode, 1),
+    (dataset.logic_tree.AndNode, 2),
+    (dataset.logic_tree.OrNode, 2),
 )
 
 
 def generate_node(num_operations, variables):
     if num_operations == 0 or random.random() < .1:
-        return logic_tree.ValueNode(random.choice(variables))
+        return dataset.logic_tree.ValueNode(random.choice(variables))
 
     operation_node, num_children = random.choice(OPERATION_NODES)
     children = list([generate_node(num_operations - 1, variables) for _ in range(num_children)])
