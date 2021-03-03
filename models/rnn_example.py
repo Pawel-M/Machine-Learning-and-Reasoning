@@ -9,8 +9,8 @@ import dataset.encoding
 
 data = dataset.encoding.load_sentences_and_conclusions('../data', 2, 5)
 sentences, conclusions, input_dictionary, output_dictionary = data
-encoded_sentences = [np.where(sentence == 1)[1] for sentence in sentences]
 
+encoded_sentences = [np.where(sentence == 1)[1] + 1 for sentence in sentences]
 x = kr.preprocessing.sequence.pad_sequences(encoded_sentences, padding='post')
 y = np.array(conclusions)
 
@@ -27,7 +27,7 @@ model.summary()
 
 learning_rate = 0.001
 batch_size = 64
-epochs = 50
+epochs = 70
 
 model.compile(optimizer=kr.optimizers.Adam(learning_rate=learning_rate),
               loss=kr.losses.categorical_crossentropy,
