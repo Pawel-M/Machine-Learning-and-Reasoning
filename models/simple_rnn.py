@@ -142,6 +142,7 @@ with tf.Session() as sess:
 
     # Test
     y_pred = sess.run(pred_out, feed_dict={x: x_test, seqLen: seq_len_test})
+    print(y_pred)
     y_pred = get_best_index(y_pred)
     print('--------Test Results-------')
     for i, x in enumerate(y_test):

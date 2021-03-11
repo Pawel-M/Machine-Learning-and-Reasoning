@@ -7,9 +7,13 @@ import pandas as pd
 import dataset.generation
 
 
-def encode(sentence, conclusion, input_dictionary, output_dictionary):
+def encode_sentence(sentence, input_dictionary):
     symbols = sentence.split(' ')
-    return np.array([input_dictionary[symbol] for symbol in symbols]), np.array(output_dictionary[conclusion])
+    return np.array([input_dictionary[symbol] for symbol in symbols])
+
+
+def encode(sentence, conclusion, input_dictionary, output_dictionary):
+    return encode_sentence(sentence, input_dictionary), np.array(output_dictionary[conclusion])
 
 
 def create_dictionaries(variables, operators, input_length, output_length):
@@ -100,8 +104,17 @@ def create_decoding_dictionaries(input_dictionary, output_dictionary):
     return decoding_input_dictionary, decoding_output_dictionary
 
 
-def decode_sentence(sentence, decoding_input_dictionary):
-    symbols = [decoding_input_dictionary[tuple(s.tolist())] for s in sentence]
+def decode_sentence(sentence, decoding_input_dictionary, indexed_encoding=False):
+    if indexed_encoding:
+        dictionary = {np.argmax(k) + 1: decoding_input_dictionary[k] for k in decoding_input_dictionary}
+        symbols = []
+        for s in sentence:
+            if s == 0:
+                break
+            symbols.append(dictionary[s])
+    else:
+        symbols = [decoding_input_dictionary[tuple(s.tolist())] for s in sentence]
+
     return ' '.join(symbols)
 
 
