@@ -88,20 +88,22 @@ def train_multiple_runs(num_runs, dataset, model_fn, model_args, training_args,
         if results_folder is not None:
             models.common.save_model(model, results_folder, base_name)
 
-    print('Test accuracies:')
-    print(result_str)
+    lines = []
+    lines.append(f'Training results of the model "{base_name}"\n\n')
+    lines.append(f'num_runs = {number}\n')
+    for key, value in itertools.chain(model_args.items(), training_args.items()):
+        lines.append(f'{key} = {value}\n')
+
+    lines.append('\n####################################\n')
+    lines.append('Test accuracies:\n')
+    lines.append(result_str + '\n')
+
+    print('\n\n####################################\n')
+    for line in lines:
+        print(line[:-1])
 
     if results_folder is not None:
         with open(os.path.join(results_folder, 'results.txt'), 'w') as f:
-            lines = []
-            lines.append(f'Training results of the model "{base_name}"\n\n')
-            lines.append(f'num_runs = {number}\n')
-            for key, value in itertools.chain(model_args.items(), training_args.items()):
-                lines.append(f'{key} = {value}\n')
-
-            lines.append('\n\n####################################\n')
-            lines.append('Test accuracies:\n')
-            lines.append(result_str)
             f.writelines(lines)
 
     return histories, accuracies
