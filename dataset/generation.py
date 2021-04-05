@@ -1,5 +1,8 @@
+import math
 import os
 import random
+import time
+from threading import local
 
 import numpy as np
 import pandas as pd
@@ -13,6 +16,20 @@ OPERATION_NODES = (
     (dataset.logic_tree.AndNode, 2),
     (dataset.logic_tree.OrNode, 2),
 )
+
+
+def get_hms(seconds):
+    h = math.floor(seconds / 3600)
+    m = math.floor(seconds / 60) % 60
+    s = int(seconds) % 60
+
+    result = f'{s:0>2}'
+    if m > 0 or h > 0:
+        if h > 0:
+            result = f'{h}:{m:0>2}:' + result
+        else:
+            result = f'{m}:' + result
+    return result
 
 
 def generate_node(num_operations, variables):
@@ -89,11 +106,18 @@ def test_for_guarantees_true(tree):
         return False, None
 
 
-def generate_and_test_trees(num_generations, num_operations, num_variables, test_fn, print_every=100):
+def generate_and_test_trees(num_generations, num_operations, num_variables, test_fn, existing=None, print_every=100):
     variables = tuple(range(1, num_variables + 1))
-    correct_trees_infix = []
-    correct_trees_prefix = []
-    conclusions = []
+
+    if existing is None:
+        correct_trees_infix = []
+        correct_trees_prefix = []
+        conclusions = []
+    else:
+        correct_trees_infix, correct_trees_prefix, conclusions = existing
+
+    num_correct = len(correct_trees_infix)
+    start_time = time.time()
     for i in range(num_generations):
         tree = generate_random_tree(num_operations, variables)
         correct, conclusion = test_fn(tree)
@@ -106,13 +130,35 @@ def generate_and_test_trees(num_generations, num_operations, num_variables, test
                 conclusions.append(conclusion)
 
         if (i + 1) % print_every == 0:
-            print(f'Checked {i + 1} trees, correct: {len(correct_trees_infix)}')
+            last_num_correct = num_correct
+            num_correct = len(correct_trees_infix)
+            percent_correct = int(1000 * (num_correct - last_num_correct) / print_every) / 10
+            elapsed_iterations = (i + 1) / num_generations
+            percent_trees = int(1000 * elapsed_iterations) / 10
+            elapsed_time = time.time() - start_time
+            eta = (1 - elapsed_iterations) * elapsed_time / elapsed_iterations
+            print(f'Checked {i + 1} ({percent_trees}%) trees, correct: {num_correct}, recently correct: {percent_correct}%, eta: {get_hms(eta)}s')
 
     return list(zip(correct_trees_infix, correct_trees_prefix, conclusions))
 
 
-def generate_and_save_trees(folder, num_generations, max_depth, num_variables, test_fn):
-    trees = generate_and_test_trees(num_generations, max_depth, num_variables, test_fn)
+def generate_and_save_trees(folder, num_generations, max_depth, num_variables, test_fn, load_existing=False,
+                            print_every=100):
+
+    existing = None
+    if load_existing:
+        try:
+            trees_df = load_trees(folder, max_depth, num_variables)
+            infix_trees = trees_df['infix'].tolist()
+            prefix_trees = trees_df['prefix'].tolist()
+            conclusions = trees_df['conclusion'].tolist()
+            existing = infix_trees, prefix_trees, conclusions
+
+        except IOError:
+            print('Cannot load existing tree - file does not exist.')
+            existing = None
+
+    trees = generate_and_test_trees(num_generations, max_depth, num_variables, test_fn, existing, print_every)
     print('found trees:', len(trees))
 
     for i in range(5):
@@ -147,6 +193,7 @@ if __name__ == '__main__':
     #         print('conclusion', conclusion)
     #         print()
 
-    generate_and_save_trees('../data', num_generations=1000000,
+    generate_and_save_trees('../data', num_generations=10000000,
                             max_depth=2, num_variables=5,
-                            test_fn=test_for_guarantees_true)
+                            test_fn=test_for_guarantees_true,
+                            load_existing=True, print_every=1000)
