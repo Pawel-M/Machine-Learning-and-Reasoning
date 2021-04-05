@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 from numpy import number
 
 from dataset.common import get_dataset
-import rnn_example
+import models.common
 
 
 def train_model(model, dataset, learning_rate, batch_size, epochs, patience=None, min_delta=0.):
@@ -86,7 +86,7 @@ def train_multiple_runs(num_runs, dataset, model_fn, model_args, training_args,
             plot_loss_accuracy(history)
 
         if results_folder is not None:
-            rnn_example.save_model(model, results_folder, base_name)
+            models.common.save_model(model, results_folder, base_name)
 
     print('Test accuracies:')
     print(result_str)
@@ -110,7 +110,9 @@ def train_multiple_runs(num_runs, dataset, model_fn, model_args, training_args,
 if __name__ == '__main__':
     dataset = get_dataset('../data', depth=2, variables=5, test_size=.1, valid_size=.1, indexed_encoding=True)
 
-    model_fn = rnn_example.create_lstm_model
+    import models.rnn_example
+
+    model_fn = models.rnn_example.create_lstm_model
     base_name = 'lstm'
     model_args = {
         'num_layers': 1,
