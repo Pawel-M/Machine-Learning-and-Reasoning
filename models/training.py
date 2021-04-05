@@ -90,7 +90,7 @@ def train_multiple_runs(num_runs, dataset, model_fn, model_args, training_args,
 
     lines = []
     lines.append(f'Training results of the model "{base_name}"\n\n')
-    lines.append(f'num_runs = {number}\n')
+    lines.append(f'num_runs = {num_runs}\n')
     for key, value in itertools.chain(model_args.items(), training_args.items()):
         lines.append(f'{key} = {value}\n')
 
