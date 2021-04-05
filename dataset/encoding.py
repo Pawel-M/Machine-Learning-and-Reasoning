@@ -81,7 +81,7 @@ def encode_trees(folder, max_depth, num_variables, prefix, input_length, output_
                                                               output_dictionary=output_dictionary)
 
     save_sentences_and_conclusions(encoded_sentences, encoded_conclusions, input_dictionary, output_dictionary,
-                                   folder='../data', max_depth=max_depth, num_variables=num_variables)
+                                   folder=folder, max_depth=max_depth, num_variables=num_variables)
 
 
 def load_sentences_and_conclusions(folder, max_depth, num_variables):
