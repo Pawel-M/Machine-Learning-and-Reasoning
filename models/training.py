@@ -64,7 +64,11 @@ def train_multiple_runs(num_runs, dataset, model_fn, model_args, training_args,
         os.makedirs(results_folder)
 
     if 'input_dim' not in model_args:
-        model_args['input_dim'] = dataset.x_train.shape[-1]
+        if dataset.indexed_encoding:
+            model_args['input_dim'] = np.max(dataset.x_train) + 1
+        else:
+            model_args['input_dim'] = dataset.x_train.shape[-1]
+            
     if 'output_dim' not in model_args:
         model_args['output_dim'] = dataset.y_train.shape[-1]
 
