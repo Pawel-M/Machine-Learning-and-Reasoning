@@ -3,7 +3,7 @@ import tensorflow.keras as kr
 
 def create_rnn_model(rnn_cls, num_layers, input_dim, output_dim, embedding_size, hidden_units, bidirectional=False):
     model = kr.Sequential()
-    model.add(kr.layers.Embedding(input_dim=input_dim, mask_zero=True, output_dim=embedding_size))
+    model.add(kr.layers.Embedding(input_dim=input_dim + 1, mask_zero=True, output_dim=embedding_size))
 
     for i in range(num_layers):
         if bidirectional:
