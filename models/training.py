@@ -38,19 +38,43 @@ def train_model(model, dataset, learning_rate, batch_size, epochs, patience=None
     return history, test_accuracy
 
 
-def plot_loss_accuracy(history):
+def plot_loss_accuracy(history, base_name='', results_folder=None):
     loss = history.history['loss']
     accuracy = history.history['categorical_accuracy']
+    val_loss = history.history['val_loss'] if 'val_loss' in history.history else None
+    val_accuracy = history.history[
+        'val_categorical_accuracy'] if 'val_categorical_accuracy' in history.history else None
 
+    lines = []
+    labels = []
     fig, ax = plt.subplots()
-    ax.plot(range(len(loss)), loss, label='loss', color='tab:blue')
+    l, = ax.plot(range(len(loss)), loss, label='loss', color='tab:blue')
+    lines.append(l)
+    labels.append('loss')
+    if val_loss is not None:
+        vl, = ax.plot(range(len(val_loss)), val_loss, label='validation loss', linestyle='--', color='tab:blue')
+        lines.append(vl)
+        labels.append('validation loss')
     ax.set_ylabel('loss', color='tab:blue')
 
     ax2 = ax.twinx()
-    ax2.plot(range(len(accuracy)), accuracy, color='tab:orange')
+    acc, = ax2.plot(range(len(accuracy)), accuracy, label='accuracy', color='tab:orange')
+    lines.append(acc)
+    labels.append('accuracy')
+    if val_accuracy is not None:
+        val_acc, = ax2.plot(range(len(val_accuracy)), val_accuracy, label='validation accuracy',
+                            linestyle='--', color='tab:orange')
+        lines.append(val_acc)
+        labels.append('validation accuracy')
     ax2.set_ylabel('accuracy', color='tab:orange')
 
     ax.set_xlabel('epoch')
+
+    plt.legend(lines, labels, loc='center right')
+
+    if results_folder is not None:
+        plt.savefig(os.path.join(results_folder, f'{base_name}_plot.png'))
+
     plt.show()
 
 
@@ -91,7 +115,7 @@ def train_multiple_runs(num_runs, dataset, model_fn, model_args, training_args,
         result_str += f'{test_accuracy}\t'
 
         if plot_history:
-            plot_loss_accuracy(history)
+            plot_loss_accuracy(history, f'{base_name}_{run + 1}', results_folder)
 
         if results_folder is not None:
             models.common.save_model(model, results_folder, base_name)
@@ -141,14 +165,13 @@ if __name__ == '__main__':
     training_args = {
         'learning_rate': 0.001,
         'batch_size': 64,
-        'epochs': 2,
+        'epochs': 20,
         'patience': 10,
         'min_delta': 1e-4,
     }
     num_runs = 1
-    # train_multiple_runs(num_runs, dataset, model_fn, model_args, training_args, base_name,
-    #                     plot_history=True, save_folder='../results')
-
+    train_multiple_runs(num_runs, dataset, model_fn, model_args, training_args, base_name,
+                        plot_history=True, save_folder='../results')
 
     # model = models.common.load_model(
     #     '../results/results_2021-04-09 16-06-35.005982/transformer_2021-04-09 16-06-50.134740.h5',
