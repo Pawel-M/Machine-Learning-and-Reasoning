@@ -72,7 +72,11 @@ def train_multiple_runs(num_runs, dataset, model_fn, model_args, training_args,
     if 'output_dim' not in model_args:
         model_args['output_dim'] = dataset.y_train.shape[-1]
 
-
+    if 'max_length' not in model_args:
+        if dataset.indexed_encoding:
+            model_args['max_length'] = dataset.x_train.shape[-1]
+        else:
+            model_args['max_length'] = dataset.x_train.shape[-2]
 
     histories = []
     accuracies = []
@@ -117,14 +121,22 @@ if __name__ == '__main__':
     dataset = get_dataset('../data', depth=2, variables=5, test_size=.1, valid_size=.1, indexed_encoding=True)
 
     import models.rnn_example
+    import models.transformer
 
-    model_fn = models.rnn_example.create_lstm_model
-    base_name = 'lstm'
+    model_fn = models.transformer.transformer_encoder_only
+    base_name = 'transformer'
+    # model_args = {
+    #     'num_layers': 1,
+    #     'embedding_size': 64,
+    #     'hidden_units': 128,
+    #     'bidirectional': False,
+    # }
     model_args = {
         'num_layers': 1,
-        'embedding_size': 64,
-        'hidden_units': 128,
-        'bidirectional': False,
+        'units': 64,
+        'd_model': 64,
+        'num_heads': 8,
+        'dropout': 0.01,
     }
     training_args = {
         'learning_rate': 0.001,
@@ -133,8 +145,13 @@ if __name__ == '__main__':
         'patience': 10,
         'min_delta': 1e-4,
     }
-    num_runs = 3
-    train_multiple_runs(num_runs, dataset, model_fn, model_args, training_args, base_name,
-                        plot_history=True, save_folder='../results')
+    num_runs = 1
+    # train_multiple_runs(num_runs, dataset, model_fn, model_args, training_args, base_name,
+    #                     plot_history=True, save_folder='../results')
 
-    # model = rnn_example.load_model('../results/lstm_2021-03-11 17-00-45.414892.h5')
+
+    # model = models.common.load_model(
+    #     '../results/results_2021-04-09 16-06-35.005982/transformer_2021-04-09 16-06-50.134740.h5',
+    #     models.transformer.CUSTOM_OBJECTS)
+    # pred = model.predict(dataset.x_test)
+    # print(pred)

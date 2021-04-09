@@ -20,5 +20,5 @@ def save_model(model, folder, name, add_timestamp=True):
     model.save(path, overwrite=True, include_optimizer=False, save_format='h5')
 
 
-def load_model(path):
-    return kr.models.load_model(path)
+def load_model(path, custom_objects=None):
+    return kr.models.load_model(path, custom_objects)

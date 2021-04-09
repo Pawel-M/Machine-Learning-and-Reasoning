@@ -1,7 +1,8 @@
 import tensorflow.keras as kr
 
 
-def create_rnn_model(rnn_cls, num_layers, input_dim, output_dim, embedding_size, hidden_units, bidirectional=False):
+def create_rnn_model(rnn_cls, num_layers, input_dim, output_dim, embedding_size, hidden_units,
+                     bidirectional=False, max_length=None):
     model = kr.Sequential()
     model.add(kr.layers.Embedding(input_dim=input_dim + 1, mask_zero=True, output_dim=embedding_size))
 
@@ -16,22 +17,25 @@ def create_rnn_model(rnn_cls, num_layers, input_dim, output_dim, embedding_size,
     return model
 
 
-def create_lstm_model(num_layers, input_dim, output_dim, embedding_size, hidden_units, bidirectional=False):
+def create_lstm_model(num_layers, input_dim, output_dim, embedding_size, hidden_units, bidirectional=False,
+                      max_length=None):
     return create_rnn_model(kr.layers.LSTM, num_layers,
                             input_dim, output_dim,
                             embedding_size, hidden_units,
-                            bidirectional)
+                            bidirectional, max_length)
 
 
-def create_gru_model(num_layers, input_dim, output_dim, embedding_size, hidden_units, bidirectional=False):
+def create_gru_model(num_layers, input_dim, output_dim, embedding_size, hidden_units, bidirectional=False,
+                     max_length=None):
     return create_rnn_model(kr.layers.GRU, num_layers,
                             input_dim, output_dim,
                             embedding_size, hidden_units,
-                            bidirectional)
+                            bidirectional, max_length)
 
 
-def create_simple_rnn_model(num_layers, input_dim, output_dim, embedding_size, hidden_units, bidirectional=False):
+def create_simple_rnn_model(num_layers, input_dim, output_dim, embedding_size, hidden_units, bidirectional=False,
+                            max_length=None):
     return create_rnn_model(kr.layers.SimpleRNN, num_layers,
                             input_dim, output_dim,
                             embedding_size, hidden_units,
-                            bidirectional)
+                            bidirectional, max_length)
