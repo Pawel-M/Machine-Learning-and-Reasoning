@@ -7,10 +7,16 @@ def create_rnn_model(rnn_cls, num_layers, input_dim, output_dim, embedding_size,
     model.add(kr.layers.Embedding(input_dim=input_dim + 1, mask_zero=True, output_dim=embedding_size))
 
     for i in range(num_layers):
-        if bidirectional:
-            model.add(kr.layers.Bidirectional(rnn_cls(units=hidden_units)))
+        if i == num_layers - 1:
+            if bidirectional:
+                model.add(kr.layers.Bidirectional(rnn_cls(units=hidden_units)))
+            else:
+                model.add(rnn_cls(units=hidden_units))
         else:
-            model.add(rnn_cls(units=hidden_units))
+            if bidirectional:
+                model.add(kr.layers.Bidirectional(rnn_cls(units=hidden_units, return_sequences=True)))
+            else:
+                model.add(rnn_cls(units=hidden_units, return_sequences=True))
 
     model.add(kr.layers.Dense(output_dim, activation='softmax'))
     model.summary()
