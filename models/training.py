@@ -84,7 +84,7 @@ def train_multiple_runs(num_runs, dataset, model_fn, model_args, training_args,
     if save_folder is not None:
         now = datetime.datetime.now()
         timestamp = str(now).replace(':', '-')
-        results_folder = os.path.join(save_folder, f'results_{timestamp}')
+        results_folder = os.path.join(save_folder, f'results_{base_name}_{timestamp}')
         os.makedirs(results_folder)
 
     if 'input_dim' not in model_args:
