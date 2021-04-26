@@ -23,6 +23,15 @@ def create_rnn_model(rnn_cls, num_layers, input_dim, output_dim, embedding_size,
     return model
 
 
+def create_no_embedding_lstm(num_layers, input_dim, output_dim, embedding_size, hidden_units, bidirectional=False,
+                             max_length=None):
+    model = kr.Sequential()
+    model.add(kr.layers.LSTM(input_shape=(13, 10), units=hidden_units))
+    model.add(kr.layers.Dense(output_dim, activation='softmax'))
+    model.summary()
+    return model
+
+
 def create_lstm_model(num_layers, input_dim, output_dim, embedding_size, hidden_units, bidirectional=False,
                       max_length=None):
     return create_rnn_model(kr.layers.LSTM, num_layers,
