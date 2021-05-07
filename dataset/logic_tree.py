@@ -2,6 +2,8 @@ import abc
 
 
 class Node(abc.ABC):
+    accepts_children = -1
+
     @abc.abstractmethod
     def evaluate(self, values):
         pass
@@ -21,6 +23,7 @@ class Node(abc.ABC):
 
 
 class ValueNode(Node):
+    accepts_children = 0
     def __init__(self, variable):
         self._variable = variable
         self._variables = (variable,)
@@ -40,6 +43,7 @@ class ValueNode(Node):
 
 
 class NotNode(Node):
+    accepts_children = 1
     def __init__(self, child: Node):
         self._child = child
         self._variables = ()
@@ -89,6 +93,8 @@ class OperatorNode(Node, abc.ABC):
 
 
 class AndNode(OperatorNode):
+    accepts_children = 2
+
     def __init__(self, *children):
         super(AndNode, self).__init__('and', *children)
 
@@ -101,6 +107,8 @@ class AndNode(OperatorNode):
 
 
 class OrNode(OperatorNode):
+    accepts_children = 2
+
     def __init__(self, *children):
         super(OrNode, self).__init__('or', *children)
 

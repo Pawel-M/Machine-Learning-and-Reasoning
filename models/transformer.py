@@ -341,7 +341,7 @@ if __name__ == '__main__':
     import numpy as np
     from dataset.common import get_dataset
 
-    dataset = get_dataset('../data', depth=2, variables=5, test_size=.1, valid_size=.1, indexed_encoding=True)
+    dataset = get_dataset('../data', depth=2, num_variables=5, test_size=.1, valid_size=.1, indexed_encoding=True)
     max_length = dataset.x_train.shape[-1]
     input_dim = np.max(dataset.x_train)
     output_dim = dataset.y_train.shape[-1]

@@ -142,7 +142,7 @@ def train_multiple_runs(num_runs, dataset, model_fn, model_args, training_args,
 
 
 if __name__ == '__main__':
-    dataset = get_dataset('../data', depth=2, variables=5, test_size=.1, valid_size=.1, indexed_encoding=True)
+    dataset = get_dataset('../data', depth=2, num_variables=5, test_size=.1, valid_size=.1, indexed_encoding=True)
 
     import models.rnn_example
     import models.transformer

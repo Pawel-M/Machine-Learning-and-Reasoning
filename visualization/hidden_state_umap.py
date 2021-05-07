@@ -49,7 +49,7 @@ def get_correct_hidden_states(dataset, model):
     print(all_preds[wrong])
 
     hidden_output = model.layers[-2].output
-    stripped_model = kr.Model(inputs=model.inputs, outputs=hidden_output)
+    stripped_model = kr.Model(inputs=model.input, outputs=hidden_output)
     hidden_preds = stripped_model.predict(correct_xs)
 
     print('Hidden states calculated.')
@@ -117,7 +117,7 @@ def analyze_results_in_range(dataset, xs, preds, embeddings, x_range, y_range):
 
 
 if __name__ == '__main__':
-    dataset = get_dataset('../data', depth=2, variables=5, test_size=.1, valid_size=.1, indexed_encoding=True)
+    dataset = get_dataset('../data', depth=2, num_variables=5, test_size=.1, valid_size=.1, indexed_encoding=True)
     model = models.common.load_model('../results/lstm_2021-04-06 12-25-35.811640.h5')
 
     correct_xs, correct_ys, hidden_preds, correct_preds = get_correct_hidden_states(dataset, model)
