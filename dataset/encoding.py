@@ -5,7 +5,7 @@ import numpy as np
 import pandas as pd
 
 import dataset.conclusion_generation
-import dataset.mental_model_generation
+# import dataset.mental_model_generation
 
 
 def encode_sentence(sentence, input_dictionary):
