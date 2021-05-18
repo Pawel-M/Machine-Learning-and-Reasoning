@@ -3,6 +3,9 @@ From: https://blog.tensorflow.org/2019/05/transformer-chatbot-tutorial-with-tens
 """
 import tensorflow as tf
 import tensorflow.keras as kr
+import seaborn as sns
+import matplotlib.pyplot as plt
+from dataset.encoding import create_decoding_dictionaries, decode_sentence
 
 
 def create_padding_mask(x):
@@ -339,6 +342,38 @@ def transformer_encoder_only(max_length,
     train_model = kr.Model(inputs=inputs, outputs=outputs, name=name)
     return train_model, base_model
 
+def visualise_attention_input(input, attention_scores):
+    # Decode sentence for labels plot
+    dec_input_dict, dec_output_dict = create_decoding_dictionaries(dataset.input_dictionary,
+                                                                    dataset.output_dictionary)
+    labels = decode_sentence(input[0], dec_input_dict, indexed_encoding=True).split(' ')
+
+    # Calculate size subplot size (because of multihead)
+    n = attention_scores[0].shape[1]
+    fig_size = int(np.ceil(n**.5))
+    fig, ax = plt.subplots(fig_size, fig_size)
+
+    # For every attention score
+    for r in range(fig_size):
+        for c in range(fig_size):
+            if r*fig_size+c < n:
+                # plot heatmap
+                g = sns.heatmap(attention_scores[0][0,r*fig_size+c,:,:], yticklabels=labels, xticklabels=labels,
+                                 cbar_kws={"orientation": "horizontal"}, square=True, cbar=False, ax=ax[r,c],
+                                cmap="Blues")
+                g.tick_params(axis='both', which='major', labelsize=10, labelbottom = False, bottom=False,
+                                top = False, labeltop=True, left=False, labelleft=True, labelrotation=.5)
+            else:
+                # or turn axis off
+                ax[r,c].axis('off')
+
+    # Show full screen
+    mng = plt.get_current_fig_manager()
+    mng.window.showMaximized()
+
+    # Show plot
+    plt.show()
+
 
 CUSTOM_OBJECTS = {
     'PositionalEncoding': PositionalEncoding,
@@ -367,7 +402,7 @@ if __name__ == '__main__':
 
     learning_rate = 0.001
     batch_size = 64
-    epochs = 3
+    epochs = 50
     patience = 10
     min_delta = 1e-4
 
@@ -390,6 +425,14 @@ if __name__ == '__main__':
     history = train_model.fit(dataset.x_train, dataset.y_train, validation_data=(dataset.x_valid, dataset.y_valid),
                               batch_size=batch_size, epochs=epochs, callbacks=callbacks)
 
+    # Test
     preds = base_model.predict(dataset.x_test)
     attention_scores = preds[1]
-    print(attention_scores[0].shape)
+
+    # Get an input, calculate output and get attention
+    input = dataset.x_test[[0],:]
+    preds = base_model.predict(input)
+    attention_scores = preds[1]
+
+    # Visualise attention scores
+    visualise_attention_input(input, attention_scores)
