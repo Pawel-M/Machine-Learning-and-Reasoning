@@ -28,9 +28,9 @@ def scaled_dot_product_attention(query, key, value, mask):
     if mask is not None:
         logits += (mask * -1e9)
 
-    attention_weights = tf.nn.softmax(logits, axis=-1)
+    attention_scores = tf.nn.softmax(logits, axis=-1)
 
-    return tf.matmul(attention_weights, value)
+    return tf.matmul(attention_scores, value), attention_scores
 
 
 class MultiHeadAttention(kr.layers.Layer):
@@ -70,7 +70,7 @@ class MultiHeadAttention(kr.layers.Layer):
         key = self.split_heads(key, batch_size)
         value = self.split_heads(value, batch_size)
 
-        scaled_attention = scaled_dot_product_attention(query, key, value, mask)
+        scaled_attention, attention_scores = scaled_dot_product_attention(query, key, value, mask)
 
         scaled_attention = tf.transpose(scaled_attention, perm=[0, 2, 1, 3])
 
@@ -79,7 +79,7 @@ class MultiHeadAttention(kr.layers.Layer):
 
         outputs = self.dense(concat_attention)
 
-        return outputs
+        return outputs, attention_scores
 
     def get_config(self):
         return {
@@ -245,11 +245,11 @@ class PositionalEncoding(kr.layers.Layer):
 #     return kr.Model(inputs=[inputs, dec_inputs], outputs=outputs, name=name)
 
 
-def encoder_layer(units, d_model, num_heads, dropout, name="encoder_layer"):
-    inputs = kr.Input(shape=(None, d_model), name="inputs")
-    padding_mask = kr.Input(shape=(1, 1, None), name="padding_mask")
+def encoder_layer(inputs, padding_mask, units, d_model, num_heads, dropout, name="encoder_layer"):
+    # inputs = kr.Input(shape=(None, d_model), name="inputs")
+    # padding_mask = kr.Input(shape=(1, 1, None), name="padding_mask")
 
-    attention = MultiHeadAttention(
+    attention, attention_scores = MultiHeadAttention(
         d_model, num_heads, name="attention")({
         'query': inputs,
         'key': inputs,
@@ -266,12 +266,13 @@ def encoder_layer(units, d_model, num_heads, dropout, name="encoder_layer"):
     outputs = kr.layers.LayerNormalization(
         epsilon=1e-6)(attention + outputs)
 
-    encoder_model = kr.Model(
-        inputs=[inputs, padding_mask], outputs=outputs, name=name)
-    return encoder_model
+    # return kr.Model(inputs=[inputs, padding_mask], outputs=outputs, name=name)
+    return outputs, attention_scores
 
 
-def encoder(max_length,
+def encoder(inputs,
+            padding_mask,
+            max_length,
             vocab_size,
             num_layers,
             units,
@@ -279,26 +280,29 @@ def encoder(max_length,
             num_heads,
             dropout,
             name="encoder"):
-    inputs = kr.Input(shape=(max_length,), name="inputs")
-    padding_mask = kr.Input(shape=(1, 1, None), name="padding_mask")
+    # inputs = kr.Input(shape=(max_length,), name="inputs")
+    # padding_mask = kr.Input(shape=(1, 1, None), name="padding_mask")
 
     embeddings = kr.layers.Embedding(vocab_size + 1, d_model, mask_zero=True)(inputs)
     embeddings *= tf.math.sqrt(tf.cast(d_model, tf.float32))
     embeddings = PositionalEncoding(max_length, d_model)(embeddings)
 
     outputs = kr.layers.Dropout(rate=dropout)(embeddings)
-
+    all_attention_scores = []
     for i in range(num_layers):
-        outputs = encoder_layer(
+        outputs, attention_scores = encoder_layer(
+            inputs=outputs,
+            padding_mask=padding_mask,
             units=units,
             d_model=d_model,
             num_heads=num_heads,
             dropout=dropout,
             name="encoder_layer_{}".format(i),
-        )([outputs, padding_mask])
+        )
+        all_attention_scores.append(attention_scores)
 
-    return kr.Model(
-        inputs=[inputs, padding_mask], outputs=outputs, name=name)
+    # return kr.Model(inputs=[inputs, padding_mask], outputs=outputs, name=name)
+    return outputs, all_attention_scores
 
 
 def transformer_encoder_only(max_length,
@@ -310,12 +314,14 @@ def transformer_encoder_only(max_length,
                              num_heads,
                              dropout,
                              name='transformer_encoder_only'):
-    inputs = kr.Input(shape=(None,), name='inputs')
+    inputs = kr.Input(shape=(max_length,), name='inputs')
     enc_padding_mask = kr.layers.Lambda(
         create_padding_mask, output_shape=(1, 1, None),
         name='enc_padding_mask')(inputs)
 
-    enc_outputs = encoder(
+    enc_outputs, all_attention_scores = encoder(
+        inputs=inputs,
+        padding_mask=enc_padding_mask,
         max_length=max_length,
         vocab_size=input_dim,
         num_layers=num_layers,
@@ -323,13 +329,15 @@ def transformer_encoder_only(max_length,
         d_model=d_model,
         num_heads=num_heads,
         dropout=dropout,
-    )(inputs=[inputs, enc_padding_mask])
+    )
     # concat_attention = tf.reshape(scaled_attention,
     #                               (batch_size, -1, self.d_model))
     flatten_outputs = kr.layers.Flatten()(enc_outputs)
     outputs = kr.layers.Dense(units=output_dim, activation='softmax', name="outputs")(flatten_outputs)
 
-    return kr.Model(inputs=inputs, outputs=outputs, name=name)
+    base_model = kr.Model(inputs=inputs, outputs=[outputs, all_attention_scores], name=name)
+    train_model = kr.Model(inputs=inputs, outputs=outputs, name=name)
+    return train_model, base_model
 
 
 CUSTOM_OBJECTS = {
@@ -359,23 +367,29 @@ if __name__ == '__main__':
 
     learning_rate = 0.001
     batch_size = 64
-    epochs = 100
+    epochs = 3
     patience = 10
     min_delta = 1e-4
 
-    model = transformer_encoder_only(max_length=max_length,
-                                     input_dim=input_dim, output_dim=output_dim,
-                                     num_layers=num_layers, units=units,
-                                     d_model=d_model, num_heads=num_heads, dropout=dropout)
-    model.compile(optimizer=kr.optimizers.Adam(learning_rate),
-                  loss=kr.losses.categorical_crossentropy,
-                  metrics=['categorical_accuracy']
-                  )
-    model.summary()
+    train_model, base_model = transformer_encoder_only(max_length=max_length,
+                                                       input_dim=input_dim, output_dim=output_dim,
+                                                       num_layers=num_layers, units=units,
+                                                       d_model=d_model, num_heads=num_heads, dropout=dropout)
+    base_model.summary()
+
+    train_model.compile(optimizer=kr.optimizers.Adam(learning_rate),
+                        loss=kr.losses.categorical_crossentropy,
+                        metrics=['categorical_accuracy']
+                        )
+    train_model.summary()
 
     callbacks = [kr.callbacks.EarlyStopping(patience=patience,
                                             min_delta=min_delta,
                                             restore_best_weights=True,
                                             verbose=1)]
-    history = model.fit(dataset.x_train, dataset.y_train, validation_data=(dataset.x_valid, dataset.y_valid),
-                        batch_size=batch_size, epochs=epochs, callbacks=callbacks)
+    history = train_model.fit(dataset.x_train, dataset.y_train, validation_data=(dataset.x_valid, dataset.y_valid),
+                              batch_size=batch_size, epochs=epochs, callbacks=callbacks)
+
+    preds = base_model.predict(dataset.x_test)
+    attention_scores = preds[1]
+    print(attention_scores[0].shape)
