@@ -318,7 +318,7 @@ if __name__ == '__main__':
     generate_random_sep_tree = functools.partial(generate_random_tree, root_node_cls=SeparatorNode)
 
     generate_and_save_trees('./data', 1000000, 2, 5,
-                            test_for_one_mental_models_type_two, generate_random_sep_tree,
-                            base_name='and_trees_single_mms_type_II')
+                            test_for_one_mental_models, generate_random_sep_tree,
+                            base_name='and_trees_single_mms')
 
 
