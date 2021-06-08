@@ -12,9 +12,9 @@ from dataset.common import get_dataset
 import models.common
 
 
-def train_model(model, dataset, learning_rate, batch_size, epochs, patience=None, min_delta=0.):
+def train_model(model, dataset, learning_rate, batch_size, epochs, loss, patience=None, min_delta=0.):
     model.compile(optimizer=kr.optimizers.Adam(learning_rate=learning_rate),
-                  loss=kr.losses.categorical_crossentropy,
+                  loss=loss,
                   metrics=['categorical_accuracy'])
 
     callbacks = []
@@ -102,6 +102,9 @@ def train_multiple_runs(num_runs, dataset, model_fn, model_args, training_args,
         else:
             model_args['max_length'] = dataset.x_train.shape[-2]
 
+    if 'loss' not in training_args:
+        training_args['loss'] = 'categorical_crossentropy'
+
     histories = []
     accuracies = []
     result_str = ''
@@ -142,26 +145,26 @@ def train_multiple_runs(num_runs, dataset, model_fn, model_args, training_args,
 
 
 if __name__ == '__main__':
-    dataset = get_dataset('../data', depth=2, num_variables=5, test_size=.1, valid_size=.1, indexed_encoding=True)
+    dataset = get_dataset('./data', depth=2, num_variables=5, test_size=.1, valid_size=.1, indexed_encoding=True)
 
     import models.rnn_example
-    import models.transformer
+    # import models.transformer
 
-    model_fn = models.transformer.transformer_encoder_only
+    model_fn = models.rnn_example.create_lstm_model
     base_name = 'transformer'
-    # model_args = {
-    #     'num_layers': 1,
-    #     'embedding_size': 64,
-    #     'hidden_units': 128,
-    #     'bidirectional': False,
-    # }
     model_args = {
         'num_layers': 1,
-        'units': 64,
-        'd_model': 64,
-        'num_heads': 8,
-        'dropout': 0.01,
+        'embedding_size': 64,
+        'hidden_units': 128,
+        'bidirectional': True,
     }
+    # model_args = {
+    #     'num_layers': 1,
+    #     'units': 64,
+    #     'd_model': 64,
+    #     'num_heads': 8,
+    #     'dropout': 0.01,
+    # }
     training_args = {
         'learning_rate': 0.001,
         'batch_size': 64,

@@ -2,10 +2,8 @@ import os
 import pickle
 
 import numpy as np
-import pandas as pd
 
 import dataset.conclusion_generation
-# import dataset.mental_model_generation
 
 
 def encode_sentence(sentence, input_dictionary):
@@ -136,38 +134,7 @@ def decode_sentence(sentence, decoding_input_dictionary, indexed_encoding=False)
 def decode_conclusion(conclusion, decoding_output_dictionary):
     return decoding_output_dictionary[tuple(conclusion.tolist())]
 
-#
-# def save_sentences_and_mental_models(sentences, mental_models, input_dictionary, output_dictionary,
-#                                      folder, num_variables, base_name=''):
-#     file_name = f'encoded_mental_models_vars-{num_variables}.pkl'
-#
-#     if not os.path.exists(folder):
-#         os.makedirs(folder)
-#
-#     with open(os.path.join(folder, file_name), 'wb') as file:
-#         pickle.dump((sentences, mental_models, input_dictionary, output_dictionary), file)
 
-
-def encode_mental_models(folder, num_variables, input_length):
-    sentences_mental_models = dataset.mental_model_generation.generate_mental_models(num_variables)
-
-    input_dictionary, output_dictionary = create_dictionaries(tuple(range(1, num_variables + 1)),
-                                                              ('and', 'or', 'not', '(', ')'),
-                                                              input_length, num_variables)
-
-    sentences = []
-    mental_models = []
-    for tree, mms in sentences_mental_models:
-        print(tree.to_string(), mms)
-        encoded_sentence = encode_sentence(tree.to_string(), input_dictionary)
-        sentences.append(encoded_sentence)
-        mental_models.append(mms)
-
-    save_sentences_and_conclusions(sentences, mental_models, input_dictionary, output_dictionary,
-                                   folder=folder, base_name='encoded_mental_models', num_variables=num_variables)
-
-
-# folder, max_depth, num_variables, prefix, input_length, output_length
 def encode_mental_models_separated_sentences(folder, max_depth, num_variables, input_length, base_name, trees_base_name):
     df = dataset.conclusion_generation.load_trees(folder, max_depth=max_depth, num_variables=num_variables,
                                                   base_name=trees_base_name)
@@ -208,10 +175,10 @@ def encode_mental_models_separated_sentences(folder, max_depth, num_variables, i
 
 if __name__ == '__main__':
     encode_mental_models_separated_sentences('./data', 2, 5, 10,
-                                             'encoded_and_trees_single_mms_type_II',
-                                             'and_trees_single_mms_type_II')
+                                             'encoded_and_trees_single_mms',
+                                             'and_trees_single_mms')
     data = load_sentences_and_conclusions('./data', num_variables=5, max_depth=2,
-                                          base_name='encoded_and_trees_single_mms_type_II')
+                                          base_name='encoded_and_trees_single_mms')
     sentences, mental_models, input_dictionary, output_dictionary = data
 
     for i in range(10):
