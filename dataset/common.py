@@ -82,6 +82,30 @@ def get_mental_models_dataset(folder, num_variables,
     return ds
 
 
+def preprocess_mental_models(mental_models, pad_mental_models):
+    if pad_mental_models:
+        max_mms_len = 0
+        for mms in mental_models:
+            max_mms_len = max(max_mms_len, len(mms))
+
+        if max_mms_len > 1:
+            padded_mental_models = []
+            for mms in mental_models:
+                padded_mental_models.append(kr.preprocessing.sequence.pad_sequences(mms, padding='post',
+                                                                                    maxlen=max_mms_len))
+
+            y = kr.preprocessing.sequence.pad_sequences(padded_mental_models, padding='post')
+        else:
+            y = np.array(mental_models)
+    else:
+        y = np.array(mental_models)
+
+    if len(y.shape) == 3 and y.shape[1] == 1:
+        y = y.reshape(y.shape[0], y.shape[-1])
+
+    return y
+
+
 def get_separated_sequences_mental_models_dataset(folder, base_name, num_variables, max_depth,
                                                   test_size, valid_size=None,
                                                   indexed_encoding=False, pad_mental_models=False, random_state=1337):
@@ -110,23 +134,7 @@ def get_separated_sequences_mental_models_dataset(folder, base_name, num_variabl
                                                                         padding='post', maxlen=max_len))
 
     x = kr.preprocessing.sequence.pad_sequences(padded_sentences, padding='post')
-
-    if pad_mental_models:
-        max_mms_len = 0
-        for mms in mental_models:
-            max_mms_len = max(max_mms_len, len(mms))
-
-        if max_mms_len > 1:
-            padded_mental_models = []
-            for mms in mental_models:
-                padded_mental_models.append(kr.preprocessing.sequence.pad_sequences(mms, padding='post',
-                                                                                    maxlen=max_mms_len))
-
-            y = kr.preprocessing.sequence.pad_sequences(padded_mental_models, padding='post')
-        else:
-            y = np.array(mental_models)
-    else:
-        y = np.array(mental_models)
+    y = preprocess_mental_models(mental_models, pad_mental_models)
 
     print(x[0:5])
     print(y[0:5])
@@ -161,22 +169,7 @@ def get_joined_sequences_mental_models_dataset(folder, base_name, num_variables,
 
     x = kr.preprocessing.sequence.pad_sequences(encoded_sentences, padding='post')
 
-    if pad_mental_models:
-        max_mms_len = 0
-        for mms in mental_models:
-            max_mms_len = max(max_mms_len, len(mms))
-
-        if max_mms_len > 1:
-            padded_mental_models = []
-            for mms in mental_models:
-                padded_mental_models.append(kr.preprocessing.sequence.pad_sequences(mms, padding='post',
-                                                                                    maxlen=max_mms_len))
-
-            y = kr.preprocessing.sequence.pad_sequences(padded_mental_models, padding='post')
-        else:
-            y = np.array(mental_models)
-    else:
-        y = np.array(mental_models)
+    y = preprocess_mental_models(mental_models, pad_mental_models)
 
     print(x[0:5])
     print(y[0:5])
@@ -190,14 +183,14 @@ if __name__ == '__main__':
     # ds = get_mental_models_dataset('./data', num_variables=5,
     #                                test_size=.1, valid_size=.1,
     #                                indexed_encoding=True, pad_mental_models=True)
-    ds_separated = get_separated_sequences_mental_models_dataset('./data', 'encoded_and_trees_single_mms',
-                                                                 num_variables=5, max_depth=2,
-                                                                 test_size=.1, valid_size=.1,
-                                                                 indexed_encoding=True, pad_mental_models=True)
+    # ds_separated = get_separated_sequences_mental_models_dataset('./data', 'encoded_and_trees_single_mms',
+    #                                                              num_variables=5, max_depth=2,
+    #                                                              test_size=.1, valid_size=.1,
+    #                                                              indexed_encoding=True, pad_mental_models=True)
 
     ds_joined = get_joined_sequences_mental_models_dataset('./data', 'encoded_and_trees_single_mms',
                                                            num_variables=5, max_depth=2,
                                                            test_size=.1, valid_size=.1,
-                                                           indexed_encoding=True, pad_mental_models=True)
+                                                           indexed_encoding=True, pad_mental_models=False)
 
     # [[first], [second]]
