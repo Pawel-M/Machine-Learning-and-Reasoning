@@ -108,9 +108,13 @@ def train_multiple_runs(num_runs, dataset, model_fn, model_args, training_args,
 
     if 'metrics' not in training_args:
         training_args['metrics'] = ['categorical_accuracy']
-
-    accuracy_name = training_args['metrics'][0]
-
+        accuracy_name = 'categorical_accuracy'
+    else:
+        accuracy_name = training_args['metrics'][0]
+        if hasattr(accuracy_name, '__name__'):
+            accuracy_name = accuracy_name.__name__
+        else:
+            accuracy_name = str(accuracy_name)
 
     histories = []
     accuracies = []
