@@ -89,12 +89,7 @@ def preprocess_mental_models(mental_models, pad_mental_models):
             max_mms_len = max(max_mms_len, len(mms))
 
         if max_mms_len > 1:
-            padded_mental_models = []
-            for mms in mental_models:
-                padded_mental_models.append(kr.preprocessing.sequence.pad_sequences(mms, padding='post',
-                                                                                    maxlen=max_mms_len))
-
-            y = kr.preprocessing.sequence.pad_sequences(padded_mental_models, padding='post')
+            y = kr.preprocessing.sequence.pad_sequences(mental_models, padding='post')
         else:
             y = np.array(mental_models)
     else:
@@ -183,14 +178,14 @@ if __name__ == '__main__':
     # ds = get_mental_models_dataset('./data', num_variables=5,
     #                                test_size=.1, valid_size=.1,
     #                                indexed_encoding=True, pad_mental_models=True)
-    # ds_separated = get_separated_sequences_mental_models_dataset('./data', 'encoded_and_trees_single_mms',
-    #                                                              num_variables=5, max_depth=2,
-    #                                                              test_size=.1, valid_size=.1,
-    #                                                              indexed_encoding=True, pad_mental_models=True)
+    ds_separated = get_separated_sequences_mental_models_dataset('./data', 'encoded_and_trees_multiple_mms',
+                                                                 num_variables=5, max_depth=2,
+                                                                 test_size=.1, valid_size=.1,
+                                                                 indexed_encoding=True, pad_mental_models=True)
 
-    ds_joined = get_joined_sequences_mental_models_dataset('./data', 'encoded_and_trees_single_mms',
+    ds_joined = get_joined_sequences_mental_models_dataset('./data', 'encoded_and_trees_multiple_mms',
                                                            num_variables=5, max_depth=2,
                                                            test_size=.1, valid_size=.1,
-                                                           indexed_encoding=True, pad_mental_models=False)
+                                                           indexed_encoding=True, pad_mental_models=True)
 
     # [[first], [second]]
