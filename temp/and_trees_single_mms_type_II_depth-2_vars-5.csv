@@ -1,0 +1,726 @@
+;infix;prefix;conclusion
+0;not 1 sep not 4;sep not 1 not 4;FnnFn
+1;not 3 sep ( 2 or 3 );sep not 3 or 2 3;nTFnn
+2;not 4 sep not 3;sep not 4 not 3;nnFFn
+3;not 5 sep 1;sep not 5 1;TnnnF
+4;not 3 sep ( 1 and 2 );sep not 3 and 1 2;TTFnn
+5;( 3 and 2 ) sep ( 3 or 5 );sep and 3 2 or 3 5;nTTnn
+6;not 4 sep ( 3 or 1 );sep not 4 or 3 1;nnTFn,TnnFn
+7;( 5 or 4 ) sep ( 4 or 4 );sep or 5 4 or 4 4;nnnTn
+8;2 sep ( 2 and 1 );sep 2 and 2 1;TTnnn
+9;5 sep ( 5 and 5 );sep 5 and 5 5;nnnnT
+10;not 3 sep ( 1 or 1 );sep not 3 or 1 1;TnFnn
+11;( 2 or 2 ) sep 4;sep or 2 2 4;nTnTn
+12;not 1 sep not 5;sep not 1 not 5;FnnnF
+13;( 5 and 1 ) sep not 2;sep and 5 1 not 2;TFnnT
+14;not 1 sep 4;sep not 1 4;FnnTn
+15;not 3 sep not 2;sep not 3 not 2;nFFnn
+16;( 2 or 1 ) sep not 3;sep or 2 1 not 3;nTFnn,TnFnn
+17;( 2 or 3 ) sep ( 2 and 3 );sep or 2 3 and 2 3;nTTnn
+18;( 1 or 5 ) sep ( 3 and 4 );sep or 1 5 and 3 4;nnTTT,TnTTn
+19;( 5 or 4 ) sep not 1;sep or 5 4 not 1;FnnnT,FnnTn
+20;( 5 or 1 ) sep not 5;sep or 5 1 not 5;TnnnF
+21;( 3 or 3 ) sep not 4;sep or 3 3 not 4;nnTFn
+22;( 2 and 3 ) sep ( 3 or 5 );sep and 2 3 or 3 5;nTTnn
+23;1 sep not 4;sep 1 not 4;TnnFn
+24;not 5 sep ( 1 or 3 );sep not 5 or 1 3;nnTnF,TnnnF
+25;( 1 and 1 ) sep ( 4 and 2 );sep and 1 1 and 4 2;TTnTn
+26;( 3 and 3 ) sep ( 1 and 1 );sep and 3 3 and 1 1;TnTnn
+27;( 2 and 2 ) sep ( 1 and 2 );sep and 2 2 and 1 2;TTnnn
+28;not 2 sep 3;sep not 2 3;nFTnn
+29;( 4 and 3 ) sep 3;sep and 4 3 3;nnTTn
+30;5 sep ( 1 or 2 );sep 5 or 1 2;nTnnT,TnnnT
+31;( 1 and 3 ) sep ( 1 and 2 );sep and 1 3 and 1 2;TTTnn
+32;not 1 sep ( 4 or 1 );sep not 1 or 4 1;FnnTn
+33;( 5 and 4 ) sep not 1;sep and 5 4 not 1;FnnTT
+34;not 3 sep ( 5 or 5 );sep not 3 or 5 5;nnFnT
+35;3 sep ( 4 or 5 );sep 3 or 4 5;nnTnT,nnTTn
+36;( 3 or 5 ) sep ( 1 and 3 );sep or 3 5 and 1 3;TnTnn
+37;3 sep ( 1 or 5 );sep 3 or 1 5;nnTnT,TnTnn
+38;( 1 or 3 ) sep not 4;sep or 1 3 not 4;nnTFn,TnnFn
+39;not 3 sep not 4;sep not 3 not 4;nnFFn
+40;not 1 sep ( 5 and 5 );sep not 1 and 5 5;FnnnT
+41;not 3 sep not 3;sep not 3 not 3;nnFnn
+42;( 4 and 3 ) sep ( 5 or 1 );sep and 4 3 or 5 1;nnTTT,TnTTn
+43;( 4 or 1 ) sep ( 3 or 3 );sep or 4 1 or 3 3;nnTTn,TnTnn
+44;( 1 and 1 ) sep ( 5 and 1 );sep and 1 1 and 5 1;TnnnT
+45;( 5 or 1 ) sep 2;sep or 5 1 2;nTnnT,TTnnn
+46;not 3 sep ( 5 and 4 );sep not 3 and 5 4;nnFTT
+47;not 5 sep ( 2 and 4 );sep not 5 and 2 4;nTnTF
+48;2 sep not 3;sep 2 not 3;nTFnn
+49;( 1 or 5 ) sep ( 2 or 5 );sep or 1 5 or 2 5;nnnnT,TTnnn
+50;( 2 or 1 ) sep ( 2 and 2 );sep or 2 1 and 2 2;nTnnn
+51;not 5 sep ( 5 or 4 );sep not 5 or 5 4;nnnTF
+52;( 3 and 3 ) sep 4;sep and 3 3 4;nnTTn
+53;( 3 or 2 ) sep ( 5 or 4 );sep or 3 2 or 5 4;nnTnT,nnTTn,nTnnT,nTnTn
+54;( 1 or 4 ) sep not 5;sep or 1 4 not 5;nnnTF,TnnnF
+55;( 2 and 3 ) sep ( 2 or 1 );sep and 2 3 or 2 1;nTTnn
+56;5 sep ( 2 or 4 );sep 5 or 2 4;nnnTT,nTnnT
+57;not 4 sep ( 2 and 5 );sep not 4 and 2 5;nTnFT
+58;( 1 and 1 ) sep 1;sep and 1 1 1;Tnnnn
+59;( 2 or 3 ) sep not 1;sep or 2 3 not 1;FnTnn,FTnnn
+60;( 4 or 1 ) sep ( 5 or 4 );sep or 4 1 or 5 4;nnnTn,TnnnT
+61;( 1 and 4 ) sep not 3;sep and 1 4 not 3;TnFTn
+62;( 2 or 1 ) sep ( 4 or 2 );sep or 2 1 or 4 2;nTnnn,TnnTn
+63;( 3 and 3 ) sep ( 5 or 3 );sep and 3 3 or 5 3;nnTnn
+64;not 1 sep ( 3 and 5 );sep not 1 and 3 5;FnTnT
+65;5 sep not 3;sep 5 not 3;nnFnT
+66;( 3 and 5 ) sep ( 5 and 2 );sep and 3 5 and 5 2;nTTnT
+67;( 2 or 5 ) sep not 1;sep or 2 5 not 1;FnnnT,FTnnn
+68;( 1 or 5 ) sep ( 5 and 2 );sep or 1 5 and 5 2;nTnnT
+69;( 5 or 1 ) sep ( 3 and 5 );sep or 5 1 and 3 5;nnTnT
+70;4 sep not 5;sep 4 not 5;nnnTF
+71;( 2 or 2 ) sep ( 1 and 1 );sep or 2 2 and 1 1;TTnnn
+72;5 sep ( 1 and 4 );sep 5 and 1 4;TnnTT
+73;1 sep ( 5 or 2 );sep 1 or 5 2;TnnnT,TTnnn
+74;( 5 and 2 ) sep ( 2 or 5 );sep and 5 2 or 2 5;nTnnT
+75;( 5 or 3 ) sep ( 2 or 5 );sep or 5 3 or 2 5;nnnnT,nTTnn
+76;( 1 and 4 ) sep ( 4 or 2 );sep and 1 4 or 4 2;TnnTn
+77;not 3 sep ( 1 or 3 );sep not 3 or 1 3;TnFnn
+78;( 3 and 2 ) sep not 1;sep and 3 2 not 1;FTTnn
+79;( 3 and 2 ) sep ( 3 and 5 );sep and 3 2 and 3 5;nTTnT
+80;not 3 sep ( 1 or 2 );sep not 3 or 1 2;nTFnn,TnFnn
+81;( 2 and 5 ) sep not 1;sep and 2 5 not 1;FTnnT
+82;( 2 or 4 ) sep ( 2 or 1 );sep or 2 4 or 2 1;nTnnn,TnnTn
+83;( 5 and 5 ) sep not 4;sep and 5 5 not 4;nnnFT
+84;( 5 and 3 ) sep not 1;sep and 5 3 not 1;FnTnT
+85;2 sep ( 3 and 2 );sep 2 and 3 2;nTTnn
+86;( 5 or 2 ) sep ( 2 and 3 );sep or 5 2 and 2 3;nTTnn
+87;( 5 and 3 ) sep ( 4 or 2 );sep and 5 3 or 4 2;nnTTT,nTTnT
+88;1 sep ( 1 and 4 );sep 1 and 1 4;TnnTn
+89;not 4 sep ( 5 and 1 );sep not 4 and 5 1;TnnFT
+90;not 3 sep ( 4 or 4 );sep not 3 or 4 4;nnFTn
+91;( 1 or 2 ) sep ( 5 and 2 );sep or 1 2 and 5 2;nTnnT
+92;not 4 sep not 4;sep not 4 not 4;nnnFn
+93;( 2 and 4 ) sep ( 4 or 4 );sep and 2 4 or 4 4;nTnTn
+94;not 2 sep ( 5 or 4 );sep not 2 or 5 4;nFnnT,nFnTn
+95;not 5 sep ( 3 and 3 );sep not 5 and 3 3;nnTnF
+96;( 3 and 1 ) sep not 4;sep and 3 1 not 4;TnTFn
+97;not 4 sep not 5;sep not 4 not 5;nnnFF
+98;( 5 and 4 ) sep ( 4 or 5 );sep and 5 4 or 4 5;nnnTT
+99;not 5 sep not 1;sep not 5 not 1;FnnnF
+100;not 5 sep ( 3 and 4 );sep not 5 and 3 4;nnTTF
+101;( 2 or 4 ) sep not 5;sep or 2 4 not 5;nnnTF,nTnnF
+102;not 4 sep ( 4 or 5 );sep not 4 or 4 5;nnnFT
+103;( 2 or 2 ) sep not 1;sep or 2 2 not 1;FTnnn
+104;( 4 and 1 ) sep ( 3 and 3 );sep and 4 1 and 3 3;TnTTn
+105;( 3 or 1 ) sep ( 4 and 3 );sep or 3 1 and 4 3;nnTTn
+106;( 3 and 4 ) sep ( 5 or 2 );sep and 3 4 or 5 2;nnTTT,nTTTn
+107;( 1 and 2 ) sep ( 3 and 4 );sep and 1 2 and 3 4;TTTTn
+108;( 2 and 2 ) sep ( 3 or 5 );sep and 2 2 or 3 5;nTnnT,nTTnn
+109;not 2 sep ( 3 and 5 );sep not 2 and 3 5;nFTnT
+110;not 4 sep ( 4 or 3 );sep not 4 or 4 3;nnTFn
+111;( 2 or 1 ) sep ( 1 or 2 );sep or 2 1 or 1 2;nTnnn,Tnnnn
+112;( 5 or 4 ) sep not 2;sep or 5 4 not 2;nFnnT,nFnTn
+113;( 2 or 1 ) sep ( 4 and 3 );sep or 2 1 and 4 3;nTTTn,TnTTn
+114;( 5 and 2 ) sep ( 1 or 1 );sep and 5 2 or 1 1;TTnnT
+115;( 4 or 1 ) sep ( 2 and 3 );sep or 4 1 and 2 3;nTTTn,TTTnn
+116;( 4 and 2 ) sep 1;sep and 4 2 1;TTnTn
+117;5 sep ( 4 or 4 );sep 5 or 4 4;nnnTT
+118;( 2 or 5 ) sep ( 4 and 3 );sep or 2 5 and 4 3;nnTTT,nTTTn
+119;( 1 or 2 ) sep ( 1 or 5 );sep or 1 2 or 1 5;nTnnT,Tnnnn
+120;not 4 sep not 2;sep not 4 not 2;nFnFn
+121;4 sep ( 3 or 4 );sep 4 or 3 4;nnnTn
+122;( 1 and 2 ) sep ( 5 or 1 );sep and 1 2 or 5 1;TTnnn
+123;( 2 or 3 ) sep ( 5 and 2 );sep or 2 3 and 5 2;nTnnT
+124;( 4 and 3 ) sep ( 1 or 5 );sep and 4 3 or 1 5;nnTTT,TnTTn
+125;( 2 or 1 ) sep ( 1 and 3 );sep or 2 1 and 1 3;TnTnn
+126;not 4 sep ( 3 and 2 );sep not 4 and 3 2;nTTFn
+127;( 2 or 5 ) sep ( 1 or 5 );sep or 2 5 or 1 5;nnnnT,TTnnn
+128;( 3 and 2 ) sep ( 4 and 1 );sep and 3 2 and 4 1;TTTTn
+129;not 1 sep ( 2 or 5 );sep not 1 or 2 5;FnnnT,FTnnn
+130;not 3 sep 1;sep not 3 1;TnFnn
+131;( 5 or 1 ) sep ( 2 or 4 );sep or 5 1 or 2 4;nnnTT,nTnnT,TnnTn,TTnnn
+132;( 3 or 2 ) sep not 4;sep or 3 2 not 4;nnTFn,nTnFn
+133;( 1 and 1 ) sep 4;sep and 1 1 4;TnnTn
+134;( 3 or 1 ) sep ( 1 or 1 );sep or 3 1 or 1 1;Tnnnn
+135;( 2 or 3 ) sep ( 1 or 3 );sep or 2 3 or 1 3;nnTnn,TTnnn
+136;( 1 and 1 ) sep ( 3 or 5 );sep and 1 1 or 3 5;TnnnT,TnTnn
+137;( 3 and 2 ) sep ( 1 or 4 );sep and 3 2 or 1 4;nTTTn,TTTnn
+138;( 2 and 1 ) sep ( 3 and 2 );sep and 2 1 and 3 2;TTTnn
+139;3 sep ( 3 or 4 );sep 3 or 3 4;nnTnn
+140;( 1 or 4 ) sep ( 4 or 2 );sep or 1 4 or 4 2;nnnTn,TTnnn
+141;not 1 sep ( 2 or 1 );sep not 1 or 2 1;FTnnn
+142;( 5 and 1 ) sep ( 3 or 3 );sep and 5 1 or 3 3;TnTnT
+143;2 sep not 5;sep 2 not 5;nTnnF
+144;not 1 sep not 3;sep not 1 not 3;FnFnn
+145;( 5 or 5 ) sep not 4;sep or 5 5 not 4;nnnFT
+146;( 2 or 5 ) sep not 3;sep or 2 5 not 3;nnFnT,nTFnn
+147;( 2 and 4 ) sep ( 2 or 4 );sep and 2 4 or 2 4;nTnTn
+148;( 3 or 5 ) sep 2;sep or 3 5 2;nTnnT,nTTnn
+149;not 4 sep ( 2 or 3 );sep not 4 or 2 3;nnTFn,nTnFn
+150;( 3 or 2 ) sep ( 2 or 1 );sep or 3 2 or 2 1;nTnnn,TnTnn
+151;( 5 and 5 ) sep ( 3 or 5 );sep and 5 5 or 3 5;nnnnT
+152;( 5 or 4 ) sep not 4;sep or 5 4 not 4;nnnFT
+153;not 4 sep ( 5 or 2 );sep not 4 or 5 2;nnnFT,nTnFn
+154;( 5 or 3 ) sep ( 1 or 3 );sep or 5 3 or 1 3;nnTnn,TnnnT
+155;( 3 and 1 ) sep 1;sep and 3 1 1;TnTnn
+156;( 4 or 5 ) sep ( 5 and 5 );sep or 4 5 and 5 5;nnnnT
+157;not 3 sep ( 2 and 5 );sep not 3 and 2 5;nTFnT
+158;not 1 sep not 2;sep not 1 not 2;FFnnn
+159;( 1 or 3 ) sep ( 2 or 5 );sep or 1 3 or 2 5;nnTnT,nTTnn,TnnnT,TTnnn
+160;( 4 or 1 ) sep ( 4 or 5 );sep or 4 1 or 4 5;nnnTn,TnnnT
+161;( 4 and 1 ) sep ( 3 or 2 );sep and 4 1 or 3 2;TnTTn,TTnTn
+162;( 4 and 2 ) sep ( 1 or 3 );sep and 4 2 or 1 3;nTTTn,TTnTn
+163;( 3 and 1 ) sep ( 1 or 4 );sep and 3 1 or 1 4;TnTnn
+164;( 3 and 4 ) sep 4;sep and 3 4 4;nnTTn
+165;4 sep ( 3 or 1 );sep 4 or 3 1;nnTTn,TnnTn
+166;( 4 and 5 ) sep ( 4 and 2 );sep and 4 5 and 4 2;nTnTT
+167;( 2 or 1 ) sep ( 1 and 5 );sep or 2 1 and 1 5;TnnnT
+168;( 3 or 3 ) sep ( 4 and 2 );sep or 3 3 and 4 2;nTTTn
+169;( 4 and 3 ) sep ( 2 or 1 );sep and 4 3 or 2 1;nTTTn,TnTTn
+170;( 3 and 5 ) sep ( 2 and 2 );sep and 3 5 and 2 2;nTTnT
+171;not 2 sep ( 1 or 3 );sep not 2 or 1 3;nFTnn,TFnnn
+172;( 3 or 5 ) sep ( 4 or 3 );sep or 3 5 or 4 3;nnnTT,nnTnn
+173;not 5 sep not 2;sep not 5 not 2;nFnnF
+174;3 sep ( 1 and 5 );sep 3 and 1 5;TnTnT
+175;4 sep ( 4 and 3 );sep 4 and 4 3;nnTTn
+176;( 5 or 5 ) sep ( 2 and 2 );sep or 5 5 and 2 2;nTnnT
+177;not 1 sep ( 5 or 3 );sep not 1 or 5 3;FnnnT,FnTnn
+178;( 5 or 1 ) sep 5;sep or 5 1 5;nnnnT
+179;not 1 sep ( 1 or 3 );sep not 1 or 1 3;FnTnn
+180;( 3 and 5 ) sep not 1;sep and 3 5 not 1;FnTnT
+181;( 2 or 5 ) sep not 4;sep or 2 5 not 4;nnnFT,nTnFn
+182;( 4 and 2 ) sep not 5;sep and 4 2 not 5;nTnTF
+183;( 5 or 4 ) sep ( 5 or 1 );sep or 5 4 or 5 1;nnnnT,TnnTn
+184;( 4 and 1 ) sep not 2;sep and 4 1 not 2;TFnTn
+185;not 4 sep ( 2 or 2 );sep not 4 or 2 2;nTnFn
+186;( 5 and 3 ) sep ( 4 or 4 );sep and 5 3 or 4 4;nnTTT
+187;( 2 and 4 ) sep not 5;sep and 2 4 not 5;nTnTF
+188;( 3 or 5 ) sep ( 5 and 3 );sep or 3 5 and 5 3;nnTnT
+189;( 2 and 5 ) sep ( 5 or 4 );sep and 2 5 or 5 4;nTnnT
+190;( 5 or 1 ) sep ( 3 and 3 );sep or 5 1 and 3 3;nnTnT,TnTnn
+191;( 3 or 1 ) sep ( 4 or 2 );sep or 3 1 or 4 2;nnTTn,nTTnn,TnnTn,TTnnn
+192;( 3 and 3 ) sep ( 5 and 2 );sep and 3 3 and 5 2;nTTnT
+193;( 1 and 4 ) sep ( 3 or 5 );sep and 1 4 or 3 5;TnnTT,TnTTn
+194;( 2 or 4 ) sep ( 5 or 3 );sep or 2 4 or 5 3;nnnTT,nnTTn,nTnnT,nTTnn
+195;not 2 sep ( 5 or 3 );sep not 2 or 5 3;nFnnT,nFTnn
+196;( 3 and 4 ) sep ( 4 or 3 );sep and 3 4 or 4 3;nnTTn
+197;not 3 sep ( 1 and 1 );sep not 3 and 1 1;TnFnn
+198;( 5 and 5 ) sep ( 1 or 4 );sep and 5 5 or 1 4;nnnTT,TnnnT
+199;( 4 and 2 ) sep ( 5 or 1 );sep and 4 2 or 5 1;nTnTT,TTnTn
+200;not 2 sep ( 5 and 4 );sep not 2 and 5 4;nFnTT
+201;( 1 and 2 ) sep ( 2 or 1 );sep and 1 2 or 2 1;TTnnn
+202;( 1 and 4 ) sep ( 1 or 1 );sep and 1 4 or 1 1;TnnTn
+203;3 sep ( 3 or 3 );sep 3 or 3 3;nnTnn
+204;( 1 and 2 ) sep ( 3 or 4 );sep and 1 2 or 3 4;TTnTn,TTTnn
+205;( 3 and 2 ) sep not 5;sep and 3 2 not 5;nTTnF
+206;not 1 sep ( 4 and 3 );sep not 1 and 4 3;FnTTn
+207;( 5 or 4 ) sep not 3;sep or 5 4 not 3;nnFnT,nnFTn
+208;not 2 sep ( 1 and 1 );sep not 2 and 1 1;TFnnn
+209;5 sep ( 2 or 5 );sep 5 or 2 5;nnnnT
+210;( 3 or 5 ) sep not 3;sep or 3 5 not 3;nnFnT
+211;( 2 or 3 ) sep not 2;sep or 2 3 not 2;nFTnn
+212;( 5 or 4 ) sep not 5;sep or 5 4 not 5;nnnTF
+213;( 2 or 2 ) sep ( 5 or 3 );sep or 2 2 or 5 3;nTnnT,nTTnn
+214;3 sep ( 3 or 1 );sep 3 or 3 1;nnTnn
+215;( 3 and 1 ) sep ( 5 and 4 );sep and 3 1 and 5 4;TnTTT
+216;( 4 or 2 ) sep ( 3 or 3 );sep or 4 2 or 3 3;nnTTn,nTTnn
+217;5 sep ( 1 or 1 );sep 5 or 1 1;TnnnT
+218;( 3 and 1 ) sep ( 2 and 1 );sep and 3 1 and 2 1;TTTnn
+219;( 5 or 3 ) sep ( 1 and 4 );sep or 5 3 and 1 4;TnnTT,TnTTn
+220;( 1 or 4 ) sep 3;sep or 1 4 3;nnTTn,TnTnn
+221;not 5 sep ( 4 or 3 );sep not 5 or 4 3;nnnTF,nnTnF
+222;not 4 sep ( 5 or 5 );sep not 4 or 5 5;nnnFT
+223;( 5 or 3 ) sep ( 2 and 4 );sep or 5 3 and 2 4;nTnTT,nTTTn
+224;( 2 and 5 ) sep ( 4 or 2 );sep and 2 5 or 4 2;nTnnT
+225;( 2 or 5 ) sep ( 3 and 1 );sep or 2 5 and 3 1;TnTnT,TTTnn
+226;( 1 and 1 ) sep ( 3 or 2 );sep and 1 1 or 3 2;TnTnn,TTnnn
+227;5 sep 3;sep 5 3;nnTnT
+228;not 5 sep ( 2 or 2 );sep not 5 or 2 2;nTnnF
+229;not 4 sep ( 1 and 2 );sep not 4 and 1 2;TTnFn
+230;not 5 sep not 5;sep not 5 not 5;nnnnF
+231;( 4 and 3 ) sep ( 3 or 5 );sep and 4 3 or 3 5;nnTTn
+232;( 4 and 3 ) sep ( 4 or 4 );sep and 4 3 or 4 4;nnTTn
+233;( 2 or 3 ) sep ( 1 and 5 );sep or 2 3 and 1 5;TnTnT,TTnnT
+234;( 5 and 3 ) sep ( 1 and 3 );sep and 5 3 and 1 3;TnTnT
+235;4 sep ( 1 and 3 );sep 4 and 1 3;TnTTn
+236;( 2 or 1 ) sep ( 4 or 4 );sep or 2 1 or 4 4;nTnTn,TnnTn
+237;( 2 and 5 ) sep ( 4 and 3 );sep and 2 5 and 4 3;nTTTT
+238;( 4 or 4 ) sep ( 5 or 5 );sep or 4 4 or 5 5;nnnTT
+239;( 3 or 3 ) sep ( 3 or 4 );sep or 3 3 or 3 4;nnTnn
+240;( 4 or 5 ) sep ( 2 or 4 );sep or 4 5 or 2 4;nnnTn,nTnnT
+241;( 3 or 2 ) sep ( 5 or 1 );sep or 3 2 or 5 1;nnTnT,nTnnT,TnTnn,TTnnn
+242;not 1 sep ( 2 and 2 );sep not 1 and 2 2;FTnnn
+243;1 sep ( 1 and 5 );sep 1 and 1 5;TnnnT
+244;( 2 or 4 ) sep not 3;sep or 2 4 not 3;nnFTn,nTFnn
+245;( 1 and 1 ) sep not 3;sep and 1 1 not 3;TnFnn
+246;( 2 and 3 ) sep not 4;sep and 2 3 not 4;nTTFn
+247;( 5 and 5 ) sep not 2;sep and 5 5 not 2;nFnnT
+248;( 1 or 4 ) sep ( 4 and 1 );sep or 1 4 and 4 1;TnnTn
+249;1 sep ( 4 or 5 );sep 1 or 4 5;TnnnT,TnnTn
+250;4 sep ( 4 and 1 );sep 4 and 4 1;TnnTn
+251;( 2 and 1 ) sep ( 5 and 3 );sep and 2 1 and 5 3;TTTnT
+252;( 3 or 3 ) sep not 2;sep or 3 3 not 2;nFTnn
+253;( 1 and 5 ) sep 1;sep and 1 5 1;TnnnT
+254;( 3 and 4 ) sep ( 3 or 2 );sep and 3 4 or 3 2;nnTTn
+255;( 1 and 4 ) sep not 2;sep and 1 4 not 2;TFnTn
+256;not 5 sep ( 4 and 2 );sep not 5 and 4 2;nTnTF
+257;( 1 or 3 ) sep not 5;sep or 1 3 not 5;nnTnF,TnnnF
+258;( 5 and 4 ) sep 2;sep and 5 4 2;nTnTT
+259;( 1 and 5 ) sep ( 4 and 1 );sep and 1 5 and 4 1;TnnTT
+260;( 1 or 5 ) sep ( 4 and 3 );sep or 1 5 and 4 3;nnTTT,TnTTn
+261;( 5 or 2 ) sep not 2;sep or 5 2 not 2;nFnnT
+262;not 3 sep ( 3 or 1 );sep not 3 or 3 1;TnFnn
+263;3 sep not 2;sep 3 not 2;nFTnn
+264;( 5 or 5 ) sep ( 4 or 3 );sep or 5 5 or 4 3;nnnTT,nnTnT
+265;( 4 and 3 ) sep ( 3 and 1 );sep and 4 3 and 3 1;TnTTn
+266;not 5 sep not 3;sep not 5 not 3;nnFnF
+267;( 1 or 5 ) sep ( 1 and 3 );sep or 1 5 and 1 3;TnTnn
+268;not 2 sep ( 3 and 4 );sep not 2 and 3 4;nFTTn
+269;( 4 or 3 ) sep ( 5 and 4 );sep or 4 3 and 5 4;nnnTT
+270;4 sep 3;sep 4 3;nnTTn
+271;( 3 or 3 ) sep ( 1 or 2 );sep or 3 3 or 1 2;nTTnn,TnTnn
+272;( 1 or 1 ) sep not 5;sep or 1 1 not 5;TnnnF
+273;1 sep ( 5 or 3 );sep 1 or 5 3;TnnnT,TnTnn
+274;( 2 or 3 ) sep not 3;sep or 2 3 not 3;nTFnn
+275;( 3 or 5 ) sep not 4;sep or 3 5 not 4;nnnFT,nnTFn
+276;( 5 and 2 ) sep not 4;sep and 5 2 not 4;nTnFT
+277;( 4 or 4 ) sep ( 3 or 2 );sep or 4 4 or 3 2;nnTTn,nTnTn
+278;not 5 sep 3;sep not 5 3;nnTnF
+279;not 5 sep ( 5 or 3 );sep not 5 or 5 3;nnTnF
+280;( 3 or 4 ) sep ( 2 and 4 );sep or 3 4 and 2 4;nTnTn
+281;( 4 and 2 ) sep not 1;sep and 4 2 not 1;FTnTn
+282;not 1 sep ( 3 and 3 );sep not 1 and 3 3;FnTnn
+283;( 3 and 5 ) sep not 4;sep and 3 5 not 4;nnTFT
+284;not 4 sep not 1;sep not 4 not 1;FnnFn
+285;not 4 sep ( 1 or 4 );sep not 4 or 1 4;TnnFn
+286;( 5 or 2 ) sep not 5;sep or 5 2 not 5;nTnnF
+287;( 1 and 5 ) sep ( 4 or 3 );sep and 1 5 or 4 3;TnnTT,TnTnT
+288;3 sep not 1;sep 3 not 1;FnTnn
+289;not 3 sep ( 2 or 5 );sep not 3 or 2 5;nnFnT,nTFnn
+290;( 2 or 3 ) sep ( 3 or 2 );sep or 2 3 or 3 2;nnTnn,nTnnn
+291;( 1 and 3 ) sep not 5;sep and 1 3 not 5;TnTnF
+292;( 4 and 2 ) sep not 3;sep and 4 2 not 3;nTFTn
+293;( 2 or 4 ) sep not 4;sep or 2 4 not 4;nTnFn
+294;( 3 and 5 ) sep 4;sep and 3 5 4;nnTTT
+295;( 4 and 3 ) sep ( 5 and 4 );sep and 4 3 and 5 4;nnTTT
+296;( 4 and 1 ) sep ( 1 or 4 );sep and 4 1 or 1 4;TnnTn
+297;( 2 and 4 ) sep ( 4 and 1 );sep and 2 4 and 4 1;TTnTn
+298;( 5 or 5 ) sep ( 3 and 4 );sep or 5 5 and 3 4;nnTTT
+299;( 2 or 3 ) sep ( 4 or 5 );sep or 2 3 or 4 5;nnTnT,nnTTn,nTnnT,nTnTn
+300;4 sep 4;sep 4 4;nnnTn
+301;( 4 or 4 ) sep ( 1 or 4 );sep or 4 4 or 1 4;nnnTn
+302;( 3 and 5 ) sep ( 4 and 2 );sep and 3 5 and 4 2;nTTTT
+303;( 5 and 4 ) sep ( 1 and 2 );sep and 5 4 and 1 2;TTnTT
+304;( 3 and 5 ) sep ( 2 or 3 );sep and 3 5 or 2 3;nnTnT
+305;( 3 or 1 ) sep ( 1 and 2 );sep or 3 1 and 1 2;TTnnn
+306;( 2 or 3 ) sep ( 3 and 1 );sep or 2 3 and 3 1;TnTnn
+307;not 3 sep ( 5 or 3 );sep not 3 or 5 3;nnFnT
+308;( 3 or 2 ) sep ( 2 and 5 );sep or 3 2 and 2 5;nTnnT
+309;4 sep not 1;sep 4 not 1;FnnTn
+310;5 sep ( 5 and 3 );sep 5 and 5 3;nnTnT
+311;( 1 and 2 ) sep ( 1 or 1 );sep and 1 2 or 1 1;TTnnn
+312;not 2 sep not 3;sep not 2 not 3;nFFnn
+313;2 sep ( 4 or 5 );sep 2 or 4 5;nTnnT,nTnTn
+314;4 sep ( 2 or 2 );sep 4 or 2 2;nTnTn
+315;( 2 or 1 ) sep ( 1 or 3 );sep or 2 1 or 1 3;nTTnn,Tnnnn
+316;( 4 and 5 ) sep not 1;sep and 4 5 not 1;FnnTT
+317;( 5 and 2 ) sep 4;sep and 5 2 4;nTnTT
+318;not 4 sep ( 3 or 4 );sep not 4 or 3 4;nnTFn
+319;( 2 and 1 ) sep not 3;sep and 2 1 not 3;TTFnn
+320;( 1 and 5 ) sep ( 1 and 4 );sep and 1 5 and 1 4;TnnTT
+321;4 sep 5;sep 4 5;nnnTT
+322;( 2 or 2 ) sep ( 5 or 2 );sep or 2 2 or 5 2;nTnnn
+323;not 3 sep ( 2 and 2 );sep not 3 and 2 2;nTFnn
+324;not 3 sep ( 3 or 5 );sep not 3 or 3 5;nnFnT
+325;not 4 sep ( 4 or 1 );sep not 4 or 4 1;TnnFn
+326;( 2 and 5 ) sep ( 5 and 3 );sep and 2 5 and 5 3;nTTnT
+327;not 3 sep not 1;sep not 3 not 1;FnFnn
+328;( 5 and 1 ) sep ( 1 and 4 );sep and 5 1 and 1 4;TnnTT
+329;( 2 or 4 ) sep ( 3 and 2 );sep or 2 4 and 3 2;nTTnn
+330;3 sep ( 5 and 2 );sep 3 and 5 2;nTTnT
+331;( 3 and 2 ) sep ( 2 or 1 );sep and 3 2 or 2 1;nTTnn
+332;not 2 sep ( 3 or 5 );sep not 2 or 3 5;nFnnT,nFTnn
+333;not 1 sep ( 2 and 3 );sep not 1 and 2 3;FTTnn
+334;( 5 or 5 ) sep ( 1 and 4 );sep or 5 5 and 1 4;TnnTT
+335;not 3 sep 5;sep not 3 5;nnFnT
+336;not 1 sep ( 5 or 4 );sep not 1 or 5 4;FnnnT,FnnTn
+337;( 3 and 3 ) sep ( 4 or 1 );sep and 3 3 or 4 1;nnTTn,TnTnn
+338;( 2 or 3 ) sep 5;sep or 2 3 5;nnTnT,nTnnT
+339;( 5 and 5 ) sep ( 4 or 5 );sep and 5 5 or 4 5;nnnnT
+340;( 5 or 1 ) sep ( 4 and 3 );sep or 5 1 and 4 3;nnTTT,TnTTn
+341;( 3 or 2 ) sep not 2;sep or 3 2 not 2;nFTnn
+342;( 2 and 4 ) sep ( 5 or 3 );sep and 2 4 or 5 3;nTnTT,nTTTn
+343;not 4 sep 5;sep not 4 5;nnnFT
+344;( 1 or 1 ) sep ( 2 and 4 );sep or 1 1 and 2 4;TTnTn
+345;( 1 or 1 ) sep ( 4 and 1 );sep or 1 1 and 4 1;TnnTn
+346;( 3 or 3 ) sep ( 1 and 5 );sep or 3 3 and 1 5;TnTnT
+347;( 4 or 3 ) sep ( 1 and 5 );sep or 4 3 and 1 5;TnnTT,TnTnT
+348;( 4 or 2 ) sep ( 5 and 1 );sep or 4 2 and 5 1;TnnTT,TTnnT
+349;( 5 and 4 ) sep ( 2 and 2 );sep and 5 4 and 2 2;nTnTT
+350;( 1 and 5 ) sep not 3;sep and 1 5 not 3;TnFnT
+351;3 sep ( 3 and 2 );sep 3 and 3 2;nTTnn
+352;( 1 and 1 ) sep ( 4 or 4 );sep and 1 1 or 4 4;TnnTn
+353;( 4 or 3 ) sep ( 2 and 3 );sep or 4 3 and 2 3;nTTnn
+354;not 3 sep not 5;sep not 3 not 5;nnFnF
+355;( 2 or 1 ) sep ( 1 or 1 );sep or 2 1 or 1 1;Tnnnn
+356;not 1 sep ( 3 or 2 );sep not 1 or 3 2;FnTnn,FTnnn
+357;( 5 and 4 ) sep 4;sep and 5 4 4;nnnTT
+358;( 1 or 1 ) sep not 2;sep or 1 1 not 2;TFnnn
+359;not 3 sep ( 5 or 4 );sep not 3 or 5 4;nnFnT,nnFTn
+360;not 4 sep ( 4 or 2 );sep not 4 or 4 2;nTnFn
+361;( 1 and 1 ) sep ( 2 and 3 );sep and 1 1 and 2 3;TTTnn
+362;not 4 sep ( 3 or 3 );sep not 4 or 3 3;nnTFn
+363;( 1 and 3 ) sep ( 4 and 3 );sep and 1 3 and 4 3;TnTTn
+364;( 1 or 4 ) sep ( 1 or 2 );sep or 1 4 or 1 2;nTnTn,Tnnnn
+365;( 2 and 5 ) sep ( 1 and 1 );sep and 2 5 and 1 1;TTnnT
+366;( 4 or 3 ) sep not 1;sep or 4 3 not 1;FnnTn,FnTnn
+367;( 1 or 4 ) sep ( 1 or 5 );sep or 1 4 or 1 5;nnnTT,Tnnnn
+368;4 sep ( 4 and 4 );sep 4 and 4 4;nnnTn
+369;not 4 sep ( 2 or 4 );sep not 4 or 2 4;nTnFn
+370;( 5 or 5 ) sep ( 3 or 5 );sep or 5 5 or 3 5;nnnnT
+371;( 1 or 4 ) sep not 2;sep or 1 4 not 2;nFnTn,TFnnn
+372;not 2 sep ( 4 or 3 );sep not 2 or 4 3;nFnTn,nFTnn
+373;( 4 or 4 ) sep ( 3 and 3 );sep or 4 4 and 3 3;nnTTn
+374;( 3 or 2 ) sep ( 4 and 5 );sep or 3 2 and 4 5;nnTTT,nTnTT
+375;( 5 or 2 ) sep not 4;sep or 5 2 not 4;nnnFT,nTnFn
+376;( 4 and 1 ) sep ( 5 and 1 );sep and 4 1 and 5 1;TnnTT
+377;( 3 and 3 ) sep not 4;sep and 3 3 not 4;nnTFn
+378;( 2 and 4 ) sep ( 1 and 3 );sep and 2 4 and 1 3;TTTTn
+379;not 5 sep ( 5 or 2 );sep not 5 or 5 2;nTnnF
+380;not 3 sep ( 5 and 5 );sep not 3 and 5 5;nnFnT
+381;( 5 and 4 ) sep ( 1 and 3 );sep and 5 4 and 1 3;TnTTT
+382;( 5 and 5 ) sep not 1;sep and 5 5 not 1;FnnnT
+383;( 2 and 5 ) sep ( 3 or 5 );sep and 2 5 or 3 5;nTnnT
+384;( 4 and 4 ) sep ( 3 or 3 );sep and 4 4 or 3 3;nnTTn
+385;( 1 and 2 ) sep 3;sep and 1 2 3;TTTnn
+386;( 3 or 1 ) sep ( 5 and 5 );sep or 3 1 and 5 5;nnTnT,TnnnT
+387;( 5 and 5 ) sep ( 1 and 1 );sep and 5 5 and 1 1;TnnnT
+388;( 4 and 2 ) sep ( 1 or 2 );sep and 4 2 or 1 2;nTnTn
+389;( 2 and 4 ) sep ( 1 or 4 );sep and 2 4 or 1 4;nTnTn
+390;( 5 and 1 ) sep ( 4 and 2 );sep and 5 1 and 4 2;TTnTT
+391;( 1 and 2 ) sep not 5;sep and 1 2 not 5;TTnnF
+392;( 1 or 2 ) sep ( 1 or 3 );sep or 1 2 or 1 3;nTTnn,Tnnnn
+393;not 2 sep not 4;sep not 2 not 4;nFnFn
+394;( 1 or 2 ) sep ( 3 and 2 );sep or 1 2 and 3 2;nTTnn
+395;( 5 and 4 ) sep not 2;sep and 5 4 not 2;nFnTT
+396;not 4 sep ( 5 or 4 );sep not 4 or 5 4;nnnFT
+397;( 2 or 1 ) sep ( 3 and 5 );sep or 2 1 and 3 5;nTTnT,TnTnT
+398;not 3 sep ( 1 and 5 );sep not 3 and 1 5;TnFnT
+399;( 2 and 4 ) sep ( 5 and 5 );sep and 2 4 and 5 5;nTnTT
+400;( 3 and 3 ) sep ( 2 and 2 );sep and 3 3 and 2 2;nTTnn
+401;( 1 or 3 ) sep ( 5 and 3 );sep or 1 3 and 5 3;nnTnT
+402;not 1 sep ( 1 or 2 );sep not 1 or 1 2;FTnnn
+403;not 2 sep 1;sep not 2 1;TFnnn
+404;( 2 and 4 ) sep 4;sep and 2 4 4;nTnTn
+405;( 5 or 5 ) sep ( 1 and 3 );sep or 5 5 and 1 3;TnTnT
+406;2 sep ( 2 or 1 );sep 2 or 2 1;nTnnn
+407;( 4 and 5 ) sep not 3;sep and 4 5 not 3;nnFTT
+408;1 sep ( 5 or 4 );sep 1 or 5 4;TnnnT,TnnTn
+409;( 5 and 3 ) sep not 2;sep and 5 3 not 2;nFTnT
+410;not 3 sep ( 4 or 1 );sep not 3 or 4 1;nnFTn,TnFnn
+411;not 5 sep ( 3 or 4 );sep not 5 or 3 4;nnnTF,nnTnF
+412;( 2 or 3 ) sep ( 5 or 3 );sep or 2 3 or 5 3;nnTnn,nTnnT
+413;1 sep ( 3 or 5 );sep 1 or 3 5;TnnnT,TnTnn
+414;( 3 and 5 ) sep ( 3 and 4 );sep and 3 5 and 3 4;nnTTT
+415;not 2 sep ( 2 or 3 );sep not 2 or 2 3;nFTnn
+416;4 sep not 2;sep 4 not 2;nFnTn
+417;not 3 sep ( 4 or 3 );sep not 3 or 4 3;nnFTn
+418;( 1 and 3 ) sep ( 3 or 2 );sep and 1 3 or 3 2;TnTnn
+419;2 sep ( 1 or 5 );sep 2 or 1 5;nTnnT,TTnnn
+420;( 4 or 3 ) sep not 3;sep or 4 3 not 3;nnFTn
+421;( 1 and 1 ) sep 2;sep and 1 1 2;TTnnn
+422;( 1 or 1 ) sep 5;sep or 1 1 5;TnnnT
+423;( 1 and 5 ) sep not 2;sep and 1 5 not 2;TFnnT
+424;( 2 or 4 ) sep ( 2 and 4 );sep or 2 4 and 2 4;nTnTn
+425;( 3 and 1 ) sep ( 4 and 5 );sep and 3 1 and 4 5;TnTTT
+426;not 1 sep ( 4 or 5 );sep not 1 or 4 5;FnnnT,FnnTn
+427;4 sep ( 1 or 1 );sep 4 or 1 1;TnnTn
+428;( 2 and 4 ) sep ( 3 and 1 );sep and 2 4 and 3 1;TTTTn
+429;( 1 or 5 ) sep ( 3 and 3 );sep or 1 5 and 3 3;nnTnT,TnTnn
+430;( 1 or 1 ) sep ( 4 or 5 );sep or 1 1 or 4 5;TnnnT,TnnTn
+431;( 3 or 3 ) sep ( 3 or 3 );sep or 3 3 or 3 3;nnTnn
+432;( 2 and 5 ) sep ( 1 or 5 );sep and 2 5 or 1 5;nTnnT
+433;( 5 and 5 ) sep ( 4 or 3 );sep and 5 5 or 4 3;nnnTT,nnTnT
+434;( 4 and 5 ) sep ( 4 or 4 );sep and 4 5 or 4 4;nnnTT
+435;( 3 or 3 ) sep ( 2 or 5 );sep or 3 3 or 2 5;nnTnT,nTTnn
+436;( 3 and 5 ) sep ( 3 or 2 );sep and 3 5 or 3 2;nnTnT
+437;not 5 sep ( 2 and 2 );sep not 5 and 2 2;nTnnF
+438;not 5 sep ( 3 or 5 );sep not 5 or 3 5;nnTnF
+439;( 3 or 4 ) sep ( 5 and 4 );sep or 3 4 and 5 4;nnnTT
+440;( 1 or 5 ) sep ( 5 and 1 );sep or 1 5 and 5 1;TnnnT
+441;( 3 and 4 ) sep not 2;sep and 3 4 not 2;nFTTn
+442;not 4 sep ( 1 and 1 );sep not 4 and 1 1;TnnFn
+443;( 5 or 5 ) sep 1;sep or 5 5 1;TnnnT
+444;not 5 sep ( 1 or 5 );sep not 5 or 1 5;TnnnF
+445;( 1 and 3 ) sep not 2;sep and 1 3 not 2;TFTnn
+446;( 5 and 5 ) sep 1;sep and 5 5 1;TnnnT
+447;( 3 or 1 ) sep ( 4 or 5 );sep or 3 1 or 4 5;nnTnT,nnTTn,TnnnT,TnnTn
+448;( 2 or 3 ) sep ( 2 or 1 );sep or 2 3 or 2 1;nTnnn,TnTnn
+449;( 4 and 4 ) sep ( 3 or 2 );sep and 4 4 or 3 2;nnTTn,nTnTn
+450;( 3 or 2 ) sep ( 3 or 2 );sep or 3 2 or 3 2;nnTnn,nTnnn
+451;3 sep not 5;sep 3 not 5;nnTnF
+452;( 5 or 5 ) sep ( 1 or 1 );sep or 5 5 or 1 1;TnnnT
+453;( 3 or 2 ) sep ( 1 or 5 );sep or 3 2 or 1 5;nnTnT,nTnnT,TnTnn,TTnnn
+454;( 5 and 1 ) sep ( 2 and 1 );sep and 5 1 and 2 1;TTnnT
+455;( 1 or 2 ) sep not 4;sep or 1 2 not 4;nTnFn,TnnFn
+456;( 2 and 4 ) sep ( 1 or 5 );sep and 2 4 or 1 5;nTnTT,TTnTn
+457;not 5 sep not 4;sep not 5 not 4;nnnFF
+458;1 sep not 5;sep 1 not 5;TnnnF
+459;( 1 or 2 ) sep ( 1 and 4 );sep or 1 2 and 1 4;TnnTn
+460;( 5 and 5 ) sep ( 4 and 2 );sep and 5 5 and 4 2;nTnTT
+461;not 2 sep ( 4 or 2 );sep not 2 or 4 2;nFnTn
+462;( 4 and 2 ) sep ( 4 or 4 );sep and 4 2 or 4 4;nTnTn
+463;not 5 sep ( 5 or 1 );sep not 5 or 5 1;TnnnF
+464;( 5 and 2 ) sep 5;sep and 5 2 5;nTnnT
+465;( 5 and 3 ) sep ( 2 and 3 );sep and 5 3 and 2 3;nTTnT
+466;( 5 and 1 ) sep ( 5 or 5 );sep and 5 1 or 5 5;TnnnT
+467;( 4 and 5 ) sep ( 4 and 1 );sep and 4 5 and 4 1;TnnTT
+468;( 5 or 1 ) sep ( 3 or 5 );sep or 5 1 or 3 5;nnnnT,TnTnn
+469;( 2 and 3 ) sep ( 2 and 5 );sep and 2 3 and 2 5;nTTnT
+470;( 3 and 3 ) sep ( 1 and 3 );sep and 3 3 and 1 3;TnTnn
+471;( 2 and 3 ) sep ( 1 or 3 );sep and 2 3 or 1 3;nTTnn
+472;not 2 sep ( 3 or 1 );sep not 2 or 3 1;nFTnn,TFnnn
+473;not 4 sep ( 5 and 5 );sep not 4 and 5 5;nnnFT
+474;3 sep 3;sep 3 3;nnTnn
+475;( 1 or 5 ) sep not 4;sep or 1 5 not 4;nnnFT,TnnFn
+476;not 3 sep ( 3 or 2 );sep not 3 or 3 2;nTFnn
+477;not 4 sep ( 2 and 1 );sep not 4 and 2 1;TTnFn
+478;( 1 or 3 ) sep ( 3 and 4 );sep or 1 3 and 3 4;nnTTn
+479;( 4 or 3 ) sep not 5;sep or 4 3 not 5;nnnTF,nnTnF
+480;5 sep ( 5 or 3 );sep 5 or 5 3;nnnnT
+481;( 5 and 2 ) sep ( 2 or 1 );sep and 5 2 or 2 1;nTnnT
+482;( 2 or 5 ) sep ( 2 or 5 );sep or 2 5 or 2 5;nnnnT,nTnnn
+483;( 4 and 4 ) sep not 3;sep and 4 4 not 3;nnFTn
+484;( 3 and 3 ) sep ( 1 or 4 );sep and 3 3 or 1 4;nnTTn,TnTnn
+485;( 1 and 4 ) sep ( 4 and 3 );sep and 1 4 and 4 3;TnTTn
+486;4 sep ( 4 or 5 );sep 4 or 4 5;nnnTn
+487;not 3 sep ( 4 and 4 );sep not 3 and 4 4;nnFTn
+488;( 5 and 1 ) sep ( 1 or 3 );sep and 5 1 or 1 3;TnnnT
+489;( 5 and 4 ) sep ( 2 or 1 );sep and 5 4 or 2 1;nTnTT,TnnTT
+490;( 3 or 3 ) sep ( 5 or 2 );sep or 3 3 or 5 2;nnTnT,nTTnn
+491;1 sep ( 1 and 1 );sep 1 and 1 1;Tnnnn
+492;( 1 and 5 ) sep 2;sep and 1 5 2;TTnnT
+493;( 3 and 2 ) sep ( 3 and 1 );sep and 3 2 and 3 1;TTTnn
+494;1 sep 4;sep 1 4;TnnTn
+495;( 3 or 3 ) sep ( 2 or 2 );sep or 3 3 or 2 2;nTTnn
+496;( 4 and 5 ) sep ( 1 or 2 );sep and 4 5 or 1 2;nTnTT,TnnTT
+497;( 5 and 4 ) sep ( 3 or 2 );sep and 5 4 or 3 2;nnTTT,nTnTT
+498;( 5 and 5 ) sep ( 2 or 3 );sep and 5 5 or 2 3;nnTnT,nTnnT
+499;not 1 sep ( 3 or 5 );sep not 1 or 3 5;FnnnT,FnTnn
+500;( 1 or 4 ) sep not 1;sep or 1 4 not 1;FnnTn
+501;( 2 or 5 ) sep ( 4 and 5 );sep or 2 5 and 4 5;nnnTT
+502;( 4 and 3 ) sep 2;sep and 4 3 2;nTTTn
+503;( 5 or 3 ) sep ( 4 and 1 );sep or 5 3 and 4 1;TnnTT,TnTTn
+504;not 3 sep ( 5 or 2 );sep not 3 or 5 2;nnFnT,nTFnn
+505;( 5 and 3 ) sep ( 5 or 5 );sep and 5 3 or 5 5;nnTnT
+506;( 1 or 1 ) sep ( 1 and 3 );sep or 1 1 and 1 3;TnTnn
+507;not 3 sep ( 4 and 5 );sep not 3 and 4 5;nnFTT
+508;( 2 or 5 ) sep ( 5 and 4 );sep or 2 5 and 5 4;nnnTT
+509;not 4 sep 3;sep not 4 3;nnTFn
+510;( 3 and 4 ) sep ( 4 and 3 );sep and 3 4 and 4 3;nnTTn
+511;( 5 and 1 ) sep not 4;sep and 5 1 not 4;TnnFT
+512;( 3 or 1 ) sep ( 5 and 4 );sep or 3 1 and 5 4;nnTTT,TnnTT
+513;( 3 or 2 ) sep ( 5 and 3 );sep or 3 2 and 5 3;nnTnT
+514;( 1 and 1 ) sep ( 1 or 1 );sep and 1 1 or 1 1;Tnnnn
+515;( 1 or 5 ) sep not 2;sep or 1 5 not 2;nFnnT,TFnnn
+516;( 4 and 3 ) sep 4;sep and 4 3 4;nnTTn
+517;( 3 and 5 ) sep ( 1 or 2 );sep and 3 5 or 1 2;nTTnT,TnTnT
+518;( 2 or 1 ) sep ( 5 and 4 );sep or 2 1 and 5 4;nTnTT,TnnTT
+519;( 3 and 5 ) sep ( 5 or 4 );sep and 3 5 or 5 4;nnTnT
+520;( 1 or 4 ) sep ( 2 or 2 );sep or 1 4 or 2 2;nTnTn,TTnnn
+521;2 sep ( 5 or 1 );sep 2 or 5 1;nTnnT,TTnnn
+522;4 sep ( 1 and 2 );sep 4 and 1 2;TTnTn
+523;( 2 or 2 ) sep ( 3 or 1 );sep or 2 2 or 3 1;nTTnn,TTnnn
+524;( 3 and 1 ) sep not 5;sep and 3 1 not 5;TnTnF
+525;( 5 and 3 ) sep ( 2 or 3 );sep and 5 3 or 2 3;nnTnT
+526;( 5 and 3 ) sep 2;sep and 5 3 2;nTTnT
+527;( 5 or 3 ) sep ( 1 or 4 );sep or 5 3 or 1 4;nnnTT,nnTTn,TnnnT,TnTnn
+528;5 sep ( 5 and 2 );sep 5 and 5 2;nTnnT
+529;( 3 and 1 ) sep ( 3 or 5 );sep and 3 1 or 3 5;TnTnn
+530;2 sep 4;sep 2 4;nTnTn
+531;( 3 or 3 ) sep not 1;sep or 3 3 not 1;FnTnn
+532;( 3 and 3 ) sep not 2;sep and 3 3 not 2;nFTnn
+533;( 1 or 2 ) sep ( 3 and 3 );sep or 1 2 and 3 3;nTTnn,TnTnn
+534;( 4 or 1 ) sep ( 3 or 1 );sep or 4 1 or 3 1;nnTTn,Tnnnn
+535;( 3 or 1 ) sep ( 5 or 3 );sep or 3 1 or 5 3;nnTnn,TnnnT
+536;( 1 and 4 ) sep ( 1 and 1 );sep and 1 4 and 1 1;TnnTn
+537;( 3 and 1 ) sep ( 3 or 4 );sep and 3 1 or 3 4;TnTnn
+538;( 5 and 2 ) sep ( 4 and 4 );sep and 5 2 and 4 4;nTnTT
+539;( 1 or 1 ) sep ( 1 and 4 );sep or 1 1 and 1 4;TnnTn
+540;( 1 and 1 ) sep ( 5 and 4 );sep and 1 1 and 5 4;TnnTT
+541;( 3 or 1 ) sep ( 4 or 1 );sep or 3 1 or 4 1;nnTTn,Tnnnn
+542;( 4 or 5 ) sep ( 2 or 5 );sep or 4 5 or 2 5;nnnnT,nTnTn
+543;3 sep ( 1 and 3 );sep 3 and 1 3;TnTnn
+544;( 1 and 2 ) sep not 3;sep and 1 2 not 3;TTFnn
+545;( 4 and 5 ) sep ( 5 and 4 );sep and 4 5 and 5 4;nnnTT
+546;not 1 sep ( 2 and 5 );sep not 1 and 2 5;FTnnT
+547;5 sep ( 3 and 5 );sep 5 and 3 5;nnTnT
+548;5 sep ( 2 and 5 );sep 5 and 2 5;nTnnT
+549;not 5 sep ( 1 or 2 );sep not 5 or 1 2;nTnnF,TnnnF
+550;not 2 sep 5;sep not 2 5;nFnnT
+551;( 2 or 4 ) sep ( 5 or 5 );sep or 2 4 or 5 5;nnnTT,nTnnT
+552;1 sep ( 1 and 3 );sep 1 and 1 3;TnTnn
+553;( 3 and 3 ) sep not 5;sep and 3 3 not 5;nnTnF
+554;not 2 sep ( 3 and 3 );sep not 2 and 3 3;nFTnn
+555;( 5 or 3 ) sep 4;sep or 5 3 4;nnnTT,nnTTn
+556;( 2 or 5 ) sep ( 1 or 2 );sep or 2 5 or 1 2;nTnnn,TnnnT
+557;( 2 and 3 ) sep 5;sep and 2 3 5;nTTnT
+558;( 2 or 2 ) sep 5;sep or 2 2 5;nTnnT
+559;( 1 or 5 ) sep not 3;sep or 1 5 not 3;nnFnT,TnFnn
+560;( 1 and 5 ) sep ( 3 and 2 );sep and 1 5 and 3 2;TTTnT
+561;( 1 or 5 ) sep not 1;sep or 1 5 not 1;FnnnT
+562;4 sep not 3;sep 4 not 3;nnFTn
+563;not 5 sep ( 1 and 1 );sep not 5 and 1 1;TnnnF
+564;not 2 sep ( 3 or 3 );sep not 2 or 3 3;nFTnn
+565;not 2 sep not 1;sep not 2 not 1;FFnnn
+566;( 5 or 5 ) sep 3;sep or 5 5 3;nnTnT
+567;not 1 sep ( 1 or 4 );sep not 1 or 1 4;FnnTn
+568;( 2 and 2 ) sep ( 2 or 2 );sep and 2 2 or 2 2;nTnnn
+569;( 2 and 4 ) sep not 1;sep and 2 4 not 1;FTnTn
+570;not 4 sep ( 1 or 3 );sep not 4 or 1 3;nnTFn,TnnFn
+571;( 4 or 2 ) sep not 4;sep or 4 2 not 4;nTnFn
+572;( 5 or 4 ) sep 1;sep or 5 4 1;TnnnT,TnnTn
+573;4 sep ( 3 and 5 );sep 4 and 3 5;nnTTT
+574;( 3 and 4 ) sep ( 5 and 1 );sep and 3 4 and 5 1;TnTTT
+575;( 3 and 4 ) sep ( 5 and 3 );sep and 3 4 and 5 3;nnTTT
+576;1 sep ( 1 and 2 );sep 1 and 1 2;TTnnn
+577;( 2 and 4 ) sep ( 5 or 1 );sep and 2 4 or 5 1;nTnTT,TTnTn
+578;not 4 sep ( 5 and 3 );sep not 4 and 5 3;nnTFT
+579;( 4 or 1 ) sep 4;sep or 4 1 4;nnnTn
+580;not 5 sep ( 2 or 1 );sep not 5 or 2 1;nTnnF,TnnnF
+581;( 2 or 5 ) sep ( 3 or 3 );sep or 2 5 or 3 3;nnTnT,nTTnn
+582;( 2 or 1 ) sep ( 4 or 5 );sep or 2 1 or 4 5;nTnnT,nTnTn,TnnnT,TnnTn
+583;( 4 or 3 ) sep ( 1 or 2 );sep or 4 3 or 1 2;nTnTn,nTTnn,TnnTn,TnTnn
+584;( 2 and 3 ) sep 3;sep and 2 3 3;nTTnn
+585;( 1 and 2 ) sep ( 4 and 5 );sep and 1 2 and 4 5;TTnTT
+586;( 5 and 5 ) sep ( 5 and 3 );sep and 5 5 and 5 3;nnTnT
+587;( 3 or 3 ) sep ( 3 or 1 );sep or 3 3 or 3 1;nnTnn
+588;not 1 sep ( 2 and 4 );sep not 1 and 2 4;FTnTn
+589;( 2 or 1 ) sep ( 4 and 4 );sep or 2 1 and 4 4;nTnTn,TnnTn
+590;not 4 sep ( 1 or 1 );sep not 4 or 1 1;TnnFn
+591;not 1 sep ( 4 and 5 );sep not 1 and 4 5;FnnTT
+592;( 4 and 5 ) sep ( 3 and 4 );sep and 4 5 and 3 4;nnTTT
+593;( 3 and 4 ) sep ( 2 or 3 );sep and 3 4 or 2 3;nnTTn
+594;( 3 and 3 ) sep 2;sep and 3 3 2;nTTnn
+595;( 3 or 2 ) sep ( 4 and 3 );sep or 3 2 and 4 3;nnTTn
+596;5 sep ( 5 or 1 );sep 5 or 5 1;nnnnT
+597;( 5 or 5 ) sep not 2;sep or 5 5 not 2;nFnnT
+598;( 3 or 4 ) sep ( 3 or 4 );sep or 3 4 or 3 4;nnnTn,nnTnn
+599;( 1 or 5 ) sep ( 1 or 4 );sep or 1 5 or 1 4;nnnTT,Tnnnn
+600;( 1 or 1 ) sep ( 5 or 5 );sep or 1 1 or 5 5;TnnnT
+601;( 5 or 4 ) sep ( 5 or 4 );sep or 5 4 or 5 4;nnnnT,nnnTn
+602;( 5 or 3 ) sep ( 3 and 2 );sep or 5 3 and 3 2;nTTnn
+603;( 5 or 2 ) sep 2;sep or 5 2 2;nTnnn
+604;( 4 or 4 ) sep ( 3 or 3 );sep or 4 4 or 3 3;nnTTn
+605;( 3 or 4 ) sep not 1;sep or 3 4 not 1;FnnTn,FnTnn
+606;( 1 or 4 ) sep ( 1 and 5 );sep or 1 4 and 1 5;TnnnT
+607;( 4 and 5 ) sep ( 3 and 2 );sep and 4 5 and 3 2;nTTTT
+608;( 5 or 1 ) sep ( 3 or 4 );sep or 5 1 or 3 4;nnnTT,nnTnT,TnnTn,TnTnn
+609;2 sep ( 1 or 3 );sep 2 or 1 3;nTTnn,TTnnn
+610;( 5 or 4 ) sep ( 4 or 1 );sep or 5 4 or 4 1;nnnTn,TnnnT
+611;not 5 sep ( 2 or 5 );sep not 5 or 2 5;nTnnF
+612;2 sep 3;sep 2 3;nTTnn
+613;( 4 and 5 ) sep ( 1 or 1 );sep and 4 5 or 1 1;TnnTT
+614;( 1 or 1 ) sep 1;sep or 1 1 1;Tnnnn
+615;2 sep ( 4 and 2 );sep 2 and 4 2;nTnTn
+616;( 2 and 5 ) sep ( 3 and 1 );sep and 2 5 and 3 1;TTTnT
+617;( 2 and 1 ) sep 1;sep and 2 1 1;TTnnn
+618;5 sep ( 4 and 2 );sep 5 and 4 2;nTnTT
+619;( 1 and 1 ) sep ( 4 or 2 );sep and 1 1 or 4 2;TnnTn,TTnnn
+620;( 3 and 3 ) sep ( 2 or 3 );sep and 3 3 or 2 3;nnTnn
+621;( 2 or 5 ) sep not 5;sep or 2 5 not 5;nTnnF
+622;( 4 or 1 ) sep ( 3 and 4 );sep or 4 1 and 3 4;nnTTn
+623;( 2 or 4 ) sep 1;sep or 2 4 1;TnnTn,TTnnn
+624;not 4 sep 2;sep not 4 2;nTnFn
+625;( 5 and 3 ) sep ( 1 and 5 );sep and 5 3 and 1 5;TnTnT
+626;( 4 and 1 ) sep ( 2 or 5 );sep and 4 1 or 2 5;TnnTT,TTnTn
+627;not 5 sep ( 1 and 2 );sep not 5 and 1 2;TTnnF
+628;not 1 sep not 1;sep not 1 not 1;Fnnnn
+629;( 5 or 1 ) sep ( 5 and 2 );sep or 5 1 and 5 2;nTnnT
+630;( 5 or 3 ) sep ( 4 and 2 );sep or 5 3 and 4 2;nTnTT,nTTTn
+631;( 1 and 3 ) sep ( 5 and 1 );sep and 1 3 and 5 1;TnTnT
+632;( 4 and 3 ) sep not 2;sep and 4 3 not 2;nFTTn
+633;( 2 or 2 ) sep ( 5 or 4 );sep or 2 2 or 5 4;nTnnT,nTnTn
+634;( 1 and 3 ) sep ( 4 and 1 );sep and 1 3 and 4 1;TnTTn
+635;( 5 and 3 ) sep ( 5 or 3 );sep and 5 3 or 5 3;nnTnT
+636;not 2 sep ( 5 or 2 );sep not 2 or 5 2;nFnnT
+637;1 sep ( 4 or 4 );sep 1 or 4 4;TnnTn
+638;( 3 or 5 ) sep ( 4 and 1 );sep or 3 5 and 4 1;TnnTT,TnTTn
+639;not 3 sep ( 4 or 2 );sep not 3 or 4 2;nnFTn,nTFnn
+640;( 1 or 4 ) sep ( 2 and 4 );sep or 1 4 and 2 4;nTnTn
+641;not 4 sep ( 3 and 3 );sep not 4 and 3 3;nnTFn
+642;( 2 or 3 ) sep 2;sep or 2 3 2;nTnnn
+643;5 sep not 1;sep 5 not 1;FnnnT
+644;( 5 or 5 ) sep ( 5 and 2 );sep or 5 5 and 5 2;nTnnT
+645;5 sep not 4;sep 5 not 4;nnnFT
+646;( 1 and 5 ) sep ( 5 and 2 );sep and 1 5 and 5 2;TTnnT
+647;( 2 and 2 ) sep not 5;sep and 2 2 not 5;nTnnF
+648;not 2 sep ( 3 or 2 );sep not 2 or 3 2;nFTnn
+649;( 5 and 3 ) sep ( 1 and 4 );sep and 5 3 and 1 4;TnTTT
+650;not 2 sep not 2;sep not 2 not 2;nFnnn
+651;( 4 and 1 ) sep ( 5 and 2 );sep and 4 1 and 5 2;TTnTT
+652;( 5 or 1 ) sep 3;sep or 5 1 3;nnTnT,TnTnn
+653;( 3 and 5 ) sep 1;sep and 3 5 1;TnTnT
+654;( 2 and 3 ) sep ( 2 and 4 );sep and 2 3 and 2 4;nTTTn
+655;( 5 or 4 ) sep 3;sep or 5 4 3;nnTnT,nnTTn
+656;5 sep ( 3 or 3 );sep 5 or 3 3;nnTnT
+657;( 2 and 1 ) sep ( 1 and 3 );sep and 2 1 and 1 3;TTTnn
+658;not 2 sep ( 5 and 5 );sep not 2 and 5 5;nFnnT
+659;( 4 or 4 ) sep ( 1 and 3 );sep or 4 4 and 1 3;TnTTn
+660;4 sep 1;sep 4 1;TnnTn
+661;( 5 and 3 ) sep ( 5 and 5 );sep and 5 3 and 5 5;nnTnT
+662;not 3 sep 2;sep not 3 2;nTFnn
+663;( 4 and 4 ) sep ( 1 and 1 );sep and 4 4 and 1 1;TnnTn
+664;( 1 or 2 ) sep not 2;sep or 1 2 not 2;TFnnn
+665;( 4 and 5 ) sep ( 3 or 4 );sep and 4 5 or 3 4;nnnTT
+666;( 1 and 5 ) sep 5;sep and 1 5 5;TnnnT
+667;( 4 or 2 ) sep not 3;sep or 4 2 not 3;nnFTn,nTFnn
+668;( 1 and 1 ) sep ( 5 or 3 );sep and 1 1 or 5 3;TnnnT,TnTnn
+669;( 3 or 1 ) sep ( 4 and 4 );sep or 3 1 and 4 4;nnTTn,TnnTn
+670;( 2 and 2 ) sep ( 1 or 1 );sep and 2 2 or 1 1;TTnnn
+671;( 1 and 3 ) sep ( 4 or 4 );sep and 1 3 or 4 4;TnTTn
+672;3 sep 2;sep 3 2;nTTnn
+673;( 4 and 1 ) sep ( 1 or 5 );sep and 4 1 or 1 5;TnnTn
+674;not 2 sep not 5;sep not 2 not 5;nFnnF
+675;( 3 or 4 ) sep not 5;sep or 3 4 not 5;nnnTF,nnTnF
+676;( 3 and 5 ) sep ( 5 or 2 );sep and 3 5 or 5 2;nnTnT
+677;( 5 or 5 ) sep not 1;sep or 5 5 not 1;FnnnT
+678;not 3 sep ( 4 and 1 );sep not 3 and 4 1;TnFTn
+679;( 3 and 1 ) sep ( 5 or 1 );sep and 3 1 or 5 1;TnTnn
+680;( 1 or 4 ) sep ( 3 or 5 );sep or 1 4 or 3 5;nnnTT,nnTTn,TnnnT,TnTnn
+681;( 4 and 4 ) sep not 5;sep and 4 4 not 5;nnnTF
+682;( 3 or 5 ) sep not 5;sep or 3 5 not 5;nnTnF
+683;( 5 and 4 ) sep ( 4 or 3 );sep and 5 4 or 4 3;nnnTT
+684;not 5 sep ( 1 and 3 );sep not 5 and 1 3;TnTnF
+685;( 5 or 3 ) sep ( 1 or 1 );sep or 5 3 or 1 1;TnnnT,TnTnn
+686;( 2 or 3 ) sep ( 2 or 5 );sep or 2 3 or 2 5;nnTnT,nTnnn
+687;( 4 or 5 ) sep not 1;sep or 4 5 not 1;FnnnT,FnnTn
+688;( 2 and 2 ) sep ( 5 and 1 );sep and 2 2 and 5 1;TTnnT
+689;not 1 sep 2;sep not 1 2;FTnnn
+690;( 3 or 1 ) sep 3;sep or 3 1 3;nnTnn
+691;5 sep ( 1 or 3 );sep 5 or 1 3;nnTnT,TnnnT
+692;( 2 and 3 ) sep ( 1 and 4 );sep and 2 3 and 1 4;TTTTn
+693;( 2 or 2 ) sep not 4;sep or 2 2 not 4;nTnFn
+694;not 2 sep ( 1 or 2 );sep not 2 or 1 2;TFnnn
+695;( 4 or 3 ) sep ( 5 or 4 );sep or 4 3 or 5 4;nnnTn,nnTnT
+696;( 3 or 3 ) sep ( 1 and 3 );sep or 3 3 and 1 3;TnTnn
+697;4 sep ( 1 and 5 );sep 4 and 1 5;TnnTT
+698;( 3 and 2 ) sep 5;sep and 3 2 5;nTTnT
+699;( 3 and 1 ) sep ( 1 and 5 );sep and 3 1 and 1 5;TnTnT
+700;( 2 or 3 ) sep ( 5 and 5 );sep or 2 3 and 5 5;nnTnT,nTnnT
+701;( 5 or 2 ) sep 5;sep or 5 2 5;nnnnT
+702;( 5 or 3 ) sep ( 2 or 3 );sep or 5 3 or 2 3;nnTnn,nTnnT
+703;( 5 or 3 ) sep not 1;sep or 5 3 not 1;FnnnT,FnTnn
+704;( 1 or 2 ) sep not 1;sep or 1 2 not 1;FTnnn
+705;( 5 or 5 ) sep ( 4 and 2 );sep or 5 5 and 4 2;nTnTT
+706;( 4 and 1 ) sep 5;sep and 4 1 5;TnnTT
+707;( 2 and 5 ) sep 1;sep and 2 5 1;TTnnT
+708;( 1 and 5 ) sep ( 2 or 4 );sep and 1 5 or 2 4;TnnTT,TTnnT
+709;( 3 or 5 ) sep ( 4 and 4 );sep or 3 5 and 4 4;nnnTT,nnTTn
+710;( 1 or 3 ) sep ( 1 or 5 );sep or 1 3 or 1 5;nnTnT,Tnnnn
+711;( 2 and 1 ) sep ( 2 or 1 );sep and 2 1 or 2 1;TTnnn
+712;( 4 or 4 ) sep not 3;sep or 4 4 not 3;nnFTn
+713;( 5 and 3 ) sep 5;sep and 5 3 5;nnTnT
+714;( 1 or 4 ) sep ( 2 and 1 );sep or 1 4 and 2 1;TTnnn
+715;( 2 or 1 ) sep 2;sep or 2 1 2;nTnnn
+716;( 5 or 1 ) sep ( 5 and 4 );sep or 5 1 and 5 4;nnnTT
+717;( 2 or 5 ) sep ( 1 and 5 );sep or 2 5 and 1 5;TnnnT
+718;( 5 and 4 ) sep ( 5 and 3 );sep and 5 4 and 5 3;nnTTT
+719;( 4 or 2 ) sep not 2;sep or 4 2 not 2;nFnTn
+720;not 1 sep 5;sep not 1 5;FnnnT
+721;not 3 sep ( 1 or 4 );sep not 3 or 1 4;nnFTn,TnFnn
+722;( 5 or 3 ) sep ( 3 or 2 );sep or 5 3 or 3 2;nnTnn,nTnnT
+723;( 5 and 2 ) sep ( 2 and 5 );sep and 5 2 and 2 5;nTnnT
+724;( 3 and 5 ) sep ( 4 and 3 );sep and 3 5 and 4 3;nnTTT
