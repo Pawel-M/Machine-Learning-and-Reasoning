@@ -1,0 +1,1381 @@
+;infix;prefix;conclusion
+0;not not 2;not not 2;2
+1;3;3;3
+2;5;5;5
+3;2;2;2
+4;( ( 4 and 1 ) or ( 1 and 1 ) );or and 4 1 and 1 1;1
+5;4;4;4
+6;( ( 1 or 1 ) and ( 2 or 4 ) );and or 1 1 or 2 4;1
+7;( not 5 and 1 );and not 5 1;1
+8;( ( 3 or 5 ) and ( 5 or 5 ) );and or 3 5 or 5 5;5
+9;not not 1;not not 1;1
+10;not not 3;not not 3;3
+11;( not 5 and ( 4 and 4 ) );and not 5 and 4 4;4
+12;1;1;1
+13;not not 5;not not 5;5
+14;( 2 and ( 1 or 3 ) );and 2 or 1 3;2
+15;( ( 4 and 4 ) or ( 5 and 4 ) );or and 4 4 and 5 4;4
+16;not not 4;not not 4;4
+17;( 2 and not 1 );and 2 not 1;2
+18;( 1 and ( 4 or 3 ) );and 1 or 4 3;1
+19;( ( 1 or 5 ) and not 5 );and or 1 5 not 5;1
+20;( ( 5 and 5 ) and ( 1 or 3 ) );and and 5 5 or 1 3;5
+21;( ( 3 and 5 ) or 5 );or and 3 5 5;5
+22;( 3 and not 1 );and 3 not 1;3
+23;( not 5 and ( 2 or 5 ) );and not 5 or 2 5;2
+24;( ( 2 and 4 ) or ( 1 and 4 ) );or and 2 4 and 1 4;4
+25;( ( 4 or 2 ) and ( 4 or 4 ) );and or 4 2 or 4 4;4
+26;( not 5 and ( 3 or 3 ) );and not 5 or 3 3;3
+27;( ( 3 or 5 ) and not 5 );and or 3 5 not 5;3
+28;( ( 4 and 4 ) and ( 4 or 1 ) );and and 4 4 or 4 1;4
+29;( not 5 and 4 );and not 5 4;4
+30;( ( 2 or 2 ) and ( 1 or 5 ) );and or 2 2 or 1 5;2
+31;( ( 2 and 3 ) or ( 2 and 1 ) );or and 2 3 and 2 1;2
+32;( ( 3 or 3 ) and ( 4 or 1 ) );and or 3 3 or 4 1;3
+33;( ( 4 or 4 ) and not 5 );and or 4 4 not 5;4
+34;( ( 1 or 3 ) and 1 );and or 1 3 1;1
+35;( not 1 and ( 2 or 1 ) );and not 1 or 2 1;2
+36;( ( 3 and 3 ) and not 5 );and and 3 3 not 5;3
+37;( 2 or ( 2 and 2 ) );or 2 and 2 2;2
+38;( ( 3 or 5 ) and ( 4 and 4 ) );and or 3 5 and 4 4;4
+39;( not 2 and 1 );and not 2 1;1
+40;( ( 3 or 2 ) and not 2 );and or 3 2 not 2;3
+41;( 1 and not 5 );and 1 not 5;1
+42;( ( 1 and 2 ) or ( 1 and 3 ) );or and 1 2 and 1 3;1
+43;( ( 2 and 4 ) or ( 2 and 3 ) );or and 2 4 and 2 3;2
+44;( 1 and not 2 );and 1 not 2;1
+45;( ( 1 or 2 ) and ( 1 and 1 ) );and or 1 2 and 1 1;1
+46;( not 1 and ( 2 or 2 ) );and not 1 or 2 2;2
+47;( ( 2 and 2 ) and ( 2 and 2 ) );and and 2 2 and 2 2;2
+48;( ( 3 or 2 ) and not 3 );and or 3 2 not 3;2
+49;( ( 2 or 2 ) and ( 4 or 3 ) );and or 2 2 or 4 3;2
+50;( ( 5 or 5 ) or ( 5 and 2 ) );or or 5 5 and 5 2;5
+51;( not 2 and ( 2 or 1 ) );and not 2 or 2 1;1
+52;( 5 and ( 3 or 2 ) );and 5 or 3 2;5
+53;( not 5 and 2 );and not 5 2;2
+54;( ( 5 and 5 ) or ( 3 and 5 ) );or and 5 5 and 3 5;5
+55;( 4 and not 3 );and 4 not 3;4
+56;( ( 4 and 4 ) and ( 4 and 4 ) );and and 4 4 and 4 4;4
+57;( ( 4 and 5 ) or ( 5 or 5 ) );or and 4 5 or 5 5;5
+58;( not 3 and ( 3 or 4 ) );and not 3 or 3 4;4
+59;( ( 1 or 3 ) and ( 4 and 4 ) );and or 1 3 and 4 4;4
+60;( 3 and ( 2 or 5 ) );and 3 or 2 5;3
+61;( 1 or ( 1 and 2 ) );or 1 and 1 2;1
+62;( 1 and ( 3 or 5 ) );and 1 or 3 5;1
+63;( not 4 and 1 );and not 4 1;1
+64;( ( 2 or 1 ) and ( 3 and 3 ) );and or 2 1 and 3 3;3
+65;( ( 1 or 4 ) and ( 4 or 4 ) );and or 1 4 or 4 4;4
+66;( 3 or ( 3 and 4 ) );or 3 and 3 4;3
+67;( ( 5 and 1 ) or 1 );or and 5 1 1;1
+68;( ( 2 or 1 ) and not 2 );and or 2 1 not 2;1
+69;( ( 4 and 5 ) or ( 5 and 2 ) );or and 4 5 and 5 2;5
+70;( not 1 and ( 4 and 4 ) );and not 1 and 4 4;4
+71;( ( 4 and 3 ) or 3 );or and 4 3 3;3
+72;( ( 2 or 5 ) and 2 );and or 2 5 2;2
+73;( not 3 and 2 );and not 3 2;2
+74;( ( 2 or 2 ) or 2 );or or 2 2 2;2
+75;( 5 and not 2 );and 5 not 2;5
+76;( ( 2 or 5 ) and ( 2 or 2 ) );and or 2 5 or 2 2;2
+77;( ( 3 or 4 ) and not 4 );and or 3 4 not 4;3
+78;( 4 and ( 3 or 1 ) );and 4 or 3 1;4
+79;( ( 4 and 4 ) and ( 2 or 5 ) );and and 4 4 or 2 5;4
+80;( ( 4 and 2 ) or ( 4 and 5 ) );or and 4 2 and 4 5;4
+81;( ( 2 and 5 ) or ( 5 and 3 ) );or and 2 5 and 5 3;5
+82;( ( 4 or 4 ) and ( 4 or 2 ) );and or 4 4 or 4 2;4
+83;( ( 2 and 2 ) and 2 );and and 2 2 2;2
+84;( 5 or ( 1 and 5 ) );or 5 and 1 5;5
+85;( ( 4 and 2 ) or ( 3 and 4 ) );or and 4 2 and 3 4;4
+86;( not 3 and ( 3 or 2 ) );and not 3 or 3 2;2
+87;( 4 or ( 2 and 4 ) );or 4 and 2 4;4
+88;( ( 1 and 1 ) or ( 1 and 3 ) );or and 1 1 and 1 3;1
+89;( ( 3 or 3 ) and 3 );and or 3 3 3;3
+90;( ( 3 and 1 ) or ( 1 and 1 ) );or and 3 1 and 1 1;1
+91;( not 5 and ( 1 or 1 ) );and not 5 or 1 1;1
+92;( ( 1 and 1 ) and not 3 );and and 1 1 not 3;1
+93;( ( 2 or 4 ) and not 4 );and or 2 4 not 4;2
+94;( not 4 and 2 );and not 4 2;2
+95;( 1 and not 3 );and 1 not 3;1
+96;( ( 4 or 4 ) and not 3 );and or 4 4 not 3;4
+97;( ( 3 or 5 ) and not 3 );and or 3 5 not 3;5
+98;( ( 2 or 4 ) and not 2 );and or 2 4 not 2;4
+99;( ( 1 and 1 ) or ( 4 and 1 ) );or and 1 1 and 4 1;1
+100;( ( 2 and 2 ) and ( 1 or 3 ) );and and 2 2 or 1 3;2
+101;( not 5 and ( 1 or 5 ) );and not 5 or 1 5;1
+102;( not 4 and 5 );and not 4 5;5
+103;( not 2 and ( 5 or 5 ) );and not 2 or 5 5;5
+104;( not 2 and 3 );and not 2 3;3
+105;( ( 2 or 5 ) and ( 3 or 3 ) );and or 2 5 or 3 3;3
+106;( 1 or ( 4 and 1 ) );or 1 and 4 1;1
+107;( 5 and ( 5 or 4 ) );and 5 or 5 4;5
+108;( ( 4 or 1 ) and ( 2 and 2 ) );and or 4 1 and 2 2;2
+109;( ( 3 or 2 ) and 1 );and or 3 2 1;1
+110;( not 1 and ( 5 and 5 ) );and not 1 and 5 5;5
+111;( ( 3 and 5 ) or ( 3 and 1 ) );or and 3 5 and 3 1;3
+112;( ( 4 and 2 ) or ( 2 and 3 ) );or and 4 2 and 2 3;2
+113;( ( 3 or 5 ) and ( 3 or 3 ) );and or 3 5 or 3 3;3
+114;( ( 4 and 5 ) or ( 5 and 3 ) );or and 4 5 and 5 3;5
+115;( ( 3 and 3 ) or ( 3 and 4 ) );or and 3 3 and 3 4;3
+116;( 5 and not 1 );and 5 not 1;5
+117;( ( 1 or 3 ) and ( 3 and 3 ) );and or 1 3 and 3 3;3
+118;( ( 2 and 2 ) and ( 2 or 3 ) );and and 2 2 or 2 3;2
+119;( 3 and ( 1 or 5 ) );and 3 or 1 5;3
+120;( 2 and ( 2 and 2 ) );and 2 and 2 2;2
+121;( ( 1 or 4 ) and ( 3 or 3 ) );and or 1 4 or 3 3;3
+122;( 2 and not 5 );and 2 not 5;2
+123;( ( 1 and 1 ) and not 5 );and and 1 1 not 5;1
+124;( ( 2 or 3 ) and not 3 );and or 2 3 not 3;2
+125;( ( 2 or 2 ) and ( 5 or 4 ) );and or 2 2 or 5 4;2
+126;( not 3 and ( 2 and 2 ) );and not 3 and 2 2;2
+127;( ( 5 or 4 ) and ( 1 and 1 ) );and or 5 4 and 1 1;1
+128;( not 3 and ( 5 or 3 ) );and not 3 or 5 3;5
+129;( ( 4 and 4 ) and ( 2 or 3 ) );and and 4 4 or 2 3;4
+130;( ( 3 or 3 ) and not 2 );and or 3 3 not 2;3
+131;( ( 1 or 4 ) and not 4 );and or 1 4 not 4;1
+132;( ( 4 or 4 ) and ( 5 or 2 ) );and or 4 4 or 5 2;4
+133;( ( 4 and 4 ) and not 2 );and and 4 4 not 2;4
+134;( ( 1 and 5 ) or ( 5 and 2 ) );or and 1 5 and 5 2;5
+135;( ( 4 and 3 ) or 4 );or and 4 3 4;4
+136;( not 2 and ( 1 or 2 ) );and not 2 or 1 2;1
+137;( ( 4 or 3 ) and ( 4 and 4 ) );and or 4 3 and 4 4;4
+138;( not 2 and ( 2 or 3 ) );and not 2 or 2 3;3
+139;( ( 1 or 1 ) and ( 1 or 1 ) );and or 1 1 or 1 1;1
+140;( ( 2 or 1 ) and not 1 );and or 2 1 not 1;2
+141;( ( 4 or 4 ) and ( 2 or 4 ) );and or 4 4 or 2 4;4
+142;( 2 or 2 );or 2 2;2
+143;( 1 and ( 5 or 3 ) );and 1 or 5 3;1
+144;( 3 and not 5 );and 3 not 5;3
+145;( ( 5 or 1 ) and not 5 );and or 5 1 not 5;1
+146;( ( 1 and 2 ) or ( 3 and 2 ) );or and 1 2 and 3 2;2
+147;( ( 5 or 1 ) and ( 2 or 2 ) );and or 5 1 or 2 2;2
+148;( not 1 and 3 );and not 1 3;3
+149;( ( 1 and 4 ) or ( 4 and 2 ) );or and 1 4 and 4 2;4
+150;( not 5 and ( 5 or 2 ) );and not 5 or 5 2;2
+151;( 2 and ( 1 or 2 ) );and 2 or 1 2;2
+152;( ( 5 and 5 ) and ( 3 or 2 ) );and and 5 5 or 3 2;5
+153;( ( 2 and 4 ) or ( 5 and 2 ) );or and 2 4 and 5 2;2
+154;( ( 2 or 1 ) and ( 5 and 5 ) );and or 2 1 and 5 5;5
+155;( ( 1 and 1 ) or ( 1 and 1 ) );or and 1 1 and 1 1;1
+156;( not 3 and ( 4 or 3 ) );and not 3 or 4 3;4
+157;( ( 2 or 2 ) or ( 2 and 4 ) );or or 2 2 and 2 4;2
+158;( ( 4 or 2 ) and ( 3 or 3 ) );and or 4 2 or 3 3;3
+159;( not 4 and ( 1 and 1 ) );and not 4 and 1 1;1
+160;( ( 3 or 2 ) and ( 4 and 4 ) );and or 3 2 and 4 4;4
+161;( not 3 and ( 5 or 5 ) );and not 3 or 5 5;5
+162;( ( 5 or 1 ) and not 1 );and or 5 1 not 1;5
+163;( ( 5 or 1 ) and 1 );and or 5 1 1;1
+164;( 5 and ( 4 or 3 ) );and 5 or 4 3;5
+165;( ( 1 or 2 ) and 1 );and or 1 2 1;1
+166;( not 5 and ( 2 or 2 ) );and not 5 or 2 2;2
+167;( ( 4 and 2 ) or 4 );or and 4 2 4;4
+168;( ( 1 and 2 ) or ( 5 and 2 ) );or and 1 2 and 5 2;2
+169;( not 4 and ( 4 or 3 ) );and not 4 or 4 3;3
+170;( ( 3 and 4 ) or ( 1 and 4 ) );or and 3 4 and 1 4;4
+171;( ( 1 and 3 ) or 3 );or and 1 3 3;3
+172;( ( 3 or 3 ) and ( 5 or 4 ) );and or 3 3 or 5 4;3
+173;( not 5 and ( 1 and 1 ) );and not 5 and 1 1;1
+174;( ( 3 and 1 ) or ( 3 and 4 ) );or and 3 1 and 3 4;3
+175;( ( 3 and 2 ) or 3 );or and 3 2 3;3
+176;( ( 3 and 4 ) or ( 2 and 4 ) );or and 3 4 and 2 4;4
+177;( 3 or ( 5 and 3 ) );or 3 and 5 3;3
+178;( ( 5 and 2 ) or ( 1 and 5 ) );or and 5 2 and 1 5;5
+179;( ( 1 or 1 ) and not 5 );and or 1 1 not 5;1
+180;( not 2 and 4 );and not 2 4;4
+181;( ( 3 or 5 ) and ( 5 and 5 ) );and or 3 5 and 5 5;5
+182;( ( 3 or 4 ) and ( 3 and 3 ) );and or 3 4 and 3 3;3
+183;( ( 1 or 3 ) and ( 5 or 5 ) );and or 1 3 or 5 5;5
+184;( 1 and not 4 );and 1 not 4;1
+185;( 3 and ( 3 or 2 ) );and 3 or 3 2;3
+186;( ( 5 and 1 ) or ( 1 and 4 ) );or and 5 1 and 1 4;1
+187;( ( 3 and 3 ) and not 4 );and and 3 3 not 4;3
+188;( ( 4 or 1 ) and ( 3 and 3 ) );and or 4 1 and 3 3;3
+189;( ( 5 and 3 ) or ( 5 and 2 ) );or and 5 3 and 5 2;5
+190;( not 5 and ( 5 or 1 ) );and not 5 or 5 1;1
+191;( not 1 and ( 1 or 4 ) );and not 1 or 1 4;4
+192;( ( 4 or 5 ) and not 4 );and or 4 5 not 4;5
+193;( ( 5 and 1 ) or ( 4 and 5 ) );or and 5 1 and 4 5;5
+194;( ( 1 or 3 ) and not 3 );and or 1 3 not 3;1
+195;( ( 1 or 4 ) and ( 1 and 1 ) );and or 1 4 and 1 1;1
+196;( not 5 and 3 );and not 5 3;3
+197;( not 2 and ( 2 or 4 ) );and not 2 or 2 4;4
+198;( ( 4 or 3 ) and 5 );and or 4 3 5;5
+199;( ( 3 and 3 ) or ( 3 and 3 ) );or and 3 3 and 3 3;3
+200;( ( 1 or 3 ) and 2 );and or 1 3 2;2
+201;( ( 5 and 5 ) and ( 5 or 5 ) );and and 5 5 or 5 5;5
+202;( not 4 and ( 4 or 2 ) );and not 4 or 4 2;2
+203;( ( 4 or 2 ) and not 2 );and or 4 2 not 2;4
+204;( ( 3 and 2 ) or ( 1 and 2 ) );or and 3 2 and 1 2;2
+205;( ( 3 or 5 ) and 2 );and or 3 5 2;2
+206;( ( 5 and 4 ) or ( 5 or 5 ) );or and 5 4 or 5 5;5
+207;( ( 4 or 4 ) and ( 2 or 3 ) );and or 4 4 or 2 3;4
+208;( ( 5 or 5 ) and ( 1 or 5 ) );and or 5 5 or 1 5;5
+209;( not 5 and ( 3 or 5 ) );and not 5 or 3 5;3
+210;( ( 4 and 4 ) and not 5 );and and 4 4 not 5;4
+211;( ( 4 or 1 ) and not 1 );and or 4 1 not 1;4
+212;( not 4 and ( 3 and 3 ) );and not 4 and 3 3;3
+213;( ( 2 and 4 ) or ( 3 and 4 ) );or and 2 4 and 3 4;4
+214;( ( 2 and 2 ) or ( 2 and 5 ) );or and 2 2 and 2 5;2
+215;( ( 1 or 1 ) and ( 5 or 2 ) );and or 1 1 or 5 2;1
+216;( ( 1 and 1 ) and ( 1 or 4 ) );and and 1 1 or 1 4;1
+217;( ( 3 or 5 ) and ( 2 or 2 ) );and or 3 5 or 2 2;2
+218;( ( 5 and 2 ) or ( 2 and 3 ) );or and 5 2 and 2 3;2
+219;( ( 5 or 5 ) and ( 1 or 3 ) );and or 5 5 or 1 3;5
+220;( 4 and ( 3 or 2 ) );and 4 or 3 2;4
+221;( ( 3 and 3 ) and ( 4 or 5 ) );and and 3 3 or 4 5;3
+222;( not 2 and ( 3 or 3 ) );and not 2 or 3 3;3
+223;( ( 3 and 3 ) and not 2 );and and 3 3 not 2;3
+224;( ( 1 and 3 ) or ( 5 and 3 ) );or and 1 3 and 5 3;3
+225;( ( 2 and 2 ) or 2 );or and 2 2 2;2
+226;( 4 and ( 3 or 4 ) );and 4 or 3 4;4
+227;( ( 1 and 5 ) or ( 5 or 5 ) );or and 1 5 or 5 5;5
+228;( 1 and ( 2 or 3 ) );and 1 or 2 3;1
+229;( ( 5 and 1 ) or ( 5 and 4 ) );or and 5 1 and 5 4;5
+230;( ( 5 and 1 ) or ( 2 and 1 ) );or and 5 1 and 2 1;1
+231;( not 5 and ( 4 or 5 ) );and not 5 or 4 5;4
+232;( not 3 and 4 );and not 3 4;4
+233;( 3 and ( 3 or 1 ) );and 3 or 3 1;3
+234;( ( 2 or 4 ) and 3 );and or 2 4 3;3
+235;( ( 3 and 5 ) or ( 5 and 2 ) );or and 3 5 and 5 2;5
+236;( ( 5 or 2 ) and 4 );and or 5 2 4;4
+237;( 4 or ( 4 or 4 ) );or 4 or 4 4;4
+238;( ( 1 or 1 ) and ( 5 or 4 ) );and or 1 1 or 5 4;1
+239;( ( 1 or 1 ) and ( 1 or 5 ) );and or 1 1 or 1 5;1
+240;( ( 2 and 2 ) and ( 4 or 5 ) );and and 2 2 or 4 5;2
+241;( ( 5 and 5 ) or ( 5 and 1 ) );or and 5 5 and 5 1;5
+242;( ( 2 or 3 ) and ( 5 and 5 ) );and or 2 3 and 5 5;5
+243;( ( 4 or 4 ) and ( 5 or 3 ) );and or 4 4 or 5 3;4
+244;( ( 1 and 2 ) or ( 3 and 1 ) );or and 1 2 and 3 1;1
+245;( ( 3 or 2 ) and 2 );and or 3 2 2;2
+246;( ( 3 and 1 ) or 3 );or and 3 1 3;3
+247;( ( 1 and 3 ) or ( 1 or 1 ) );or and 1 3 or 1 1;1
+248;( 2 and ( 4 or 3 ) );and 2 or 4 3;2
+249;( not 1 and ( 1 or 5 ) );and not 1 or 1 5;5
+250;( ( 1 or 1 ) and not 4 );and or 1 1 not 4;1
+251;( ( 2 or 4 ) and ( 2 and 2 ) );and or 2 4 and 2 2;2
+252;( 4 and ( 1 or 5 ) );and 4 or 1 5;4
+253;( ( 2 and 1 ) or ( 2 and 3 ) );or and 2 1 and 2 3;2
+254;( ( 3 and 2 ) or ( 2 and 5 ) );or and 3 2 and 2 5;2
+255;( ( 3 and 4 ) or 3 );or and 3 4 3;3
+256;( ( 4 and 3 ) or ( 5 and 4 ) );or and 4 3 and 5 4;4
+257;( ( 1 and 1 ) and ( 3 or 5 ) );and and 1 1 or 3 5;1
+258;( not 4 and ( 1 or 1 ) );and not 4 or 1 1;1
+259;( ( 1 or 1 ) or ( 3 and 1 ) );or or 1 1 and 3 1;1
+260;( 5 and not 3 );and 5 not 3;5
+261;( ( 1 or 5 ) and 3 );and or 1 5 3;3
+262;( 1 and ( 3 or 4 ) );and 1 or 3 4;1
+263;( ( 5 and 5 ) or ( 5 and 2 ) );or and 5 5 and 5 2;5
+264;( ( 2 and 2 ) and not 1 );and and 2 2 not 1;2
+265;( 3 and ( 4 or 2 ) );and 3 or 4 2;3
+266;( ( 4 or 4 ) or ( 4 and 3 ) );or or 4 4 and 4 3;4
+267;( ( 5 or 2 ) and not 2 );and or 5 2 not 2;5
+268;( ( 4 or 4 ) or ( 5 and 4 ) );or or 4 4 and 5 4;4
+269;( ( 1 and 1 ) and ( 3 or 1 ) );and and 1 1 or 3 1;1
+270;( 3 or 3 );or 3 3;3
+271;( not 4 and ( 3 or 3 ) );and not 4 or 3 3;3
+272;( not 1 and ( 3 and 3 ) );and not 1 and 3 3;3
+273;( ( 2 or 4 ) and 1 );and or 2 4 1;1
+274;( not 3 and ( 4 and 4 ) );and not 3 and 4 4;4
+275;( ( 1 or 5 ) and ( 1 and 1 ) );and or 1 5 and 1 1;1
+276;( ( 3 or 1 ) and 5 );and or 3 1 5;5
+277;( not 4 and ( 5 or 5 ) );and not 4 or 5 5;5
+278;( ( 3 and 2 ) or ( 4 and 3 ) );or and 3 2 and 4 3;3
+279;( ( 4 or 5 ) and 4 );and or 4 5 4;4
+280;( not 3 and ( 4 or 4 ) );and not 3 or 4 4;4
+281;( ( 5 or 3 ) and 1 );and or 5 3 1;1
+282;( ( 2 and 2 ) and not 3 );and and 2 2 not 3;2
+283;( 2 and ( 2 or 3 ) );and 2 or 2 3;2
+284;( 5 and ( 3 or 1 ) );and 5 or 3 1;5
+285;( ( 5 and 2 ) or ( 4 and 2 ) );or and 5 2 and 4 2;2
+286;( ( 4 and 4 ) and not 1 );and and 4 4 not 1;4
+287;( ( 3 and 1 ) or ( 5 and 1 ) );or and 3 1 and 5 1;1
+288;( 5 and ( 5 or 1 ) );and 5 or 5 1;5
+289;( not 3 and 1 );and not 3 1;1
+290;( not 4 and ( 2 and 2 ) );and not 4 and 2 2;2
+291;( not 2 and 5 );and not 2 5;5
+292;( ( 4 and 4 ) and ( 3 or 4 ) );and and 4 4 or 3 4;4
+293;( 5 and ( 5 or 3 ) );and 5 or 5 3;5
+294;( ( 4 or 3 ) and ( 2 and 2 ) );and or 4 3 and 2 2;2
+295;( ( 3 and 3 ) and 3 );and and 3 3 3;3
+296;( ( 4 or 2 ) and ( 5 and 5 ) );and or 4 2 and 5 5;5
+297;( ( 5 and 5 ) and not 1 );and and 5 5 not 1;5
+298;( 1 and 1 );and 1 1;1
+299;( not 5 and ( 3 and 3 ) );and not 5 and 3 3;3
+300;( not 3 and 5 );and not 3 5;5
+301;( not 2 and ( 4 or 4 ) );and not 2 or 4 4;4
+302;( 3 and not 4 );and 3 not 4;3
+303;( 2 and not 3 );and 2 not 3;2
+304;( ( 3 and 1 ) or ( 2 and 3 ) );or and 3 1 and 2 3;3
+305;( ( 1 and 4 ) or ( 1 and 2 ) );or and 1 4 and 1 2;1
+306;( 4 and not 5 );and 4 not 5;4
+307;( ( 1 or 2 ) and ( 2 or 2 ) );and or 1 2 or 2 2;2
+308;( ( 5 or 5 ) and ( 5 or 2 ) );and or 5 5 or 5 2;5
+309;( ( 4 and 3 ) or ( 4 and 2 ) );or and 4 3 and 4 2;4
+310;( ( 2 or 2 ) and not 1 );and or 2 2 not 1;2
+311;( ( 2 or 1 ) and ( 1 and 1 ) );and or 2 1 and 1 1;1
+312;( ( 1 or 5 ) and 5 );and or 1 5 5;5
+313;( ( 4 and 2 ) or ( 4 or 4 ) );or and 4 2 or 4 4;4
+314;( 4 and ( 3 or 5 ) );and 4 or 3 5;4
+315;( ( 1 or 1 ) and ( 5 or 3 ) );and or 1 1 or 5 3;1
+316;( not 2 and ( 3 or 2 ) );and not 2 or 3 2;3
+317;( ( 5 and 1 ) or ( 4 and 1 ) );or and 5 1 and 4 1;1
+318;( ( 1 or 1 ) or ( 1 or 1 ) );or or 1 1 or 1 1;1
+319;( ( 3 and 3 ) and ( 3 or 2 ) );and and 3 3 or 3 2;3
+320;( ( 4 and 2 ) or ( 3 and 2 ) );or and 4 2 and 3 2;2
+321;( ( 1 or 2 ) and ( 2 and 2 ) );and or 1 2 and 2 2;2
+322;( 3 and 3 );and 3 3;3
+323;( ( 3 or 1 ) and ( 3 and 3 ) );and or 3 1 and 3 3;3
+324;( not 2 and ( 1 and 1 ) );and not 2 and 1 1;1
+325;( ( 4 or 3 ) and not 3 );and or 4 3 not 3;4
+326;( ( 5 or 3 ) and ( 5 and 5 ) );and or 5 3 and 5 5;5
+327;( ( 2 or 4 ) and 2 );and or 2 4 2;2
+328;( ( 3 and 3 ) and ( 4 or 2 ) );and and 3 3 or 4 2;3
+329;( ( 1 and 3 ) or ( 1 and 1 ) );or and 1 3 and 1 1;1
+330;( ( 3 or 4 ) and ( 4 or 4 ) );and or 3 4 or 4 4;4
+331;( ( 1 and 2 ) or ( 1 and 1 ) );or and 1 2 and 1 1;1
+332;( ( 5 or 1 ) and ( 5 and 5 ) );and or 5 1 and 5 5;5
+333;( ( 5 and 3 ) or 3 );or and 5 3 3;3
+334;( ( 2 and 5 ) or 2 );or and 2 5 2;2
+335;( ( 4 or 2 ) and not 4 );and or 4 2 not 4;2
+336;( ( 4 and 1 ) or ( 4 and 3 ) );or and 4 1 and 4 3;4
+337;( not 1 and ( 3 or 1 ) );and not 1 or 3 1;3
+338;( ( 2 and 5 ) or ( 2 or 2 ) );or and 2 5 or 2 2;2
+339;( not 3 and ( 2 or 3 ) );and not 3 or 2 3;2
+340;( ( 5 and 5 ) or ( 5 or 5 ) );or and 5 5 or 5 5;5
+341;( ( 5 and 4 ) or ( 2 and 4 ) );or and 5 4 and 2 4;4
+342;( ( 3 or 3 ) and ( 4 or 2 ) );and or 3 3 or 4 2;3
+343;( ( 2 and 2 ) and not 4 );and and 2 2 not 4;2
+344;( 4 or ( 4 and 2 ) );or 4 and 4 2;4
+345;( 4 and not 1 );and 4 not 1;4
+346;( 2 or ( 2 or 2 ) );or 2 or 2 2;2
+347;( ( 5 or 5 ) and ( 2 or 5 ) );and or 5 5 or 2 5;5
+348;( ( 2 or 4 ) and 4 );and or 2 4 4;4
+349;( not 1 and ( 5 or 5 ) );and not 1 or 5 5;5
+350;( not 5 and ( 4 or 4 ) );and not 5 or 4 4;4
+351;( ( 5 and 2 ) or ( 5 and 5 ) );or and 5 2 and 5 5;5
+352;( 3 and ( 3 or 5 ) );and 3 or 3 5;3
+353;( ( 4 or 2 ) and 5 );and or 4 2 5;5
+354;( ( 2 or 2 ) and ( 2 and 2 ) );and or 2 2 and 2 2;2
+355;( ( 3 and 3 ) or ( 2 and 3 ) );or and 3 3 and 2 3;3
+356;( ( 3 or 5 ) and ( 4 or 4 ) );and or 3 5 or 4 4;4
+357;( 4 and 4 );and 4 4;4
+358;( not 3 and ( 3 or 1 ) );and not 3 or 3 1;1
+359;( 2 and ( 4 or 2 ) );and 2 or 4 2;2
+360;( 2 and ( 1 or 4 ) );and 2 or 1 4;2
+361;( ( 5 and 3 ) or 5 );or and 5 3 5;5
+362;( ( 3 or 3 ) and ( 5 or 2 ) );and or 3 3 or 5 2;3
+363;( ( 3 or 3 ) and ( 1 or 3 ) );and or 3 3 or 1 3;3
+364;( ( 2 and 2 ) or ( 2 or 2 ) );or and 2 2 or 2 2;2
+365;( not 4 and ( 4 or 1 ) );and not 4 or 4 1;1
+366;( 1 or ( 5 and 1 ) );or 1 and 5 1;1
+367;( 1 and ( 1 or 3 ) );and 1 or 1 3;1
+368;( not 1 and 5 );and not 1 5;5
+369;( not 4 and ( 2 or 2 ) );and not 4 or 2 2;2
+370;( ( 3 or 5 ) and ( 2 and 2 ) );and or 3 5 and 2 2;2
+371;( ( 2 or 2 ) and ( 2 or 3 ) );and or 2 2 or 2 3;2
+372;( ( 5 or 4 ) and ( 2 and 2 ) );and or 5 4 and 2 2;2
+373;( ( 2 and 1 ) or ( 1 and 5 ) );or and 2 1 and 1 5;1
+374;( ( 2 and 3 ) or 3 );or and 2 3 3;3
+375;( 5 and not 4 );and 5 not 4;5
+376;( ( 2 and 2 ) and ( 5 or 3 ) );and and 2 2 or 5 3;2
+377;( ( 4 and 3 ) or ( 3 and 2 ) );or and 4 3 and 3 2;3
+378;( ( 4 or 4 ) and not 1 );and or 4 4 not 1;4
+379;( ( 1 and 4 ) or ( 3 and 4 ) );or and 1 4 and 3 4;4
+380;( ( 1 or 2 ) and ( 5 or 5 ) );and or 1 2 or 5 5;5
+381;( 5 or ( 5 and 5 ) );or 5 and 5 5;5
+382;( 3 or ( 3 and 2 ) );or 3 and 3 2;3
+383;( ( 4 or 5 ) and not 5 );and or 4 5 not 5;4
+384;( ( 2 or 5 ) and ( 4 and 4 ) );and or 2 5 and 4 4;4
+385;( ( 5 or 5 ) and ( 5 or 4 ) );and or 5 5 or 5 4;5
+386;( ( 5 or 5 ) and not 1 );and or 5 5 not 1;5
+387;( ( 3 and 2 ) or 2 );or and 3 2 2;2
+388;( ( 1 and 1 ) and ( 5 or 4 ) );and and 1 1 or 5 4;1
+389;( 4 and ( 4 and 4 ) );and 4 and 4 4;4
+390;( ( 5 and 5 ) and not 4 );and and 5 5 not 4;5
+391;( ( 5 or 5 ) and ( 5 or 5 ) );and or 5 5 or 5 5;5
+392;( ( 3 or 3 ) and ( 3 or 5 ) );and or 3 3 or 3 5;3
+393;( ( 1 or 4 ) and 2 );and or 1 4 2;2
+394;( ( 2 and 2 ) and ( 1 or 5 ) );and and 2 2 or 1 5;2
+395;( ( 4 or 1 ) and not 4 );and or 4 1 not 4;1
+396;( ( 5 and 4 ) or ( 5 and 3 ) );or and 5 4 and 5 3;5
+397;( 1 and ( 4 or 5 ) );and 1 or 4 5;1
+398;( 3 and ( 3 or 4 ) );and 3 or 3 4;3
+399;( ( 5 and 5 ) and ( 3 or 5 ) );and and 5 5 or 3 5;5
+400;( ( 2 and 5 ) or ( 5 or 5 ) );or and 2 5 or 5 5;5
+401;( ( 2 or 5 ) and ( 4 or 4 ) );and or 2 5 or 4 4;4
+402;( ( 1 and 3 ) or ( 1 and 2 ) );or and 1 3 and 1 2;1
+403;( ( 1 or 5 ) and ( 2 and 2 ) );and or 1 5 and 2 2;2
+404;( 3 or ( 3 or 3 ) );or 3 or 3 3;3
+405;( 3 and ( 5 or 2 ) );and 3 or 5 2;3
+406;( ( 3 or 5 ) and ( 3 and 3 ) );and or 3 5 and 3 3;3
+407;( ( 3 and 4 ) or ( 3 and 1 ) );or and 3 4 and 3 1;3
+408;( ( 1 or 4 ) and ( 1 or 1 ) );and or 1 4 or 1 1;1
+409;( ( 1 and 3 ) or ( 1 and 4 ) );or and 1 3 and 1 4;1
+410;( 2 or ( 2 and 4 ) );or 2 and 2 4;2
+411;( ( 4 or 2 ) and ( 4 and 4 ) );and or 4 2 and 4 4;4
+412;( 1 and ( 1 or 2 ) );and 1 or 1 2;1
+413;( not 2 and ( 2 or 5 ) );and not 2 or 2 5;5
+414;( ( 1 or 4 ) and ( 2 and 2 ) );and or 1 4 and 2 2;2
+415;( ( 5 or 3 ) and not 3 );and or 5 3 not 3;5
+416;( ( 2 and 3 ) or ( 3 and 5 ) );or and 2 3 and 3 5;3
+417;( ( 3 or 3 ) or ( 3 and 1 ) );or or 3 3 and 3 1;3
+418;( 4 and ( 4 or 2 ) );and 4 or 4 2;4
+419;( ( 3 or 3 ) and not 5 );and or 3 3 not 5;3
+420;( 5 and ( 5 or 5 ) );and 5 or 5 5;5
+421;( ( 3 and 3 ) and ( 5 or 4 ) );and and 3 3 or 5 4;3
+422;( ( 3 or 3 ) and not 1 );and or 3 3 not 1;3
+423;( ( 5 and 1 ) or ( 5 or 5 ) );or and 5 1 or 5 5;5
+424;( 1 and ( 1 or 1 ) );and 1 or 1 1;1
+425;( ( 5 and 5 ) or ( 4 and 5 ) );or and 5 5 and 4 5;5
+426;( ( 1 or 5 ) and not 1 );and or 1 5 not 1;5
+427;( ( 2 and 4 ) or ( 2 or 2 ) );or and 2 4 or 2 2;2
+428;( ( 2 or 2 ) and not 5 );and or 2 2 not 5;2
+429;( ( 3 and 1 ) or 1 );or and 3 1 1;1
+430;( ( 1 and 1 ) or 1 );or and 1 1 1;1
+431;( ( 2 or 2 ) and ( 3 or 1 ) );and or 2 2 or 3 1;2
+432;( ( 5 or 5 ) or ( 5 and 3 ) );or or 5 5 and 5 3;5
+433;( 4 and ( 4 or 3 ) );and 4 or 4 3;4
+434;( not 5 and ( 5 or 3 ) );and not 5 or 5 3;3
+435;( ( 4 and 4 ) and ( 1 or 2 ) );and and 4 4 or 1 2;4
+436;( ( 1 and 2 ) or ( 4 and 1 ) );or and 1 2 and 4 1;1
+437;( ( 5 and 1 ) or ( 1 and 2 ) );or and 5 1 and 1 2;1
+438;( 4 and ( 5 or 1 ) );and 4 or 5 1;4
+439;( not 5 and ( 2 and 2 ) );and not 5 and 2 2;2
+440;( not 2 and ( 1 or 1 ) );and not 2 or 1 1;1
+441;( ( 2 and 2 ) and ( 3 or 5 ) );and and 2 2 or 3 5;2
+442;( not 5 and ( 5 or 4 ) );and not 5 or 5 4;4
+443;( ( 5 or 5 ) and not 4 );and or 5 5 not 4;5
+444;( ( 2 or 5 ) and ( 5 and 5 ) );and or 2 5 and 5 5;5
+445;( ( 1 or 3 ) and ( 2 and 2 ) );and or 1 3 and 2 2;2
+446;( ( 3 and 2 ) or ( 5 and 2 ) );or and 3 2 and 5 2;2
+447;( 3 and not 2 );and 3 not 2;3
+448;( ( 2 or 2 ) or ( 4 and 2 ) );or or 2 2 and 4 2;2
+449;( ( 3 and 2 ) or ( 2 and 1 ) );or and 3 2 and 2 1;2
+450;( ( 5 or 2 ) and 3 );and or 5 2 3;3
+451;( ( 1 or 1 ) and ( 1 and 1 ) );and or 1 1 and 1 1;1
+452;( not 1 and ( 5 or 1 ) );and not 1 or 5 1;5
+453;( ( 5 or 4 ) and 5 );and or 5 4 5;5
+454;( ( 4 and 5 ) or ( 4 and 3 ) );or and 4 5 and 4 3;4
+455;( ( 2 and 4 ) or ( 2 and 1 ) );or and 2 4 and 2 1;2
+456;( ( 5 or 3 ) and ( 5 or 5 ) );and or 5 3 or 5 5;5
+457;( not 3 and ( 1 and 1 ) );and not 3 and 1 1;1
+458;( ( 2 and 2 ) and ( 1 or 4 ) );and and 2 2 or 1 4;2
+459;( 4 or 4 );or 4 4;4
+460;( ( 2 or 2 ) and ( 2 or 1 ) );and or 2 2 or 2 1;2
+461;( ( 3 and 3 ) or ( 4 and 3 ) );or and 3 3 and 4 3;3
+462;( ( 1 or 4 ) and not 1 );and or 1 4 not 1;4
+463;( ( 5 or 1 ) and 4 );and or 5 1 4;4
+464;( ( 1 and 5 ) or ( 4 and 5 ) );or and 1 5 and 4 5;5
+465;( 5 and 5 );and 5 5;5
+466;( ( 1 and 3 ) or ( 3 and 3 ) );or and 1 3 and 3 3;3
+467;( ( 5 and 5 ) and ( 4 or 3 ) );and and 5 5 or 4 3;5
+468;( ( 4 and 4 ) and ( 4 or 2 ) );and and 4 4 or 4 2;4
+469;( ( 1 and 1 ) or ( 1 and 4 ) );or and 1 1 and 1 4;1
+470;( ( 4 or 1 ) and ( 2 or 2 ) );and or 4 1 or 2 2;2
+471;( ( 5 and 2 ) or ( 2 or 2 ) );or and 5 2 or 2 2;2
+472;( not 3 and ( 1 or 1 ) );and not 3 or 1 1;1
+473;( ( 4 or 4 ) and ( 2 or 1 ) );and or 4 4 or 2 1;4
+474;( ( 5 or 5 ) and ( 5 and 5 ) );and or 5 5 and 5 5;5
+475;( ( 3 or 4 ) and ( 1 and 1 ) );and or 3 4 and 1 1;1
+476;( not 1 and ( 4 or 4 ) );and not 1 or 4 4;4
+477;( not 2 and ( 4 or 2 ) );and not 2 or 4 2;4
+478;( ( 3 or 3 ) and ( 4 or 3 ) );and or 3 3 or 4 3;3
+479;( ( 5 or 5 ) and ( 3 or 2 ) );and or 5 5 or 3 2;5
+480;( 1 and ( 4 or 1 ) );and 1 or 4 1;1
+481;( ( 5 or 3 ) and not 5 );and or 5 3 not 5;3
+482;( ( 4 or 4 ) and ( 4 or 1 ) );and or 4 4 or 4 1;4
+483;( ( 5 or 5 ) and not 2 );and or 5 5 not 2;5
+484;( ( 1 or 2 ) and 4 );and or 1 2 4;4
+485;( ( 4 and 1 ) or ( 4 and 5 ) );or and 4 1 and 4 5;4
+486;( ( 3 and 3 ) and ( 1 or 3 ) );and and 3 3 or 1 3;3
+487;( 4 and ( 1 or 3 ) );and 4 or 1 3;4
+488;( 5 or ( 3 and 5 ) );or 5 and 3 5;5
+489;( ( 1 or 5 ) and ( 3 and 3 ) );and or 1 5 and 3 3;3
+490;( not 4 and 3 );and not 4 3;3
+491;( ( 3 or 4 ) and 4 );and or 3 4 4;4
+492;( ( 2 or 3 ) and not 2 );and or 2 3 not 2;3
+493;( ( 2 and 4 ) or 4 );or and 2 4 4;4
+494;( ( 3 or 4 ) and 3 );and or 3 4 3;3
+495;( ( 3 or 2 ) and ( 1 and 1 ) );and or 3 2 and 1 1;1
+496;( ( 5 and 5 ) and ( 2 or 1 ) );and and 5 5 or 2 1;5
+497;( ( 1 and 3 ) or ( 3 and 4 ) );or and 1 3 and 3 4;3
+498;( ( 1 and 2 ) or ( 1 or 1 ) );or and 1 2 or 1 1;1
+499;( ( 3 or 2 ) and 4 );and or 3 2 4;4
+500;( ( 5 and 5 ) and ( 5 or 1 ) );and and 5 5 or 5 1;5
+501;( ( 1 or 2 ) and not 1 );and or 1 2 not 1;2
+502;( ( 3 and 3 ) and ( 3 or 3 ) );and and 3 3 or 3 3;3
+503;( 2 and not 4 );and 2 not 4;2
+504;( ( 1 and 5 ) or ( 1 and 4 ) );or and 1 5 and 1 4;1
+505;( 5 or ( 5 and 3 ) );or 5 and 5 3;5
+506;( 1 and ( 4 or 2 ) );and 1 or 4 2;1
+507;( ( 1 and 5 ) or ( 1 and 2 ) );or and 1 5 and 1 2;1
+508;( ( 2 or 3 ) and ( 5 or 5 ) );and or 2 3 or 5 5;5
+509;( ( 3 and 1 ) or ( 3 and 3 ) );or and 3 1 and 3 3;3
+510;( ( 3 and 5 ) or ( 1 and 5 ) );or and 3 5 and 1 5;5
+511;( not 2 and ( 5 and 5 ) );and not 2 and 5 5;5
+512;( ( 2 or 1 ) and ( 4 or 4 ) );and or 2 1 or 4 4;4
+513;( ( 5 and 3 ) or ( 4 and 3 ) );or and 5 3 and 4 3;3
+514;( ( 3 and 5 ) or ( 2 and 3 ) );or and 3 5 and 2 3;3
+515;( ( 3 and 3 ) and not 1 );and and 3 3 not 1;3
+516;( ( 1 and 1 ) and ( 2 or 4 ) );and and 1 1 or 2 4;1
+517;( 4 and not 2 );and 4 not 2;4
+518;( ( 1 and 1 ) or ( 5 and 1 ) );or and 1 1 and 5 1;1
+519;( ( 3 or 3 ) or ( 3 and 4 ) );or or 3 3 and 3 4;3
+520;( ( 2 or 2 ) and ( 5 or 3 ) );and or 2 2 or 5 3;2
+521;( ( 5 or 2 ) and ( 4 or 4 ) );and or 5 2 or 4 4;4
+522;( ( 3 or 2 ) and ( 4 or 4 ) );and or 3 2 or 4 4;4
+523;( ( 4 or 4 ) and ( 4 and 4 ) );and or 4 4 and 4 4;4
+524;( 3 or ( 3 and 5 ) );or 3 and 3 5;3
+525;( ( 2 and 5 ) or ( 3 and 2 ) );or and 2 5 and 3 2;2
+526;( ( 5 and 4 ) or ( 4 and 3 ) );or and 5 4 and 4 3;4
+527;( not 3 and ( 5 and 5 ) );and not 3 and 5 5;5
+528;( ( 1 or 2 ) and 5 );and or 1 2 5;5
+529;( 2 and ( 4 or 5 ) );and 2 or 4 5;2
+530;( ( 5 and 5 ) or 5 );or and 5 5 5;5
+531;( ( 4 or 5 ) and ( 4 or 4 ) );and or 4 5 or 4 4;4
+532;( ( 5 or 2 ) and ( 1 and 1 ) );and or 5 2 and 1 1;1
+533;( 3 and ( 5 or 1 ) );and 3 or 5 1;3
+534;( ( 5 or 3 ) and 2 );and or 5 3 2;2
+535;( ( 4 and 4 ) and not 3 );and and 4 4 not 3;4
+536;( ( 1 or 5 ) and 2 );and or 1 5 2;2
+537;( 1 or ( 1 and 5 ) );or 1 and 1 5;1
+538;( ( 2 and 4 ) or ( 1 and 2 ) );or and 2 4 and 1 2;2
+539;( ( 3 or 4 ) and 2 );and or 3 4 2;2
+540;( ( 3 or 1 ) and not 1 );and or 3 1 not 1;3
+541;( ( 1 and 1 ) or ( 1 or 1 ) );or and 1 1 or 1 1;1
+542;( 1 and ( 3 or 2 ) );and 1 or 3 2;1
+543;( ( 1 or 2 ) and not 2 );and or 1 2 not 2;1
+544;( ( 1 and 3 ) or ( 3 or 3 ) );or and 1 3 or 3 3;3
+545;( ( 5 or 4 ) and ( 3 or 3 ) );and or 5 4 or 3 3;3
+546;( ( 1 and 1 ) and ( 2 or 5 ) );and and 1 1 or 2 5;1
+547;( ( 3 and 1 ) or ( 3 and 2 ) );or and 3 1 and 3 2;3
+548;( not 3 and ( 2 or 2 ) );and not 3 or 2 2;2
+549;( not 1 and 4 );and not 1 4;4
+550;( ( 3 and 4 ) or ( 4 and 5 ) );or and 3 4 and 4 5;4
+551;( ( 4 and 4 ) and ( 4 or 4 ) );and and 4 4 or 4 4;4
+552;( not 1 and ( 4 or 1 ) );and not 1 or 4 1;4
+553;( ( 5 and 5 ) or ( 2 and 5 ) );or and 5 5 and 2 5;5
+554;( ( 3 or 1 ) and ( 2 and 2 ) );and or 3 1 and 2 2;2
+555;( ( 5 and 5 ) and ( 5 or 3 ) );and and 5 5 or 5 3;5
+556;( 3 or ( 4 and 3 ) );or 3 and 4 3;3
+557;( ( 5 and 5 ) and 5 );and and 5 5 5;5
+558;( ( 2 and 2 ) or ( 1 and 2 ) );or and 2 2 and 1 2;2
+559;( ( 5 or 5 ) and 5 );and or 5 5 5;5
+560;( ( 4 or 3 ) and ( 4 or 4 ) );and or 4 3 or 4 4;4
+561;( ( 4 and 2 ) or ( 4 and 1 ) );or and 4 2 and 4 1;4
+562;( ( 1 and 5 ) or ( 5 and 5 ) );or and 1 5 and 5 5;5
+563;( ( 1 and 5 ) or ( 5 and 3 ) );or and 1 5 and 5 3;5
+564;( 2 and ( 2 or 1 ) );and 2 or 2 1;2
+565;( ( 3 or 3 ) or ( 3 and 5 ) );or or 3 3 and 3 5;3
+566;( ( 2 and 1 ) or ( 1 and 3 ) );or and 2 1 and 1 3;1
+567;( ( 3 and 3 ) and ( 4 or 1 ) );and and 3 3 or 4 1;3
+568;( ( 4 and 1 ) or 1 );or and 4 1 1;1
+569;( ( 4 and 5 ) or ( 2 and 4 ) );or and 4 5 and 2 4;4
+570;( ( 1 and 5 ) or ( 1 and 3 ) );or and 1 5 and 1 3;1
+571;( 2 and ( 1 or 5 ) );and 2 or 1 5;2
+572;( ( 2 or 5 ) and not 2 );and or 2 5 not 2;5
+573;( ( 4 or 1 ) and 5 );and or 4 1 5;5
+574;( 2 and ( 3 or 1 ) );and 2 or 3 1;2
+575;( not 4 and ( 3 or 4 ) );and not 4 or 3 4;3
+576;( ( 2 and 4 ) or ( 4 and 3 ) );or and 2 4 and 4 3;4
+577;( ( 1 or 4 ) and ( 5 or 5 ) );and or 1 4 or 5 5;5
+578;( ( 1 or 4 ) and 4 );and or 1 4 4;4
+579;( ( 1 and 2 ) or ( 2 and 5 ) );or and 1 2 and 2 5;2
+580;( 2 or ( 4 and 2 ) );or 2 and 4 2;2
+581;( ( 1 and 4 ) or 1 );or and 1 4 1;1
+582;( 5 and ( 1 or 4 ) );and 5 or 1 4;5
+583;( ( 5 and 2 ) or ( 2 and 1 ) );or and 5 2 and 2 1;2
+584;( ( 4 and 5 ) or ( 5 and 1 ) );or and 4 5 and 5 1;5
+585;( not 1 and ( 1 or 3 ) );and not 1 or 1 3;3
+586;( ( 4 and 4 ) and ( 1 or 3 ) );and and 4 4 or 1 3;4
+587;( ( 3 and 4 ) or ( 1 and 3 ) );or and 3 4 and 1 3;3
+588;( ( 1 and 1 ) and ( 4 or 2 ) );and and 1 1 or 4 2;1
+589;( ( 2 or 5 ) and ( 3 and 3 ) );and or 2 5 and 3 3;3
+590;( ( 2 or 4 ) and ( 4 or 4 ) );and or 2 4 or 4 4;4
+591;( ( 2 and 3 ) or ( 5 and 2 ) );or and 2 3 and 5 2;2
+592;( ( 3 and 4 ) or ( 5 and 4 ) );or and 3 4 and 5 4;4
+593;( ( 1 or 4 ) and ( 3 and 3 ) );and or 1 4 and 3 3;3
+594;( ( 4 or 3 ) and 4 );and or 4 3 4;4
+595;( ( 1 and 3 ) or ( 5 and 1 ) );or and 1 3 and 5 1;1
+596;( 2 and 2 );and 2 2;2
+597;( ( 1 or 3 ) and ( 2 or 2 ) );and or 1 3 or 2 2;2
+598;( ( 2 and 2 ) or ( 3 and 2 ) );or and 2 2 and 3 2;2
+599;( ( 1 or 3 ) and ( 3 or 3 ) );and or 1 3 or 3 3;3
+600;( ( 4 or 3 ) and 2 );and or 4 3 2;2
+601;( ( 4 or 5 ) and ( 2 or 2 ) );and or 4 5 or 2 2;2
+602;( 5 and ( 3 or 5 ) );and 5 or 3 5;5
+603;( 4 and ( 4 or 5 ) );and 4 or 4 5;4
+604;( ( 1 and 2 ) or 2 );or and 1 2 2;2
+605;( 4 and ( 1 or 2 ) );and 4 or 1 2;4
+606;( ( 2 and 5 ) or ( 2 and 4 ) );or and 2 5 and 2 4;2
+607;( ( 4 or 4 ) or ( 2 and 4 ) );or or 4 4 and 2 4;4
+608;( ( 1 or 3 ) and not 1 );and or 1 3 not 1;3
+609;( ( 1 and 1 ) and ( 5 or 2 ) );and and 1 1 or 5 2;1
+610;( ( 4 and 2 ) or ( 2 and 5 ) );or and 4 2 and 2 5;2
+611;( ( 2 or 1 ) and ( 5 or 5 ) );and or 2 1 or 5 5;5
+612;( ( 2 and 2 ) and not 5 );and and 2 2 not 5;2
+613;( ( 1 or 1 ) or ( 4 and 1 ) );or or 1 1 and 4 1;1
+614;( ( 3 or 1 ) and ( 5 or 5 ) );and or 3 1 or 5 5;5
+615;( ( 4 and 3 ) or ( 1 and 4 ) );or and 4 3 and 1 4;4
+616;( ( 2 and 1 ) or ( 5 and 2 ) );or and 2 1 and 5 2;2
+617;( ( 1 and 1 ) and not 4 );and and 1 1 not 4;1
+618;( ( 4 and 4 ) or ( 3 and 4 ) );or and 4 4 and 3 4;4
+619;( 2 and ( 2 or 2 ) );and 2 or 2 2;2
+620;( 1 and ( 2 or 5 ) );and 1 or 2 5;1
+621;( ( 2 and 1 ) or ( 2 and 5 ) );or and 2 1 and 2 5;2
+622;( ( 5 and 4 ) or ( 3 and 5 ) );or and 5 4 and 3 5;5
+623;( not 4 and ( 2 or 4 ) );and not 4 or 2 4;2
+624;( ( 4 or 5 ) and ( 5 and 5 ) );and or 4 5 and 5 5;5
+625;( ( 3 and 3 ) and ( 5 or 2 ) );and and 3 3 or 5 2;3
+626;( not 1 and 2 );and not 1 2;2
+627;( ( 3 and 5 ) or ( 1 and 3 ) );or and 3 5 and 1 3;3
+628;( ( 3 and 4 ) or ( 5 and 3 ) );or and 3 4 and 5 3;3
+629;( ( 1 and 5 ) or ( 5 and 4 ) );or and 1 5 and 5 4;5
+630;( ( 2 and 5 ) or ( 2 and 1 ) );or and 2 5 and 2 1;2
+631;( ( 4 or 3 ) and 3 );and or 4 3 3;3
+632;( not 3 and ( 1 or 3 ) );and not 3 or 1 3;1
+633;( 2 and ( 2 or 5 ) );and 2 or 2 5;2
+634;( ( 2 and 5 ) or ( 3 and 5 ) );or and 2 5 and 3 5;5
+635;( ( 4 and 3 ) or ( 3 and 3 ) );or and 4 3 and 3 3;3
+636;( ( 3 or 4 ) and 5 );and or 3 4 5;5
+637;( ( 5 or 3 ) and ( 3 and 3 ) );and or 5 3 and 3 3;3
+638;( ( 5 or 3 ) and 3 );and or 5 3 3;3
+639;( not 1 and ( 3 or 3 ) );and not 1 or 3 3;3
+640;( ( 5 and 4 ) or ( 3 and 4 ) );or and 5 4 and 3 4;4
+641;( 1 or ( 1 or 1 ) );or 1 or 1 1;1
+642;( ( 2 or 1 ) and 2 );and or 2 1 2;2
+643;( 5 and ( 1 or 3 ) );and 5 or 1 3;5
+644;( ( 4 or 4 ) and ( 1 or 3 ) );and or 4 4 or 1 3;4
+645;( ( 5 or 3 ) and ( 4 and 4 ) );and or 5 3 and 4 4;4
+646;( ( 3 or 4 ) and ( 5 or 5 ) );and or 3 4 or 5 5;5
+647;( ( 2 or 2 ) and 2 );and or 2 2 2;2
+648;( ( 4 or 3 ) and 1 );and or 4 3 1;1
+649;( ( 4 and 1 ) or ( 1 and 3 ) );or and 4 1 and 1 3;1
+650;( ( 3 and 1 ) or ( 3 and 5 ) );or and 3 1 and 3 5;3
+651;( ( 3 and 2 ) or ( 3 and 5 ) );or and 3 2 and 3 5;3
+652;( ( 3 or 5 ) and 5 );and or 3 5 5;5
+653;( 1 and ( 5 or 4 ) );and 1 or 5 4;1
+654;( ( 1 or 1 ) and not 2 );and or 1 1 not 2;1
+655;( not 1 and ( 2 and 2 ) );and not 1 and 2 2;2
+656;( not 4 and ( 1 or 4 ) );and not 4 or 1 4;1
+657;( ( 5 and 5 ) and not 3 );and and 5 5 not 3;5
+658;( ( 5 or 4 ) and not 4 );and or 5 4 not 4;5
+659;( ( 5 or 5 ) and ( 1 or 2 ) );and or 5 5 or 1 2;5
+660;( ( 4 or 4 ) or ( 3 and 4 ) );or or 4 4 and 3 4;4
+661;( ( 1 and 3 ) or ( 3 and 5 ) );or and 1 3 and 3 5;3
+662;( ( 4 or 2 ) and ( 3 and 3 ) );and or 4 2 and 3 3;3
+663;( ( 5 or 1 ) and ( 4 or 4 ) );and or 5 1 or 4 4;4
+664;( ( 5 and 3 ) or ( 5 and 4 ) );or and 5 3 and 5 4;5
+665;( ( 4 and 4 ) and 4 );and and 4 4 4;4
+666;( ( 5 or 4 ) and ( 2 or 2 ) );and or 5 4 or 2 2;2
+667;( ( 5 or 2 ) and not 5 );and or 5 2 not 5;2
+668;( ( 5 and 3 ) or ( 1 and 5 ) );or and 5 3 and 1 5;5
+669;( 2 and ( 5 or 1 ) );and 2 or 5 1;2
+670;( ( 5 or 5 ) or ( 1 and 5 ) );or or 5 5 and 1 5;5
+671;( ( 1 and 1 ) and ( 2 or 1 ) );and and 1 1 or 2 1;1
+672;( 2 and ( 5 or 3 ) );and 2 or 5 3;2
+673;( ( 3 and 5 ) or ( 5 and 4 ) );or and 3 5 and 5 4;5
+674;( not 4 and ( 5 or 4 ) );and not 4 or 5 4;5
+675;( ( 2 or 3 ) and 1 );and or 2 3 1;1
+676;( ( 1 and 4 ) or ( 1 and 3 ) );or and 1 4 and 1 3;1
+677;( ( 2 and 3 ) or ( 2 and 5 ) );or and 2 3 and 2 5;2
+678;( 5 or 5 );or 5 5;5
+679;( ( 5 and 3 ) or ( 1 and 3 ) );or and 5 3 and 1 3;3
+680;( ( 1 or 1 ) and ( 5 or 1 ) );and or 1 1 or 5 1;1
+681;( ( 4 or 4 ) and ( 5 or 4 ) );and or 4 4 or 5 4;4
+682;( 1 and ( 1 or 4 ) );and 1 or 1 4;1
+683;( ( 1 or 1 ) and ( 3 or 4 ) );and or 1 1 or 3 4;1
+684;( ( 4 or 4 ) or ( 4 and 2 ) );or or 4 4 and 4 2;4
+685;( ( 4 or 2 ) and ( 2 or 2 ) );and or 4 2 or 2 2;2
+686;( ( 2 and 1 ) or ( 1 and 1 ) );or and 2 1 and 1 1;1
+687;( ( 5 or 5 ) and ( 4 or 5 ) );and or 5 5 or 4 5;5
+688;( ( 5 and 5 ) and not 2 );and and 5 5 not 2;5
+689;( ( 1 and 1 ) and ( 1 and 1 ) );and and 1 1 and 1 1;1
+690;( ( 2 or 2 ) and ( 5 or 1 ) );and or 2 2 or 5 1;2
+691;( ( 2 and 2 ) and ( 4 or 1 ) );and and 2 2 or 4 1;2
+692;( ( 1 or 3 ) and 4 );and or 1 3 4;4
+693;( ( 4 and 4 ) and ( 3 or 5 ) );and and 4 4 or 3 5;4
+694;( ( 2 or 1 ) and ( 4 and 4 ) );and or 2 1 and 4 4;4
+695;( ( 4 or 1 ) and ( 4 and 4 ) );and or 4 1 and 4 4;4
+696;( ( 2 or 3 ) and 3 );and or 2 3 3;3
+697;( ( 3 or 3 ) and ( 2 or 4 ) );and or 3 3 or 2 4;3
+698;( ( 2 and 3 ) or ( 5 and 3 ) );or and 2 3 and 5 3;3
+699;( ( 4 or 2 ) and 3 );and or 4 2 3;3
+700;( ( 2 and 2 ) or ( 2 and 3 ) );or and 2 2 and 2 3;2
+701;( ( 5 or 2 ) and 1 );and or 5 2 1;1
+702;( ( 4 and 1 ) or ( 3 and 1 ) );or and 4 1 and 3 1;1
+703;( ( 1 or 5 ) and ( 2 or 2 ) );and or 1 5 or 2 2;2
+704;( ( 5 or 2 ) and ( 2 and 2 ) );and or 5 2 and 2 2;2
+705;( ( 1 and 5 ) or ( 3 and 1 ) );or and 1 5 and 3 1;1
+706;( 1 or ( 1 and 4 ) );or 1 and 1 4;1
+707;( ( 5 and 1 ) or ( 3 and 1 ) );or and 5 1 and 3 1;1
+708;( ( 3 and 2 ) or ( 3 and 1 ) );or and 3 2 and 3 1;3
+709;( ( 5 and 4 ) or ( 5 and 5 ) );or and 5 4 and 5 5;5
+710;( not 2 and ( 4 and 4 ) );and not 2 and 4 4;4
+711;( ( 2 and 4 ) or ( 4 and 1 ) );or and 2 4 and 4 1;4
+712;( ( 5 or 1 ) and 5 );and or 5 1 5;5
+713;( ( 5 or 3 ) and ( 3 or 3 ) );and or 5 3 or 3 3;3
+714;( ( 1 and 1 ) or ( 1 and 5 ) );or and 1 1 and 1 5;1
+715;( ( 5 and 3 ) or ( 3 or 3 ) );or and 5 3 or 3 3;3
+716;( 2 and ( 3 or 5 ) );and 2 or 3 5;2
+717;( ( 3 or 4 ) and ( 1 or 1 ) );and or 3 4 or 1 1;1
+718;( ( 5 and 3 ) or ( 3 and 1 ) );or and 5 3 and 3 1;3
+719;( not 4 and ( 4 or 5 ) );and not 4 or 4 5;5
+720;( 3 and ( 4 or 1 ) );and 3 or 4 1;3
+721;( ( 5 and 5 ) and ( 4 or 1 ) );and and 5 5 or 4 1;5
+722;( ( 3 or 3 ) and ( 5 or 1 ) );and or 3 3 or 5 1;3
+723;( ( 1 or 4 ) and 3 );and or 1 4 3;3
+724;( ( 5 or 5 ) and not 3 );and or 5 5 not 3;5
+725;( ( 1 and 2 ) or ( 2 and 4 ) );or and 1 2 and 2 4;2
+726;( ( 2 and 2 ) and ( 5 or 4 ) );and and 2 2 or 5 4;2
+727;( ( 1 or 1 ) and ( 4 or 3 ) );and or 1 1 or 4 3;1
+728;( ( 4 and 4 ) and ( 4 or 3 ) );and and 4 4 or 4 3;4
+729;( ( 3 or 3 ) and not 4 );and or 3 3 not 4;3
+730;( ( 3 or 4 ) and not 3 );and or 3 4 not 3;4
+731;( ( 1 and 1 ) and not 2 );and and 1 1 not 2;1
+732;( ( 3 and 3 ) and ( 5 or 3 ) );and and 3 3 or 5 3;3
+733;( ( 2 and 1 ) or ( 3 and 2 ) );or and 2 1 and 3 2;2
+734;( ( 3 and 3 ) and ( 2 or 1 ) );and and 3 3 or 2 1;3
+735;( ( 4 or 1 ) and ( 1 or 1 ) );and or 4 1 or 1 1;1
+736;( ( 5 and 2 ) or ( 5 and 3 ) );or and 5 2 and 5 3;5
+737;( ( 4 or 1 ) and 1 );and or 4 1 1;1
+738;( ( 4 or 4 ) and not 2 );and or 4 4 not 2;4
+739;( ( 2 or 5 ) and 5 );and or 2 5 5;5
+740;( ( 5 and 4 ) or ( 1 and 5 ) );or and 5 4 and 1 5;5
+741;( 4 and ( 5 or 3 ) );and 4 or 5 3;4
+742;( ( 1 or 2 ) and ( 4 or 4 ) );and or 1 2 or 4 4;4
+743;( ( 2 and 2 ) and ( 3 or 2 ) );and and 2 2 or 3 2;2
+744;( ( 2 or 2 ) and ( 3 or 4 ) );and or 2 2 or 3 4;2
+745;( ( 1 and 3 ) or ( 2 and 1 ) );or and 1 3 and 2 1;1
+746;( ( 5 or 4 ) and not 5 );and or 5 4 not 5;4
+747;( ( 5 or 2 ) and 5 );and or 5 2 5;5
+748;( ( 4 and 2 ) or ( 2 and 1 ) );or and 4 2 and 2 1;2
+749;( ( 2 and 3 ) or ( 4 and 2 ) );or and 2 3 and 4 2;2
+750;( 5 or ( 5 and 1 ) );or 5 and 5 1;5
+751;( ( 3 and 3 ) and ( 1 or 4 ) );and and 3 3 or 1 4;3
+752;( ( 5 and 4 ) or ( 5 and 1 ) );or and 5 4 and 5 1;5
+753;( ( 3 or 1 ) and ( 4 and 4 ) );and or 3 1 and 4 4;4
+754;( ( 1 or 3 ) and 3 );and or 1 3 3;3
+755;( ( 3 and 3 ) and ( 4 or 3 ) );and and 3 3 or 4 3;3
+756;( ( 3 and 4 ) or ( 3 and 5 ) );or and 3 4 and 3 5;3
+757;( ( 2 and 1 ) or 1 );or and 2 1 1;1
+758;( ( 5 or 5 ) and ( 5 or 1 ) );and or 5 5 or 5 1;5
+759;( ( 1 and 4 ) or ( 2 and 4 ) );or and 1 4 and 2 4;4
+760;( ( 1 and 5 ) or ( 1 and 1 ) );or and 1 5 and 1 1;1
+761;( ( 5 or 5 ) or 5 );or or 5 5 5;5
+762;( ( 4 and 4 ) and ( 1 or 4 ) );and and 4 4 or 1 4;4
+763;( ( 2 or 5 ) and 1 );and or 2 5 1;1
+764;( ( 2 or 2 ) and not 3 );and or 2 2 not 3;2
+765;( ( 1 or 4 ) and ( 2 or 2 ) );and or 1 4 or 2 2;2
+766;( ( 5 and 3 ) or ( 4 and 5 ) );or and 5 3 and 4 5;5
+767;( ( 3 and 4 ) or ( 3 and 3 ) );or and 3 4 and 3 3;3
+768;( ( 5 and 4 ) or 4 );or and 5 4 4;4
+769;( ( 2 or 3 ) and ( 4 or 4 ) );and or 2 3 or 4 4;4
+770;( ( 4 or 5 ) and ( 3 and 3 ) );and or 4 5 and 3 3;3
+771;( ( 4 or 4 ) and ( 1 or 5 ) );and or 4 4 or 1 5;4
+772;( 3 or ( 1 and 3 ) );or 3 and 1 3;3
+773;( ( 4 or 5 ) and 3 );and or 4 5 3;3
+774;( ( 3 or 3 ) and ( 1 or 4 ) );and or 3 3 or 1 4;3
+775;( ( 5 and 4 ) or ( 4 or 4 ) );or and 5 4 or 4 4;4
+776;( ( 2 or 3 ) and ( 3 and 3 ) );and or 2 3 and 3 3;3
+777;( ( 3 or 3 ) and ( 4 or 5 ) );and or 3 3 or 4 5;3
+778;( ( 1 or 1 ) and ( 4 or 1 ) );and or 1 1 or 4 1;1
+779;( ( 4 or 1 ) and ( 4 or 4 ) );and or 4 1 or 4 4;4
+780;( ( 2 and 3 ) or ( 1 and 3 ) );or and 2 3 and 1 3;3
+781;( ( 4 or 4 ) or ( 1 and 4 ) );or or 4 4 and 1 4;4
+782;( ( 3 or 1 ) and ( 3 or 3 ) );and or 3 1 or 3 3;3
+783;( ( 2 or 1 ) and ( 1 or 1 ) );and or 2 1 or 1 1;1
+784;( ( 4 and 4 ) and ( 2 or 1 ) );and and 4 4 or 2 1;4
+785;( ( 5 or 3 ) and ( 1 or 1 ) );and or 5 3 or 1 1;1
+786;( ( 1 and 5 ) or ( 2 and 5 ) );or and 1 5 and 2 5;5
+787;( 2 and ( 4 or 1 ) );and 2 or 4 1;2
+788;( 2 or ( 5 and 2 ) );or 2 and 5 2;2
+789;( ( 5 or 4 ) and 1 );and or 5 4 1;1
+790;( ( 2 or 5 ) and not 5 );and or 2 5 not 5;2
+791;( ( 4 and 1 ) or ( 4 or 4 ) );or and 4 1 or 4 4;4
+792;( ( 4 or 2 ) and 4 );and or 4 2 4;4
+793;( ( 5 or 4 ) and ( 1 or 1 ) );and or 5 4 or 1 1;1
+794;( ( 5 or 5 ) and ( 1 or 4 ) );and or 5 5 or 1 4;5
+795;( ( 1 and 2 ) or ( 2 and 2 ) );or and 1 2 and 2 2;2
+796;( 4 or ( 4 and 1 ) );or 4 and 4 1;4
+797;( 3 and ( 3 or 3 ) );and 3 or 3 3;3
+798;( ( 2 and 5 ) or 5 );or and 2 5 5;5
+799;( not 2 and ( 5 or 2 ) );and not 2 or 5 2;5
+800;( ( 1 or 1 ) and ( 3 or 1 ) );and or 1 1 or 3 1;1
+801;( ( 5 or 5 ) and ( 3 or 4 ) );and or 5 5 or 3 4;5
+802;( ( 4 and 4 ) and ( 3 or 1 ) );and and 4 4 or 3 1;4
+803;( ( 5 and 2 ) or ( 3 and 5 ) );or and 5 2 and 3 5;5
+804;( ( 3 or 1 ) and 1 );and or 3 1 1;1
+805;( ( 5 and 3 ) or ( 2 and 5 ) );or and 5 3 and 2 5;5
+806;( ( 2 or 1 ) and 3 );and or 2 1 3;3
+807;( 3 and ( 2 or 3 ) );and 3 or 2 3;3
+808;( ( 3 or 3 ) and ( 2 or 3 ) );and or 3 3 or 2 3;3
+809;( ( 2 or 2 ) and not 4 );and or 2 2 not 4;2
+810;( 5 or ( 5 and 2 ) );or 5 and 5 2;5
+811;( ( 2 and 2 ) and ( 4 or 2 ) );and and 2 2 or 4 2;2
+812;( ( 2 or 2 ) or ( 1 and 2 ) );or or 2 2 and 1 2;2
+813;( ( 4 and 1 ) or ( 1 and 2 ) );or and 4 1 and 1 2;1
+814;( ( 4 or 4 ) and ( 3 or 5 ) );and or 4 4 or 3 5;4
+815;( ( 4 and 1 ) or ( 5 and 1 ) );or and 4 1 and 5 1;1
+816;( 4 or ( 4 and 5 ) );or 4 and 4 5;4
+817;( ( 2 or 3 ) and 5 );and or 2 3 5;5
+818;( ( 4 and 5 ) or ( 4 and 2 ) );or and 4 5 and 4 2;4
+819;( ( 2 and 4 ) or ( 5 and 4 ) );or and 2 4 and 5 4;4
+820;( ( 5 or 4 ) and 2 );and or 5 4 2;2
+821;( ( 4 and 4 ) or ( 1 and 4 ) );or and 4 4 and 1 4;4
+822;( not 1 and ( 1 or 2 ) );and not 1 or 1 2;2
+823;( ( 5 and 4 ) or 5 );or and 5 4 5;5
+824;( ( 5 or 5 ) or ( 4 and 5 ) );or or 5 5 and 4 5;5
+825;( ( 4 or 1 ) and ( 1 and 1 ) );and or 4 1 and 1 1;1
+826;( ( 1 or 2 ) and ( 3 and 3 ) );and or 1 2 and 3 3;3
+827;( ( 3 or 4 ) and 1 );and or 3 4 1;1
+828;( ( 2 and 4 ) or ( 3 and 2 ) );or and 2 4 and 3 2;2
+829;( 4 and ( 5 or 2 ) );and 4 or 5 2;4
+830;( ( 4 or 3 ) and ( 1 or 1 ) );and or 4 3 or 1 1;1
+831;( ( 4 or 3 ) and not 4 );and or 4 3 not 4;3
+832;( ( 4 or 5 ) and ( 1 or 1 ) );and or 4 5 or 1 1;1
+833;( 3 and ( 4 or 5 ) );and 3 or 4 5;3
+834;( ( 4 or 2 ) and 2 );and or 4 2 2;2
+835;( ( 1 and 1 ) or ( 3 and 1 ) );or and 1 1 and 3 1;1
+836;( ( 1 and 3 ) or 1 );or and 1 3 1;1
+837;( ( 2 or 2 ) and ( 2 or 2 ) );and or 2 2 or 2 2;2
+838;( ( 5 and 5 ) or ( 5 and 3 ) );or and 5 5 and 5 3;5
+839;( 3 and ( 1 or 2 ) );and 3 or 1 2;3
+840;( 2 and ( 2 or 4 ) );and 2 or 2 4;2
+841;( ( 2 or 2 ) and ( 1 or 4 ) );and or 2 2 or 1 4;2
+842;( ( 1 and 3 ) or ( 1 and 5 ) );or and 1 3 and 1 5;1
+843;( ( 3 and 1 ) or ( 3 or 3 ) );or and 3 1 or 3 3;3
+844;( ( 5 or 1 ) and ( 3 and 3 ) );and or 5 1 and 3 3;3
+845;( 2 and ( 5 or 2 ) );and 2 or 5 2;2
+846;( ( 1 and 1 ) and ( 1 or 5 ) );and and 1 1 or 1 5;1
+847;( ( 5 or 5 ) and ( 2 or 3 ) );and or 5 5 or 2 3;5
+848;( ( 1 or 3 ) and ( 1 and 1 ) );and or 1 3 and 1 1;1
+849;( ( 2 and 1 ) or ( 5 and 1 ) );or and 2 1 and 5 1;1
+850;( 5 and ( 2 or 3 ) );and 5 or 2 3;5
+851;( ( 2 or 1 ) and 5 );and or 2 1 5;5
+852;( ( 5 or 2 ) and ( 3 or 3 ) );and or 5 2 or 3 3;3
+853;( ( 3 and 5 ) or ( 3 or 3 ) );or and 3 5 or 3 3;3
+854;( ( 5 and 4 ) or ( 4 and 1 ) );or and 5 4 and 4 1;4
+855;( 2 and ( 3 or 4 ) );and 2 or 3 4;2
+856;( ( 4 and 1 ) or ( 5 and 4 ) );or and 4 1 and 5 4;4
+857;( ( 2 or 3 ) and 4 );and or 2 3 4;4
+858;( ( 5 or 4 ) and 3 );and or 5 4 3;3
+859;( ( 5 or 4 ) and ( 3 and 3 ) );and or 5 4 and 3 3;3
+860;( ( 3 and 4 ) or ( 3 and 2 ) );or and 3 4 and 3 2;3
+861;( ( 1 or 2 ) and ( 3 or 3 ) );and or 1 2 or 3 3;3
+862;( ( 5 or 5 ) and ( 2 or 1 ) );and or 5 5 or 2 1;5
+863;( ( 1 and 2 ) or 1 );or and 1 2 1;1
+864;( ( 4 and 4 ) and ( 2 or 4 ) );and and 4 4 or 2 4;4
+865;( ( 3 or 5 ) and 1 );and or 3 5 1;1
+866;( ( 3 and 5 ) or ( 5 or 5 ) );or and 3 5 or 5 5;5
+867;( ( 3 and 3 ) and ( 5 or 1 ) );and and 3 3 or 5 1;3
+868;( ( 4 and 1 ) or ( 3 and 4 ) );or and 4 1 and 3 4;4
+869;( ( 3 or 1 ) and 2 );and or 3 1 2;2
+870;( ( 3 or 1 ) and not 3 );and or 3 1 not 3;1
+871;( ( 4 and 5 ) or ( 2 and 5 ) );or and 4 5 and 2 5;5
+872;( ( 5 and 3 ) or ( 5 or 5 ) );or and 5 3 or 5 5;5
+873;( ( 1 or 1 ) or ( 1 and 1 ) );or or 1 1 and 1 1;1
+874;( ( 3 and 3 ) or 3 );or and 3 3 3;3
+875;( ( 3 or 2 ) and 3 );and or 3 2 3;3
+876;( ( 2 and 4 ) or ( 2 and 5 ) );or and 2 4 and 2 5;2
+877;( ( 5 and 4 ) or ( 2 and 5 ) );or and 5 4 and 2 5;5
+878;( ( 4 and 2 ) or ( 4 and 3 ) );or and 4 2 and 4 3;4
+879;( ( 1 and 1 ) and ( 4 or 1 ) );and and 1 1 or 4 1;1
+880;( ( 2 and 2 ) and ( 4 or 3 ) );and and 2 2 or 4 3;2
+881;( ( 5 and 3 ) or ( 3 and 3 ) );or and 5 3 and 3 3;3
+882;( ( 4 or 4 ) and ( 3 or 2 ) );and or 4 4 or 3 2;4
+883;( ( 2 or 2 ) and ( 2 or 4 ) );and or 2 2 or 2 4;2
+884;( ( 2 or 1 ) and ( 3 or 3 ) );and or 2 1 or 3 3;3
+885;( ( 5 and 5 ) and ( 2 or 4 ) );and and 5 5 or 2 4;5
+886;( ( 2 and 2 ) and ( 5 or 1 ) );and and 2 2 or 5 1;2
+887;( ( 4 or 3 ) and ( 3 and 3 ) );and or 4 3 and 3 3;3
+888;( ( 2 or 2 ) and ( 3 or 2 ) );and or 2 2 or 3 2;2
+889;( ( 1 or 1 ) and not 3 );and or 1 1 not 3;1
+890;( ( 3 or 1 ) and ( 1 and 1 ) );and or 3 1 and 1 1;1
+891;( ( 1 and 5 ) or 1 );or and 1 5 1;1
+892;( ( 1 and 4 ) or ( 4 or 4 ) );or and 1 4 or 4 4;4
+893;( ( 4 or 4 ) and ( 4 or 3 ) );and or 4 4 or 4 3;4
+894;( ( 4 and 1 ) or ( 1 or 1 ) );or and 4 1 or 1 1;1
+895;( ( 5 or 3 ) and ( 2 or 2 ) );and or 5 3 or 2 2;2
+896;( 1 and ( 5 or 2 ) );and 1 or 5 2;1
+897;( not 3 and ( 3 or 5 ) );and not 3 or 3 5;5
+898;( ( 1 or 1 ) or 1 );or or 1 1 1;1
+899;( ( 1 and 3 ) or ( 4 and 3 ) );or and 1 3 and 4 3;3
+900;( ( 5 or 1 ) and ( 5 or 5 ) );and or 5 1 or 5 5;5
+901;( ( 5 or 2 ) and ( 5 or 5 ) );and or 5 2 or 5 5;5
+902;( 4 or ( 3 and 4 ) );or 4 and 3 4;4
+903;( ( 4 or 5 ) and 5 );and or 4 5 5;5
+904;( ( 2 or 2 ) or ( 3 and 2 ) );or or 2 2 and 3 2;2
+905;( ( 2 or 3 ) and ( 1 or 1 ) );and or 2 3 or 1 1;1
+906;( ( 1 or 1 ) and ( 4 or 2 ) );and or 1 1 or 4 2;1
+907;( ( 1 or 1 ) or ( 1 and 4 ) );or or 1 1 and 1 4;1
+908;( ( 2 or 2 ) and ( 3 or 5 ) );and or 2 2 or 3 5;2
+909;( ( 3 and 3 ) and ( 1 or 5 ) );and and 3 3 or 1 5;3
+910;( ( 4 and 4 ) or ( 4 or 4 ) );or and 4 4 or 4 4;4
+911;( ( 4 or 2 ) and ( 2 and 2 ) );and or 4 2 and 2 2;2
+912;( ( 5 or 1 ) and ( 1 or 1 ) );and or 5 1 or 1 1;1
+913;( ( 1 and 2 ) or ( 2 and 3 ) );or and 1 2 and 2 3;2
+914;( 3 and ( 1 or 4 ) );and 3 or 1 4;3
+915;( ( 2 and 3 ) or ( 3 and 1 ) );or and 2 3 and 3 1;3
+916;( ( 5 and 5 ) and ( 3 or 4 ) );and and 5 5 or 3 4;5
+917;( ( 4 or 1 ) and 3 );and or 4 1 3;3
+918;( ( 5 or 2 ) and ( 3 and 3 ) );and or 5 2 and 3 3;3
+919;( ( 1 and 5 ) or 5 );or and 1 5 5;5
+920;( ( 2 or 5 ) and 3 );and or 2 5 3;3
+921;( ( 2 and 3 ) or ( 1 and 2 ) );or and 2 3 and 1 2;2
+922;( ( 2 and 2 ) or ( 2 and 2 ) );or and 2 2 and 2 2;2
+923;( ( 1 or 1 ) and ( 3 or 2 ) );and or 1 1 or 3 2;1
+924;( ( 5 and 5 ) and ( 1 or 5 ) );and and 5 5 or 1 5;5
+925;( ( 2 or 4 ) and ( 5 and 5 ) );and or 2 4 and 5 5;5
+926;( 1 and ( 5 or 1 ) );and 1 or 5 1;1
+927;( ( 3 or 1 ) and ( 5 and 5 ) );and or 3 1 and 5 5;5
+928;( ( 5 and 2 ) or 5 );or and 5 2 5;5
+929;( ( 3 and 5 ) or ( 4 and 5 ) );or and 3 5 and 4 5;5
+930;( ( 1 or 1 ) and ( 1 or 3 ) );and or 1 1 or 1 3;1
+931;( ( 1 and 1 ) and 1 );and and 1 1 1;1
+932;( ( 5 and 5 ) and ( 1 or 2 ) );and and 5 5 or 1 2;5
+933;( 2 or ( 2 and 1 ) );or 2 and 2 1;2
+934;( ( 3 and 1 ) or ( 5 and 3 ) );or and 3 1 and 5 3;3
+935;( ( 2 or 5 ) and ( 1 or 1 ) );and or 2 5 or 1 1;1
+936;( ( 1 or 2 ) and ( 1 or 1 ) );and or 1 2 or 1 1;1
+937;( ( 3 or 1 ) and ( 2 or 2 ) );and or 3 1 or 2 2;2
+938;( ( 3 or 3 ) or 3 );or or 3 3 3;3
+939;( ( 4 and 2 ) or ( 1 and 4 ) );or and 4 2 and 1 4;4
+940;( ( 5 or 1 ) and 2 );and or 5 1 2;2
+941;( 3 or ( 3 and 3 ) );or 3 and 3 3;3
+942;( ( 5 and 4 ) or ( 5 and 2 ) );or and 5 4 and 5 2;5
+943;( ( 1 or 5 ) and ( 3 or 3 ) );and or 1 5 or 3 3;3
+944;( 4 or ( 5 and 4 ) );or 4 and 5 4;4
+945;( ( 2 or 2 ) and ( 4 or 1 ) );and or 2 2 or 4 1;2
+946;( ( 4 and 2 ) or 2 );or and 4 2 2;2
+947;( ( 5 and 5 ) and ( 4 or 2 ) );and and 5 5 or 4 2;5
+948;( ( 2 and 2 ) and ( 2 or 4 ) );and and 2 2 or 2 4;2
+949;( ( 2 and 3 ) or ( 2 or 2 ) );or and 2 3 or 2 2;2
+950;( not 4 and ( 5 and 5 ) );and not 4 and 5 5;5
+951;( ( 3 or 5 ) and 3 );and or 3 5 3;3
+952;( 5 and ( 2 or 4 ) );and 5 or 2 4;5
+953;( ( 1 or 1 ) and ( 2 or 5 ) );and or 1 1 or 2 5;1
+954;( 1 and ( 3 or 1 ) );and 1 or 3 1;1
+955;( ( 5 or 1 ) and ( 1 and 1 ) );and or 5 1 and 1 1;1
+956;( ( 5 or 2 ) and ( 1 or 1 ) );and or 5 2 or 1 1;1
+957;( ( 2 or 4 ) and 5 );and or 2 4 5;5
+958;( ( 4 or 5 ) and 1 );and or 4 5 1;1
+959;( ( 1 or 3 ) and ( 5 and 5 ) );and or 1 3 and 5 5;5
+960;( ( 3 and 2 ) or ( 3 and 3 ) );or and 3 2 and 3 3;3
+961;( 4 and ( 4 or 1 ) );and 4 or 4 1;4
+962;( ( 2 and 5 ) or ( 2 and 3 ) );or and 2 5 and 2 3;2
+963;( ( 1 and 1 ) or ( 2 and 1 ) );or and 1 1 and 2 1;1
+964;( ( 4 and 5 ) or ( 5 and 5 ) );or and 4 5 and 5 5;5
+965;( ( 3 and 3 ) and ( 1 or 2 ) );and and 3 3 or 1 2;3
+966;( 2 or ( 1 and 2 ) );or 2 and 1 2;2
+967;( ( 3 and 4 ) or ( 4 and 1 ) );or and 3 4 and 4 1;4
+968;( ( 2 and 1 ) or ( 4 and 2 ) );or and 2 1 and 4 2;2
+969;( ( 1 and 3 ) or ( 4 and 1 ) );or and 1 3 and 4 1;1
+970;( ( 2 and 1 ) or ( 2 or 2 ) );or and 2 1 or 2 2;2
+971;( ( 3 and 4 ) or ( 4 and 2 ) );or and 3 4 and 4 2;4
+972;( ( 3 and 5 ) or ( 5 and 5 ) );or and 3 5 and 5 5;5
+973;( ( 1 or 3 ) and 5 );and or 1 3 5;5
+974;( ( 3 or 3 ) and ( 2 or 1 ) );and or 3 3 or 2 1;3
+975;( ( 4 and 3 ) or ( 2 and 4 ) );or and 4 3 and 2 4;4
+976;( ( 3 and 3 ) and ( 3 and 3 ) );and and 3 3 and 3 3;3
+977;( ( 4 and 5 ) or 5 );or and 4 5 5;5
+978;( ( 3 or 3 ) or ( 1 and 3 ) );or or 3 3 and 1 3;3
+979;( 5 and ( 4 or 1 ) );and 5 or 4 1;5
+980;( ( 5 or 5 ) or ( 5 and 5 ) );or or 5 5 and 5 5;5
+981;( ( 4 and 3 ) or ( 3 and 5 ) );or and 4 3 and 3 5;3
+982;( ( 3 or 3 ) or ( 3 or 3 ) );or or 3 3 or 3 3;3
+983;( ( 2 or 3 ) and ( 2 and 2 ) );and or 2 3 and 2 2;2
+984;( 3 and ( 5 or 4 ) );and 3 or 5 4;3
+985;( ( 3 or 3 ) and ( 3 or 3 ) );and or 3 3 or 3 3;3
+986;( ( 2 or 2 ) or ( 2 or 2 ) );or or 2 2 or 2 2;2
+987;( ( 3 or 3 ) or ( 3 and 2 ) );or or 3 3 and 3 2;3
+988;( ( 1 and 1 ) and ( 3 or 2 ) );and and 1 1 or 3 2;1
+989;( ( 1 and 4 ) or ( 1 or 1 ) );or and 1 4 or 1 1;1
+990;( ( 3 or 5 ) and ( 1 or 1 ) );and or 3 5 or 1 1;1
+991;( ( 5 or 2 ) and 2 );and or 5 2 2;2
+992;( ( 4 and 4 ) or ( 4 and 4 ) );or and 4 4 and 4 4;4
+993;( ( 4 or 4 ) or 4 );or or 4 4 4;4
+994;( 3 or ( 2 and 3 ) );or 3 and 2 3;3
+995;( ( 4 and 4 ) or ( 4 and 2 ) );or and 4 4 and 4 2;4
+996;( ( 4 and 4 ) or 4 );or and 4 4 4;4
+997;( ( 4 and 1 ) or 4 );or and 4 1 4;4
+998;( ( 3 or 2 ) and 5 );and or 3 2 5;5
+999;( 4 and ( 1 or 4 ) );and 4 or 1 4;4
+1000;( not 2 and ( 3 and 3 ) );and not 2 and 3 3;3
+1001;( ( 1 or 1 ) or ( 5 and 1 ) );or or 1 1 and 5 1;1
+1002;( ( 5 and 2 ) or ( 1 and 2 ) );or and 5 2 and 1 2;2
+1003;( 4 or ( 1 and 4 ) );or 4 and 1 4;4
+1004;( ( 4 and 5 ) or ( 1 and 4 ) );or and 4 5 and 1 4;4
+1005;( ( 3 and 1 ) or ( 4 and 1 ) );or and 3 1 and 4 1;1
+1006;( 5 or ( 4 and 5 ) );or 5 and 4 5;5
+1007;( ( 3 and 1 ) or ( 4 and 3 ) );or and 3 1 and 4 3;3
+1008;( 3 and ( 4 or 3 ) );and 3 or 4 3;3
+1009;( ( 2 and 2 ) or ( 4 and 2 ) );or and 2 2 and 4 2;2
+1010;( ( 4 or 4 ) and ( 2 or 5 ) );and or 4 4 or 2 5;4
+1011;( ( 2 or 2 ) and ( 5 or 2 ) );and or 2 2 or 5 2;2
+1012;( ( 3 and 4 ) or ( 4 or 4 ) );or and 3 4 or 4 4;4
+1013;( ( 2 and 1 ) or ( 2 and 2 ) );or and 2 1 and 2 2;2
+1014;( 2 or ( 2 and 3 ) );or 2 and 2 3;2
+1015;( ( 3 or 2 ) and ( 2 and 2 ) );and or 3 2 and 2 2;2
+1016;( ( 3 and 5 ) or ( 3 and 2 ) );or and 3 5 and 3 2;3
+1017;( ( 5 and 3 ) or ( 5 and 1 ) );or and 5 3 and 5 1;5
+1018;( ( 5 or 5 ) and ( 4 or 3 ) );and or 5 5 or 4 3;5
+1019;( ( 3 or 3 ) or ( 3 and 3 ) );or or 3 3 and 3 3;3
+1020;( ( 5 or 5 ) or ( 5 and 1 ) );or or 5 5 and 5 1;5
+1021;( ( 4 and 4 ) or ( 2 and 4 ) );or and 4 4 and 2 4;4
+1022;( ( 5 or 1 ) and ( 2 and 2 ) );and or 5 1 and 2 2;2
+1023;( ( 5 and 2 ) or 2 );or and 5 2 2;2
+1024;( ( 4 or 4 ) or ( 4 and 1 ) );or or 4 4 and 4 1;4
+1025;( ( 2 and 5 ) or ( 1 and 5 ) );or and 2 5 and 1 5;5
+1026;( ( 5 or 1 ) and 3 );and or 5 1 3;3
+1027;( ( 3 or 1 ) and 4 );and or 3 1 4;4
+1028;( ( 1 or 1 ) or ( 2 and 1 ) );or or 1 1 and 2 1;1
+1029;( ( 2 and 2 ) and ( 2 or 5 ) );and and 2 2 or 2 5;2
+1030;( ( 3 and 3 ) and ( 2 or 4 ) );and and 3 3 or 2 4;3
+1031;( ( 3 and 4 ) or 4 );or and 3 4 4;4
+1032;( ( 5 or 4 ) and 4 );and or 5 4 4;4
+1033;( ( 5 and 1 ) or ( 1 and 1 ) );or and 5 1 and 1 1;1
+1034;( ( 2 or 2 ) or ( 2 and 5 ) );or or 2 2 and 2 5;2
+1035;( ( 2 and 3 ) or ( 4 and 3 ) );or and 2 3 and 4 3;3
+1036;( ( 3 or 5 ) and 4 );and or 3 5 4;4
+1037;( ( 1 or 1 ) and ( 1 or 2 ) );and or 1 1 or 1 2;1
+1038;( 1 or ( 2 and 1 ) );or 1 and 2 1;1
+1039;( ( 3 and 3 ) and ( 3 or 4 ) );and and 3 3 or 3 4;3
+1040;( 3 or ( 3 and 1 ) );or 3 and 3 1;3
+1041;( ( 1 or 1 ) and 1 );and or 1 1 1;1
+1042;( ( 1 and 1 ) and ( 5 or 3 ) );and and 1 1 or 5 3;1
+1043;( ( 2 or 2 ) or ( 2 and 3 ) );or or 2 2 and 2 3;2
+1044;( ( 3 and 4 ) or ( 2 and 3 ) );or and 3 4 and 2 3;3
+1045;( ( 4 and 5 ) or ( 1 and 5 ) );or and 4 5 and 1 5;5
+1046;( ( 1 and 4 ) or ( 4 and 5 ) );or and 1 4 and 4 5;4
+1047;( ( 5 and 2 ) or ( 2 and 4 ) );or and 5 2 and 2 4;2
+1048;( 5 and ( 5 or 2 ) );and 5 or 5 2;5
+1049;( 3 and ( 3 and 3 ) );and 3 and 3 3;3
+1050;( ( 2 or 1 ) and ( 2 or 2 ) );and or 2 1 or 2 2;2
+1051;( ( 1 and 2 ) or ( 2 or 2 ) );or and 1 2 or 2 2;2
+1052;( ( 5 or 1 ) and ( 3 or 3 ) );and or 5 1 or 3 3;3
+1053;( 5 and ( 5 and 5 ) );and 5 and 5 5;5
+1054;( ( 5 and 4 ) or ( 4 and 4 ) );or and 5 4 and 4 4;4
+1055;( ( 4 or 5 ) and ( 1 and 1 ) );and or 4 5 and 1 1;1
+1056;( ( 1 and 2 ) or ( 1 and 4 ) );or and 1 2 and 1 4;1
+1057;( ( 2 and 4 ) or ( 4 or 4 ) );or and 2 4 or 4 4;4
+1058;( ( 2 or 4 ) and ( 1 and 1 ) );and or 2 4 and 1 1;1
+1059;( 1 or ( 3 and 1 ) );or 1 and 3 1;1
+1060;( 1 and ( 2 or 4 ) );and 1 or 2 4;1
+1061;( ( 1 or 1 ) or ( 1 and 2 ) );or or 1 1 and 1 2;1
+1062;( ( 1 and 1 ) and ( 1 or 2 ) );and and 1 1 or 1 2;1
+1063;( ( 2 or 2 ) and ( 1 or 3 ) );and or 2 2 or 1 3;2
+1064;( ( 3 or 4 ) and ( 4 and 4 ) );and or 3 4 and 4 4;4
+1065;( 5 and ( 4 or 2 ) );and 5 or 4 2;5
+1066;( ( 2 or 2 ) and ( 2 or 5 ) );and or 2 2 or 2 5;2
+1067;( ( 4 and 1 ) or ( 4 and 2 ) );or and 4 1 and 4 2;4
+1068;( 2 and ( 3 or 2 ) );and 2 or 3 2;2
+1069;( ( 4 or 4 ) and ( 4 or 5 ) );and or 4 4 or 4 5;4
+1070;( 1 or ( 1 and 1 ) );or 1 and 1 1;1
+1071;( ( 3 or 3 ) and ( 1 or 5 ) );and or 3 3 or 1 5;3
+1072;( ( 1 or 4 ) and ( 4 and 4 ) );and or 1 4 and 4 4;4
+1073;( ( 2 and 5 ) or ( 1 and 2 ) );or and 2 5 and 1 2;2
+1074;( ( 1 or 5 ) and 1 );and or 1 5 1;1
+1075;( ( 4 and 3 ) or ( 4 and 4 ) );or and 4 3 and 4 4;4
+1076;( ( 4 and 3 ) or ( 4 and 5 ) );or and 4 3 and 4 5;4
+1077;( ( 1 or 5 ) and 4 );and or 1 5 4;4
+1078;( ( 2 or 2 ) and ( 4 or 5 ) );and or 2 2 or 4 5;2
+1079;( ( 5 and 5 ) and ( 5 or 2 ) );and and 5 5 or 5 2;5
+1080;( ( 5 or 1 ) and ( 4 and 4 ) );and or 5 1 and 4 4;4
+1081;( ( 1 and 1 ) and ( 2 or 3 ) );and and 1 1 or 2 3;1
+1082;( 4 and ( 2 or 5 ) );and 4 or 2 5;4
+1083;( 2 or ( 3 and 2 ) );or 2 and 3 2;2
+1084;( ( 1 or 5 ) and ( 4 or 4 ) );and or 1 5 or 4 4;4
+1085;( ( 4 or 4 ) and ( 3 or 1 ) );and or 4 4 or 3 1;4
+1086;( 1 or ( 1 and 3 ) );or 1 and 1 3;1
+1087;( ( 2 and 2 ) and ( 5 or 2 ) );and and 2 2 or 5 2;2
+1088;( ( 1 or 3 ) and ( 4 or 4 ) );and or 1 3 or 4 4;4
+1089;( ( 4 or 5 ) and ( 5 or 5 ) );and or 4 5 or 5 5;5
+1090;( ( 3 and 2 ) or ( 3 and 4 ) );or and 3 2 and 3 4;3
+1091;( ( 4 or 1 ) and 2 );and or 4 1 2;2
+1092;( ( 5 and 1 ) or ( 5 and 5 ) );or and 5 1 and 5 5;5
+1093;( ( 5 and 2 ) or ( 5 or 5 ) );or and 5 2 or 5 5;5
+1094;( ( 3 and 3 ) and ( 2 or 3 ) );and and 3 3 or 2 3;3
+1095;( ( 4 and 3 ) or ( 1 and 3 ) );or and 4 3 and 1 3;3
+1096;( ( 1 or 5 ) and ( 5 and 5 ) );and or 1 5 and 5 5;5
+1097;( ( 1 or 2 ) and ( 5 and 5 ) );and or 1 2 and 5 5;5
+1098;( ( 5 or 2 ) and ( 2 or 2 ) );and or 5 2 or 2 2;2
+1099;( 2 and ( 5 or 4 ) );and 2 or 5 4;2
+1100;( ( 2 and 2 ) or ( 2 and 1 ) );or and 2 2 and 2 1;2
+1101;( ( 2 or 1 ) and 1 );and or 2 1 1;1
+1102;( 4 and ( 5 or 4 ) );and 4 or 5 4;4
+1103;( ( 1 or 1 ) and ( 4 or 5 ) );and or 1 1 or 4 5;1
+1104;( ( 5 or 3 ) and ( 4 or 4 ) );and or 5 3 or 4 4;4
+1105;( ( 5 or 5 ) or ( 5 or 5 ) );or or 5 5 or 5 5;5
+1106;( ( 5 and 2 ) or ( 4 and 5 ) );or and 5 2 and 4 5;5
+1107;( ( 2 and 4 ) or 2 );or and 2 4 2;2
+1108;( ( 4 or 4 ) and ( 1 or 4 ) );and or 4 4 or 1 4;4
+1109;( ( 4 and 1 ) or ( 2 and 4 ) );or and 4 1 and 2 4;4
+1110;( ( 2 and 2 ) and ( 1 or 2 ) );and and 2 2 or 1 2;2
+1111;( ( 2 or 2 ) or ( 2 and 2 ) );or or 2 2 and 2 2;2
+1112;( 5 and ( 3 or 4 ) );and 5 or 3 4;5
+1113;( ( 4 and 4 ) and ( 3 or 2 ) );and and 4 4 or 3 2;4
+1114;( ( 4 and 3 ) or ( 4 and 1 ) );or and 4 3 and 4 1;4
+1115;( ( 4 or 1 ) and ( 3 or 3 ) );and or 4 1 or 3 3;3
+1116;( ( 4 and 4 ) or ( 4 and 3 ) );or and 4 4 and 4 3;4
+1117;( 5 or ( 5 or 5 ) );or 5 or 5 5;5
+1118;( ( 4 and 5 ) or ( 3 and 4 ) );or and 4 5 and 3 4;4
+1119;( ( 1 or 2 ) and 2 );and or 1 2 2;2
+1120;( ( 5 and 1 ) or 5 );or and 5 1 5;5
+1121;( ( 4 and 4 ) and ( 1 or 5 ) );and and 4 4 or 1 5;4
+1122;( 4 and ( 2 or 4 ) );and 4 or 2 4;4
+1123;( ( 5 or 3 ) and ( 2 and 2 ) );and or 5 3 and 2 2;2
+1124;( ( 3 and 2 ) or ( 5 and 3 ) );or and 3 2 and 5 3;3
+1125;( 3 and ( 2 or 4 ) );and 3 or 2 4;3
+1126;( ( 5 or 5 ) or ( 2 and 5 ) );or or 5 5 and 2 5;5
+1127;( ( 5 and 5 ) and ( 5 and 5 ) );and and 5 5 and 5 5;5
+1128;( ( 2 and 5 ) or ( 5 and 4 ) );or and 2 5 and 5 4;5
+1129;( ( 1 or 1 ) or ( 1 and 3 ) );or or 1 1 and 1 3;1
+1130;( ( 3 or 2 ) and ( 1 or 1 ) );and or 3 2 or 1 1;1
+1131;( ( 5 or 2 ) and ( 4 and 4 ) );and or 5 2 and 4 4;4
+1132;( ( 4 or 2 ) and ( 1 and 1 ) );and or 4 2 and 1 1;1
+1133;( 4 and ( 4 or 4 ) );and 4 or 4 4;4
+1134;( ( 3 or 4 ) and ( 2 and 2 ) );and or 3 4 and 2 2;2
+1135;( ( 1 and 4 ) or ( 5 and 1 ) );or and 1 4 and 5 1;1
+1136;( ( 3 and 2 ) or ( 3 or 3 ) );or and 3 2 or 3 3;3
+1137;( 3 and ( 1 or 3 ) );and 3 or 1 3;3
+1138;( ( 3 or 3 ) or ( 4 and 3 ) );or or 3 3 and 4 3;3
+1139;( 5 and ( 2 or 5 ) );and 5 or 2 5;5
+1140;( ( 4 and 2 ) or ( 5 and 4 ) );or and 4 2 and 5 4;4
+1141;( 5 and ( 4 or 5 ) );and 5 or 4 5;5
+1142;( ( 1 and 4 ) or ( 5 and 4 ) );or and 1 4 and 5 4;4
+1143;( ( 4 and 5 ) or ( 4 and 1 ) );or and 4 5 and 4 1;4
+1144;( ( 1 and 5 ) or ( 4 and 1 ) );or and 1 5 and 4 1;1
+1145;( ( 2 and 3 ) or ( 3 and 4 ) );or and 2 3 and 3 4;3
+1146;( ( 4 or 4 ) or ( 4 and 5 ) );or or 4 4 and 4 5;4
+1147;( ( 4 and 2 ) or ( 5 and 2 ) );or and 4 2 and 5 2;2
+1148;( ( 3 and 5 ) or 3 );or and 3 5 3;3
+1149;( 4 or ( 4 and 3 ) );or 4 and 4 3;4
+1150;( ( 2 and 1 ) or ( 3 and 1 ) );or and 2 1 and 3 1;1
+1151;( ( 5 and 4 ) or ( 4 and 2 ) );or and 5 4 and 4 2;4
+1152;( ( 4 and 3 ) or ( 5 and 3 ) );or and 4 3 and 5 3;3
+1153;( ( 5 and 2 ) or ( 2 and 2 ) );or and 5 2 and 2 2;2
+1154;( ( 3 and 3 ) or ( 3 and 1 ) );or and 3 3 and 3 1;3
+1155;( ( 3 and 5 ) or ( 4 and 3 ) );or and 3 5 and 4 3;3
+1156;( ( 1 or 4 ) and 1 );and or 1 4 1;1
+1157;( ( 4 and 3 ) or ( 4 or 4 ) );or and 4 3 or 4 4;4
+1158;( ( 4 or 4 ) or ( 4 and 4 ) );or or 4 4 and 4 4;4
+1159;( ( 4 and 5 ) or ( 4 or 4 ) );or and 4 5 or 4 4;4
+1160;( ( 2 or 4 ) and ( 5 or 5 ) );and or 2 4 or 5 5;5
+1161;( ( 3 and 3 ) and ( 2 or 5 ) );and and 3 3 or 2 5;3
+1162;( ( 1 and 4 ) or ( 2 and 1 ) );or and 1 4 and 2 1;1
+1163;( ( 4 and 2 ) or ( 2 and 2 ) );or and 4 2 and 2 2;2
+1164;( ( 1 and 2 ) or ( 1 and 5 ) );or and 1 2 and 1 5;1
+1165;( ( 1 or 4 ) and 5 );and or 1 4 5;5
+1166;( ( 5 and 5 ) and ( 2 or 3 ) );and and 5 5 or 2 3;5
+1167;( ( 4 or 4 ) and ( 3 or 4 ) );and or 4 4 or 3 4;4
+1168;( ( 5 or 4 ) and ( 5 and 5 ) );and or 5 4 and 5 5;5
+1169;( ( 2 or 5 ) and 4 );and or 2 5 4;4
+1170;( ( 4 or 3 ) and ( 1 and 1 ) );and or 4 3 and 1 1;1
+1171;( ( 5 and 1 ) or ( 3 and 5 ) );or and 5 1 and 3 5;5
+1172;( ( 4 and 4 ) and ( 5 or 3 ) );and and 4 4 or 5 3;4
+1173;( ( 1 and 5 ) or ( 1 or 1 ) );or and 1 5 or 1 1;1
+1174;( ( 3 and 3 ) or ( 3 or 3 ) );or and 3 3 or 3 3;3
+1175;( ( 4 or 4 ) and ( 5 or 1 ) );and or 4 4 or 5 1;4
+1176;( ( 4 or 5 ) and ( 4 and 4 ) );and or 4 5 and 4 4;4
+1177;( ( 2 and 1 ) or 2 );or and 2 1 2;2
+1178;( 2 or ( 2 and 5 ) );or 2 and 2 5;2
+1179;( ( 5 or 5 ) and ( 4 or 1 ) );and or 5 5 or 4 1;5
+1180;( ( 4 or 1 ) and 4 );and or 4 1 4;4
+1181;( 5 and ( 2 or 1 ) );and 5 or 2 1;5
+1182;( ( 1 or 1 ) and ( 3 or 5 ) );and or 1 1 or 3 5;1
+1183;( ( 2 or 3 ) and 2 );and or 2 3 2;2
+1184;( ( 4 and 4 ) and ( 5 or 4 ) );and and 4 4 or 5 4;4
+1185;( ( 3 and 2 ) or ( 4 and 2 ) );or and 3 2 and 4 2;2
+1186;( ( 1 or 1 ) and ( 2 or 1 ) );and or 1 1 or 2 1;1
+1187;( ( 3 and 5 ) or ( 3 and 3 ) );or and 3 5 and 3 3;3
+1188;( ( 1 and 4 ) or ( 1 and 1 ) );or and 1 4 and 1 1;1
+1189;( ( 2 or 3 ) and ( 3 or 3 ) );and or 2 3 or 3 3;3
+1190;( ( 1 and 4 ) or 4 );or and 1 4 4;4
+1191;( ( 2 and 5 ) or ( 5 and 5 ) );or and 2 5 and 5 5;5
+1192;( ( 4 and 1 ) or ( 1 and 5 ) );or and 4 1 and 1 5;1
+1193;( ( 5 and 5 ) or ( 5 and 5 ) );or and 5 5 and 5 5;5
+1194;( ( 1 or 5 ) and ( 4 and 4 ) );and or 1 5 and 4 4;4
+1195;( ( 3 and 1 ) or ( 2 and 1 ) );or and 3 1 and 2 1;1
+1196;( ( 2 or 4 ) and ( 1 or 1 ) );and or 2 4 or 1 1;1
+1197;( ( 4 and 4 ) or ( 4 and 1 ) );or and 4 4 and 4 1;4
+1198;( ( 1 and 4 ) or ( 3 and 1 ) );or and 1 4 and 3 1;1
+1199;( ( 4 or 2 ) and ( 1 or 1 ) );and or 4 2 or 1 1;1
+1200;( ( 2 or 2 ) or ( 2 and 1 ) );or or 2 2 and 2 1;2
+1201;( ( 1 or 5 ) and ( 5 or 5 ) );and or 1 5 or 5 5;5
+1202;( ( 1 and 1 ) and ( 1 or 3 ) );and and 1 1 or 1 3;1
+1203;( ( 1 or 2 ) and 3 );and or 1 2 3;3
+1204;( 4 and ( 2 or 3 ) );and 4 or 2 3;4
+1205;( ( 4 and 3 ) or ( 3 and 1 ) );or and 4 3 and 3 1;3
+1206;( ( 3 or 3 ) and ( 3 or 4 ) );and or 3 3 or 3 4;3
+1207;( ( 5 and 1 ) or ( 5 and 3 ) );or and 5 1 and 5 3;5
+1208;( ( 2 and 2 ) and ( 3 or 1 ) );and and 2 2 or 3 1;2
+1209;( ( 2 and 3 ) or ( 3 or 3 ) );or and 2 3 or 3 3;3
+1210;( ( 2 or 4 ) and ( 4 and 4 ) );and or 2 4 and 4 4;4
+1211;( ( 5 and 5 ) and ( 4 or 5 ) );and and 5 5 or 4 5;5
+1212;( ( 4 and 4 ) and ( 5 or 1 ) );and and 4 4 or 5 1;4
+1213;( ( 1 and 4 ) or ( 4 and 3 ) );or and 1 4 and 4 3;4
+1214;( ( 3 or 4 ) and ( 2 or 2 ) );and or 3 4 or 2 2;2
+1215;( ( 3 and 5 ) or ( 3 and 4 ) );or and 3 5 and 3 4;3
+1216;( ( 5 and 2 ) or ( 5 and 1 ) );or and 5 2 and 5 1;5
+1217;( ( 2 and 4 ) or ( 4 and 4 ) );or and 2 4 and 4 4;4
+1218;( ( 4 or 2 ) and 1 );and or 4 2 1;1
+1219;( ( 2 or 4 ) and ( 3 or 3 ) );and or 2 4 or 3 3;3
+1220;( ( 3 and 2 ) or ( 2 and 4 ) );or and 3 2 and 2 4;2
+1221;( 1 or 1 );or 1 1;1
+1222;( ( 4 or 5 ) and ( 2 and 2 ) );and or 4 5 and 2 2;2
+1223;( ( 3 or 4 ) and ( 3 or 3 ) );and or 3 4 or 3 3;3
+1224;( ( 5 or 5 ) or ( 3 and 5 ) );or or 5 5 and 3 5;5
+1225;( ( 5 and 5 ) or ( 1 and 5 ) );or and 5 5 and 1 5;5
+1226;( ( 1 or 1 ) and ( 2 or 3 ) );and or 1 1 or 2 3;1
+1227;( ( 1 and 3 ) or ( 2 and 3 ) );or and 1 3 and 2 3;3
+1228;( ( 3 or 2 ) and ( 3 and 3 ) );and or 3 2 and 3 3;3
+1229;( ( 3 or 3 ) or ( 2 and 3 ) );or or 3 3 and 2 3;3
+1230;( ( 5 and 5 ) and ( 2 or 5 ) );and and 5 5 or 2 5;5
+1231;( ( 4 or 2 ) and ( 5 or 5 ) );and or 4 2 or 5 5;5
+1232;( ( 2 and 2 ) or ( 5 and 2 ) );or and 2 2 and 5 2;2
+1233;( ( 5 and 1 ) or ( 1 and 3 ) );or and 5 1 and 1 3;1
+1234;( ( 3 and 1 ) or ( 1 or 1 ) );or and 3 1 or 1 1;1
+1235;( ( 5 and 3 ) or ( 2 and 3 ) );or and 5 3 and 2 3;3
+1236;( ( 3 or 1 ) and 3 );and or 3 1 3;3
+1237;( ( 2 and 4 ) or ( 4 and 5 ) );or and 2 4 and 4 5;4
+1238;( 1 and ( 2 or 1 ) );and 1 or 2 1;1
+1239;( ( 2 or 5 ) and ( 1 and 1 ) );and or 2 5 and 1 1;1
+1240;( ( 4 or 3 ) and ( 5 and 5 ) );and or 4 3 and 5 5;5
+1241;( ( 3 and 1 ) or ( 1 and 5 ) );or and 3 1 and 1 5;1
+1242;( ( 2 or 1 ) and 4 );and or 2 1 4;4
+1243;( ( 1 or 4 ) and ( 5 and 5 ) );and or 1 4 and 5 5;5
+1244;( ( 1 and 4 ) or ( 1 and 5 ) );or and 1 4 and 1 5;1
+1245;( ( 3 and 3 ) or ( 5 and 3 ) );or and 3 3 and 5 3;3
+1246;( ( 5 or 3 ) and 5 );and or 5 3 5;5
+1247;( ( 3 and 3 ) and ( 3 or 5 ) );and and 3 3 or 3 5;3
+1248;( ( 5 or 4 ) and ( 4 or 4 ) );and or 5 4 or 4 4;4
+1249;( ( 5 and 1 ) or ( 2 and 5 ) );or and 5 1 and 2 5;5
+1250;( 5 and ( 1 or 2 ) );and 5 or 1 2;5
+1251;( ( 1 and 2 ) or ( 4 and 2 ) );or and 1 2 and 4 2;2
+1252;( ( 2 and 1 ) or ( 2 and 4 ) );or and 2 1 and 2 4;2
+1253;( ( 2 and 3 ) or 2 );or and 2 3 2;2
+1254;( ( 5 and 5 ) and ( 3 or 1 ) );and and 5 5 or 3 1;5
+1255;( ( 5 and 2 ) or ( 5 and 4 ) );or and 5 2 and 5 4;5
+1256;( ( 2 and 3 ) or ( 3 and 3 ) );or and 2 3 and 3 3;3
+1257;( ( 4 and 4 ) and ( 4 or 5 ) );and and 4 4 or 4 5;4
+1258;( ( 1 and 1 ) and ( 4 or 3 ) );and and 1 1 or 4 3;1
+1259;( 5 and ( 1 or 5 ) );and 5 or 1 5;5
+1260;( ( 3 or 2 ) and ( 3 or 3 ) );and or 3 2 or 3 3;3
+1261;( ( 4 or 5 ) and ( 3 or 3 ) );and or 4 5 or 3 3;3
+1262;( 1 and ( 1 and 1 ) );and 1 and 1 1;1
+1263;( ( 2 and 5 ) or ( 4 and 5 ) );or and 2 5 and 4 5;5
+1264;( ( 5 or 5 ) or ( 5 and 4 ) );or or 5 5 and 5 4;5
+1265;( ( 4 or 3 ) and ( 5 or 5 ) );and or 4 3 or 5 5;5
+1266;( 3 and ( 5 or 3 ) );and 3 or 5 3;3
+1267;( ( 3 or 3 ) or ( 5 and 3 ) );or or 3 3 and 5 3;3
+1268;( ( 2 or 1 ) and ( 2 and 2 ) );and or 2 1 and 2 2;2
+1269;( ( 2 and 2 ) and ( 2 or 1 ) );and and 2 2 or 2 1;2
+1270;( ( 1 or 2 ) and ( 4 and 4 ) );and or 1 2 and 4 4;4
+1271;( ( 4 or 3 ) and ( 3 or 3 ) );and or 4 3 or 3 3;3
+1272;( ( 1 and 1 ) and ( 5 or 1 ) );and and 1 1 or 5 1;1
+1273;( ( 5 and 2 ) or ( 3 and 2 ) );or and 5 2 and 3 2;2
+1274;( ( 2 and 3 ) or ( 2 and 2 ) );or and 2 3 and 2 2;2
+1275;( ( 1 or 5 ) and ( 1 or 1 ) );and or 1 5 or 1 1;1
+1276;( ( 2 and 1 ) or ( 4 and 1 ) );or and 2 1 and 4 1;1
+1277;( ( 4 and 1 ) or ( 2 and 1 ) );or and 4 1 and 2 1;1
+1278;( ( 1 or 3 ) and ( 1 or 1 ) );and or 1 3 or 1 1;1
+1279;( 3 and ( 2 or 1 ) );and 3 or 2 1;3
+1280;( ( 2 or 4 ) and ( 2 or 2 ) );and or 2 4 or 2 2;2
+1281;( ( 2 and 2 ) and ( 2 or 2 ) );and and 2 2 or 2 2;2
+1282;( ( 5 or 5 ) and ( 5 or 3 ) );and or 5 5 or 5 3;5
+1283;( ( 1 and 5 ) or ( 2 and 1 ) );or and 1 5 and 2 1;1
+1284;( ( 4 and 2 ) or ( 1 and 2 ) );or and 4 2 and 1 2;2
+1285;( ( 3 or 2 ) and ( 5 and 5 ) );and or 3 2 and 5 5;5
+1286;( ( 2 and 1 ) or ( 1 and 4 ) );or and 2 1 and 1 4;1
+1287;( ( 2 or 3 ) and ( 4 and 4 ) );and or 2 3 and 4 4;4
+1288;( ( 4 or 1 ) and ( 5 or 5 ) );and or 4 1 or 5 5;5
+1289;( ( 2 and 2 ) or ( 2 and 4 ) );or and 2 2 and 2 4;2
+1290;( ( 4 and 1 ) or ( 4 and 4 ) );or and 4 1 and 4 4;4
+1291;( ( 4 or 4 ) and 4 );and or 4 4 4;4
+1292;( ( 3 or 1 ) and ( 4 or 4 ) );and or 3 1 or 4 4;4
+1293;( ( 5 and 5 ) and ( 1 or 4 ) );and and 5 5 or 1 4;5
+1294;( ( 5 or 4 ) and ( 4 and 4 ) );and or 5 4 and 4 4;4
+1295;( ( 2 or 5 ) and ( 5 or 5 ) );and or 2 5 or 5 5;5
+1296;( ( 3 and 3 ) or ( 3 and 2 ) );or and 3 3 and 3 2;3
+1297;( 4 and ( 2 or 1 ) );and 4 or 2 1;4
+1298;( ( 4 and 5 ) or ( 3 and 5 ) );or and 4 5 and 3 5;5
+1299;( ( 5 or 5 ) and ( 3 or 5 ) );and or 5 5 or 3 5;5
+1300;( ( 5 or 3 ) and ( 1 and 1 ) );and or 5 3 and 1 1;1
+1301;( ( 4 or 3 ) and ( 2 or 2 ) );and or 4 3 or 2 2;2
+1302;( ( 4 and 5 ) or 4 );or and 4 5 4;4
+1303;( ( 3 and 1 ) or ( 1 and 4 ) );or and 3 1 and 1 4;1
+1304;( ( 1 and 5 ) or ( 3 and 5 ) );or and 1 5 and 3 5;5
+1305;( ( 3 or 3 ) and ( 3 and 3 ) );and or 3 3 and 3 3;3
+1306;( ( 5 or 4 ) and ( 5 or 5 ) );and or 5 4 or 5 5;5
+1307;( ( 1 and 1 ) and ( 1 or 1 ) );and and 1 1 or 1 1;1
+1308;( ( 3 and 4 ) or ( 3 or 3 ) );or and 3 4 or 3 3;3
+1309;( ( 2 or 3 ) and ( 2 or 2 ) );and or 2 3 or 2 2;2
+1310;( ( 5 and 5 ) and ( 5 or 4 ) );and and 5 5 or 5 4;5
+1311;( ( 1 and 3 ) or ( 3 and 2 ) );or and 1 3 and 3 2;3
+1312;( ( 5 or 3 ) and 4 );and or 5 3 4;4
+1313;( ( 3 or 4 ) and ( 5 and 5 ) );and or 3 4 and 5 5;5
+1314;( ( 2 and 3 ) or ( 2 and 4 ) );or and 2 3 and 2 4;2
+1315;( ( 2 or 2 ) and ( 4 or 2 ) );and or 2 2 or 4 2;2
+1316;( ( 5 and 5 ) or ( 5 and 4 ) );or and 5 5 and 5 4;5
+1317;( 1 and ( 1 or 5 ) );and 1 or 1 5;1
+1318;( ( 1 or 1 ) and ( 1 or 4 ) );and or 1 1 or 1 4;1
+1319;( ( 3 and 2 ) or ( 1 and 3 ) );or and 3 2 and 1 3;3
+1320;( ( 3 or 1 ) and ( 1 or 1 ) );and or 3 1 or 1 1;1
+1321;( ( 1 and 1 ) and ( 4 or 5 ) );and and 1 1 or 4 5;1
+1322;( ( 3 and 1 ) or ( 1 and 2 ) );or and 3 1 and 1 2;1
+1323;( ( 3 or 3 ) and ( 3 or 1 ) );and or 3 3 or 3 1;3
+1324;( ( 2 and 2 ) and ( 3 or 4 ) );and and 2 2 or 3 4;2
+1325;( 5 or ( 2 and 5 ) );or 5 and 2 5;5
+1326;( ( 4 or 4 ) or ( 4 or 4 ) );or or 4 4 or 4 4;4
+1327;( ( 3 or 2 ) and ( 5 or 5 ) );and or 3 2 or 5 5;5
+1328;( ( 5 or 2 ) and ( 5 and 5 ) );and or 5 2 and 5 5;5
+1329;( ( 2 and 5 ) or ( 4 and 2 ) );or and 2 5 and 4 2;2
+1330;( ( 3 or 3 ) and ( 3 or 2 ) );and or 3 3 or 3 2;3
+1331;( ( 1 and 4 ) or ( 4 and 4 ) );or and 1 4 and 4 4;4
+1332;( ( 3 or 3 ) and ( 1 or 2 ) );and or 3 3 or 1 2;3
+1333;( ( 3 and 2 ) or ( 2 or 2 ) );or and 3 2 or 2 2;2
+1334;( ( 5 and 1 ) or ( 1 or 1 ) );or and 5 1 or 1 1;1
+1335;( ( 2 or 3 ) and ( 1 and 1 ) );and or 2 3 and 1 1;1
+1336;( ( 3 and 3 ) and ( 3 or 1 ) );and and 3 3 or 3 1;3
+1337;( ( 1 and 2 ) or ( 5 and 1 ) );or and 1 2 and 5 1;1
+1338;( ( 1 and 1 ) or ( 1 and 2 ) );or and 1 1 and 1 2;1
+1339;( ( 4 or 5 ) and 2 );and or 4 5 2;2
+1340;( ( 3 and 3 ) or ( 3 and 5 ) );or and 3 3 and 3 5;3
+1341;( ( 4 and 4 ) and ( 5 or 2 ) );and and 4 4 or 5 2;4
+1342;( ( 3 and 4 ) or ( 4 and 4 ) );or and 3 4 and 4 4;4
+1343;( ( 2 and 1 ) or ( 1 or 1 ) );or and 2 1 or 1 1;1
+1344;( ( 3 or 5 ) and ( 1 and 1 ) );and or 3 5 and 1 1;1
+1345;( ( 3 or 3 ) and ( 5 or 3 ) );and or 3 3 or 5 3;3
+1346;( ( 5 or 5 ) and ( 2 or 4 ) );and or 5 5 or 2 4;5
+1347;( ( 2 and 5 ) or ( 2 and 2 ) );or and 2 5 and 2 2;2
+1348;( ( 3 and 2 ) or ( 2 and 2 ) );or and 3 2 and 2 2;2
+1349;( ( 4 and 2 ) or ( 2 or 2 ) );or and 4 2 or 2 2;2
+1350;( ( 3 or 2 ) and ( 2 or 2 ) );and or 3 2 or 2 2;2
+1351;( ( 4 or 4 ) and ( 4 or 4 ) );and or 4 4 or 4 4;4
+1352;( ( 2 or 4 ) and ( 3 and 3 ) );and or 2 4 and 3 3;3
+1353;( ( 3 and 3 ) or ( 1 and 3 ) );or and 3 3 and 1 3;3
+1354;( ( 5 or 5 ) and ( 4 or 2 ) );and or 5 5 or 4 2;5
+1355;( ( 4 and 4 ) or ( 4 and 5 ) );or and 4 4 and 4 5;4
+1356;( ( 2 and 4 ) or ( 2 and 2 ) );or and 2 4 and 2 2;2
+1357;( ( 4 or 4 ) and ( 1 or 2 ) );and or 4 4 or 1 2;4
+1358;( 5 or ( 5 and 4 ) );or 5 and 5 4;5
+1359;( ( 4 and 3 ) or ( 2 and 3 ) );or and 4 3 and 2 3;3
+1360;( ( 2 or 5 ) and ( 2 and 2 ) );and or 2 5 and 2 2;2
+1361;( ( 3 and 5 ) or ( 2 and 5 ) );or and 3 5 and 2 5;5
+1362;( ( 5 or 5 ) and ( 3 or 1 ) );and or 5 5 or 3 1;5
+1363;( ( 4 and 2 ) or ( 4 and 4 ) );or and 4 2 and 4 4;4
+1364;( ( 5 and 4 ) or ( 1 and 4 ) );or and 5 4 and 1 4;4
+1365;( ( 4 or 1 ) and ( 5 and 5 ) );and or 4 1 and 5 5;5
+1366;( ( 3 and 5 ) or ( 5 and 1 ) );or and 3 5 and 5 1;5
+1367;( ( 2 or 2 ) and ( 1 or 2 ) );and or 2 2 or 1 2;2
+1368;( ( 4 and 3 ) or ( 3 or 3 ) );or and 4 3 or 3 3;3
+1369;( ( 5 and 3 ) or ( 5 and 5 ) );or and 5 3 and 5 5;5
+1370;( ( 2 or 2 ) or ( 5 and 2 ) );or or 2 2 and 5 2;2
+1371;( ( 2 and 5 ) or ( 5 and 1 ) );or and 2 5 and 5 1;5
+1372;( 4 or ( 4 and 4 ) );or 4 and 4 4;4
+1373;( ( 3 or 3 ) and ( 2 or 5 ) );and or 3 3 or 2 5;3
+1374;( ( 1 or 1 ) or ( 1 and 5 ) );or or 1 1 and 1 5;1
+1375;( ( 5 and 3 ) or ( 3 and 4 ) );or and 5 3 and 3 4;3
+1376;( ( 1 and 1 ) and ( 3 or 4 ) );and and 1 1 or 3 4;1
+1377;( ( 5 and 3 ) or ( 3 and 2 ) );or and 5 3 and 3 2;3
+1378;( ( 4 and 5 ) or ( 4 and 4 ) );or and 4 5 and 4 4;4
+1379;( ( 5 and 1 ) or ( 5 and 2 ) );or and 5 1 and 5 2;5
