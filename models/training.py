@@ -13,10 +13,10 @@ from dataset.common import get_dataset
 import models.common
 
 
-def train_model(model, dataset, learning_rate, batch_size, epochs, loss, patience=None, min_delta=0.):
+def train_model(model, dataset, learning_rate, batch_size, epochs, loss, metrics=None, patience=None, min_delta=0.):
     model.compile(optimizer=kr.optimizers.Adam(learning_rate=learning_rate),
                   loss=loss,
-                  metrics=['categorical_accuracy'])
+                  metrics=metrics)
 
     callbacks = []
     if patience is not None:
