@@ -4,6 +4,7 @@ import os
 import time
 
 import numpy as np
+import tensorflow as tf
 import tensorflow.keras as kr
 import matplotlib.pyplot as plt
 from numpy import number
@@ -38,12 +39,12 @@ def train_model(model, dataset, learning_rate, batch_size, epochs, loss, patienc
     return history, test_accuracy
 
 
-def plot_loss_accuracy(history, base_name='', results_folder=None):
+def plot_loss_accuracy(history, accuracy_name='categorical_accuracy', base_name='', results_folder=None):
     loss = history.history['loss']
-    accuracy = history.history['categorical_accuracy']
+    accuracy = history.history[accuracy_name]
     val_loss = history.history['val_loss'] if 'val_loss' in history.history else None
     val_accuracy = history.history[
-        'val_categorical_accuracy'] if 'val_categorical_accuracy' in history.history else None
+        f'val_{accuracy_name}'] if f'val_{accuracy_name}' in history.history else None
 
     lines = []
     labels = []
@@ -105,6 +106,12 @@ def train_multiple_runs(num_runs, dataset, model_fn, model_args, training_args,
     if 'loss' not in training_args:
         training_args['loss'] = 'categorical_crossentropy'
 
+    if 'metrics' not in training_args:
+        training_args['metrics'] = ['categorical_accuracy']
+
+    accuracy_name = training_args['metrics'][0]
+
+
     histories = []
     accuracies = []
     result_str = ''
@@ -118,7 +125,7 @@ def train_multiple_runs(num_runs, dataset, model_fn, model_args, training_args,
         result_str += f'{test_accuracy}\t'
 
         if plot_history:
-            plot_loss_accuracy(history, f'{base_name}_{run + 1}', results_folder)
+            plot_loss_accuracy(history, accuracy_name, f'{base_name}_{run + 1}', results_folder)
 
         if results_folder is not None:
             models.common.save_model(model, results_folder, base_name)
@@ -142,6 +149,13 @@ def train_multiple_runs(num_runs, dataset, model_fn, model_args, training_args,
             f.writelines(lines)
 
     return histories, accuracies
+
+
+def mental_model_accuracy(y_true, y_pred):
+    preds_int = tf.cast(tf.round(y_pred), tf.int32)
+    errors = tf.reduce_sum(tf.abs(preds_int - tf.cast(y_true, tf.int32)), axis=-1)
+    num_errors = tf.math.count_nonzero(errors)
+    return 1 - tf.cast(num_errors, tf.float32) / tf.cast(tf.shape(y_true)[-2], tf.float32)
 
 
 if __name__ == '__main__':
