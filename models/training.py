@@ -9,6 +9,8 @@ import tensorflow.keras as kr
 import matplotlib.pyplot as plt
 from numpy import number
 
+import models.common
+
 
 def train_model(model, dataset, learning_rate, batch_size, epochs, loss, metrics=None, patience=None, min_delta=0.):
     model.compile(optimizer=kr.optimizers.Adam(learning_rate=learning_rate),
@@ -31,8 +33,8 @@ def train_model(model, dataset, learning_rate, batch_size, epochs, loss, metrics
 
     print(f'Training time: {(end_time - start_time):.1f}s')
     pred = model.predict(dataset.x_test)
-    if metrics[0] is str:
-        accuracy_fn = kr.metrics.Metric(metrics[0])
+    if type(metrics[0]) is str:
+        accuracy_fn = kr.metrics.get(metrics[0])
     else:
         accuracy_fn = metrics[0]
     test_accuracy = np.mean(accuracy_fn(dataset.y_test, pred))
@@ -166,7 +168,6 @@ def mental_model_accuracy(y_true, y_pred):
 if __name__ == '__main__':
     from dataset.common import get_dataset, get_joined_sequences_mental_models_dataset, \
         get_separated_sequences_mental_models_dataset
-    import models.common
     import models.mm_inference
     import models.rnn_example
     import models.transformer
