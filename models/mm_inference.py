@@ -96,46 +96,144 @@ class MMInferenceLayer(kr.layers.Layer):
     def call(self, inputs, **kwargs):
         x = inputs[0]
         y = inputs[1]
-
         x, y = self.broadcast(x, y)
 
+        # calculate value
         s = x + y
         value = tf.clip_by_value(s, -1, 1)
-        # applicability = (tf.reduce_max(tf.abs(x), axis=-1) * tf.reduce_max(tf.abs(y), axis=-1))
-        # value = value * tf.expand_dims(applicability, axis=-1)
 
+        # calculate correctness
         diff = 1 - tf.maximum(0., tf.abs(x - y) - 1.)
         correctness = tf.reduce_prod(diff, axis=-1)
+
+        # calculate mental models
         mms = value * tf.expand_dims(correctness, axis=-1)
+
+        # sum and normalize to obtain a single mental model
         reshaped_value = tf.reshape(mms, (-1, mms.shape[-3] * mms.shape[-2], mms.shape[-1]))
         reshaped_correctness = tf.reshape(correctness, (-1, correctness.shape[-2] * correctness.shape[-1]))
         mm = tf.reduce_sum(reshaped_value, axis=-2)
+        # normalization by correctness
         mm = mm / tf.reduce_sum(reshaped_correctness, axis=-1, keepdims=True)
+
+
         # mm = tf.clip_by_value(mm, -1, 1)
         # mm = tf.tanh(mm)
         return mm
 
 
-def create_inference_model(num_variables, max_input_length, max_sub_mental_models):
-    embedding_size = 10
-    hidden_units = 128
-    print('max_input_length', max_input_length)
-    input = kr.Input(shape=(2, max_input_length))
+class MMInferenceScoresLayer(kr.layers.Layer):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+    def broadcast(self, x, y):
+        x = tf.expand_dims(x, axis=-1)
+        y = tf.expand_dims(y, axis=-1)
+        x = tf.transpose(x, perm=[0, 1, 3, 2])
+        y = tf.transpose(y, perm=[0, 3, 1, 2])
+        return x, y
+
+    def broadcast_scores(self, x_scores, y_scores):
+        x_scores = tf.expand_dims(x_scores, axis=-1)
+        y_scores = tf.expand_dims(y_scores, axis=-1)
+        y_scores = tf.transpose(y_scores, perm=[0, 2, 1])
+        return x_scores, y_scores
+
+    def call(self, inputs, **kwargs):
+        x, x_scores = inputs[0]
+        y, y_scores = inputs[1]
+
+        x, y = self.broadcast(x, y)
+        x_scores, y_scores = self.broadcast_scores(x_scores, y_scores)
+
+        # calculate value
+        s = x + y
+        value = tf.clip_by_value(s, -1, 1)
+
+        # calculate correctness
+        diff = 1 - tf.maximum(0., tf.abs(x - y) - 1.)
+        correctness = tf.reduce_prod(diff, axis=-1)
+
+        # calculate mental models
+        mms = value * tf.expand_dims(correctness, axis=-1)
+
+        # calculate and apply scores
+        scores = x_scores * y_scores
+        mms = mms * tf.expand_dims(scores, axis=-1)
+
+        # sum and normalize to obtain a single mental model
+        reshaped_value = tf.reshape(mms, (-1, mms.shape[-3] * mms.shape[-2], mms.shape[-1]))
+        reshaped_correctness = tf.reshape(correctness, (-1, correctness.shape[-2] * correctness.shape[-1]))
+        reshaped_scores = tf.reshape(scores, (-1, scores.shape[-2] * scores.shape[-1]))
+        mm = tf.reduce_sum(reshaped_value, axis=-2)
+        # normalization by correctness
+        mm = mm / tf.reduce_sum(reshaped_correctness, axis=-1, keepdims=True)
+
+        # mm = tf.clip_by_value(mm, -1, 1)
+        # mm = tf.tanh(mm)
+        return mm
+
+
+def create_inference_model(hidden_units,
+                           embedding_size,
+                           max_sub_mental_models,
+                           mm_l1,
+                           max_length,
+                           input_dim,
+                           output_dim):
+
+    print('max_input_length', max_length)
+    input = kr.Input(shape=(2, max_length))
     split_layer = kr.layers.Lambda(lambda x: (x[:, 0], x[:, 1]))(input)
 
-    nn_input = kr.Input(max_input_length)
-    nn_embedding_layer = kr.layers.Embedding(num_symbols + 1, embedding_size)(nn_input)
+    nn_input = kr.Input(max_length)
+    nn_embedding_layer = kr.layers.Embedding(input_dim + 1, embedding_size)(nn_input)
     flatten_layer = kr.layers.Flatten()(nn_embedding_layer)
     nn_hidden = kr.layers.Dense(hidden_units, activation='relu')(flatten_layer)
-    nn_output = kr.layers.Dense(num_variables * max_sub_mental_models,
+    nn_output = kr.layers.Dense(output_dim * max_sub_mental_models,
                                 activation='tanh',
-                                activity_regularizer=kr.regularizers.L1(0.0))(nn_hidden)
-    nn_reshape = kr.layers.Reshape((max_sub_mental_models, num_variables))(nn_output)
+                                activity_regularizer=kr.regularizers.L1(mm_l1))(nn_hidden)
+    nn_reshape = kr.layers.Reshape((max_sub_mental_models, output_dim))(nn_output)
     sub_sequence_nn = kr.Model(inputs=nn_input, outputs=nn_reshape, name='sub-sequence-NN')
     sub_sequence_nn.summary()
 
     mm = sub_sequence_nn(split_layer[0]), sub_sequence_nn(split_layer[1])
     mm_inference_layer = MMInferenceLayer()(mm)
+
+    model = kr.Model(inputs=input, outputs=mm_inference_layer)
+    model.summary()
+
+    return model
+
+
+def create_inference_model_with_scores(hidden_units,
+                                       embedding_size,
+                                       max_sub_mental_models,
+                                       mm_l1,
+                                       score_l1,
+                                       max_length,
+                                       input_dim,
+                                       output_dim):
+    print('max_input_length', max_length)
+    input = kr.Input(shape=(2, max_length))
+    split_layer = kr.layers.Lambda(lambda x: (x[:, 0], x[:, 1]))(input)
+
+    nn_input = kr.Input(max_length)
+    nn_embedding_layer = kr.layers.Embedding(input_dim + 1, embedding_size)(nn_input)
+    flatten_layer = kr.layers.Flatten()(nn_embedding_layer)
+    nn_hidden = kr.layers.Dense(hidden_units, activation='relu')(flatten_layer)
+    nn_output = kr.layers.Dense(output_dim * max_sub_mental_models,
+                                activation='tanh',
+                                activity_regularizer=kr.regularizers.L1(mm_l1))(nn_hidden)
+    score_output = kr.layers.Dense(max_sub_mental_models,
+                                   activation='sigmoid',
+                                   activity_regularizer=kr.regularizers.L1(score_l1))(nn_hidden)
+    nn_reshape = kr.layers.Reshape((max_sub_mental_models, output_dim))(nn_output)
+    sub_sequence_nn = kr.Model(inputs=nn_input, outputs=[nn_reshape, score_output], name='sub-sequence-NN')
+    sub_sequence_nn.summary()
+
+    mms_and_scores = sub_sequence_nn(split_layer[0]), sub_sequence_nn(split_layer[1])
+    mm_inference_layer = MMInferenceScoresLayer()(mms_and_scores)
 
     model = kr.Model(inputs=input, outputs=mm_inference_layer)
     model.summary()
@@ -157,12 +255,16 @@ def show_subsentence_inference(model, ds, decoding_dictionary, idxs):
             x = ds.x_test[i][j]
             pred = sub_model.predict(x[np.newaxis, ...])
             print(dataset.encoding.decode_sentence(x, decoding_dictionary, ds.indexed_encoding))
-            print(np.rint(pred))
-
+            if type(pred) is list:
+                print(np.rint(pred[0]), np.rint(pred[1]))
+            else:
+                print(np.rint(pred))
+            print(pred)
 
 
 if __name__ == '__main__':
     import matplotlib.pyplot as plt
+    from models.training import mental_model_accuracy
 
     # xs, ys = create_ds()
 
@@ -175,23 +277,38 @@ if __name__ == '__main__':
 
     dec_in, dec_out = dataset.encoding.create_decoding_dictionaries(ds.input_dictionary, ds.output_dictionary)
 
-    ds.y_train = ds.y_train[..., 0, :]
-    ds.y_valid = ds.y_valid[..., 0, :]
-    ds.y_test = ds.y_test[..., 0, :]
+    # ds.y_train = ds.y_train[..., 0, :]
+    # ds.y_valid = ds.y_valid[..., 0, :]
+    # ds.y_test = ds.y_test[..., 0, :]
 
     num_variables = 5
     num_operators = 5  # and, or, not
-    max_sub_mental_models = 3
-    num_symbols = num_variables + num_operators
+    input_dim = num_variables + num_operators
     max_input_length = ds.x_train.shape[-1]
 
-    model = create_inference_model(num_variables, max_input_length, max_sub_mental_models)
+    hidden_units = 1024
+    embedding_size = 64
+    max_sub_mental_models = 3
+    mm_l1 = 0.0
+    score_l1 = 0.0
+
+    batch_size = 64
+
+    model = create_inference_model_with_scores(hidden_units,
+                                               embedding_size,
+                                               max_sub_mental_models,
+                                               mm_l1,
+                                               score_l1,
+                                               max_length=max_input_length,
+                                               input_dim=input_dim,
+                                               output_dim=num_variables)
+
     model.compile(optimizer=kr.optimizers.Adam(learning_rate=1e-3),
-                  loss=kr.losses.mse)
+                  loss=kr.losses.mse, metrics=[mental_model_accuracy])
 
     callbacks = [kr.callbacks.EarlyStopping(patience=20, min_delta=1e-5, restore_best_weights=True)]
     history = model.fit(ds.x_train, ds.y_train, validation_data=(ds.x_valid, ds.y_valid),
-                        epochs=1000, batch_size=8, callbacks=callbacks)
+                        epochs=1000, batch_size=batch_size, callbacks=callbacks)
     loss = history.history['loss']
     val_loss = history.history['val_loss']
     plt.plot(range(len(loss)), loss, label='loss')
@@ -214,8 +331,9 @@ if __name__ == '__main__':
         print(dataset.encoding.decode_sentence(ds.x_test[i][1], dec_in, ds.indexed_encoding))
         print(preds_int[i], ds.y_test[i])
         print(preds[i])
+        show_subsentence_inference(model, ds, dec_in, [i])
         print()
 
     errors = np.count_nonzero(np.sum(np.abs(preds_int - ds.y_test), axis=-1))
     print('errors', int(errors))
-    print(f'accuracy: {int((1 - int(errors)/ds.x_test.shape[0]) * 1000) / 10}%')
+    print(f'accuracy: {mental_model_accuracy(ds.y_test, preds) * 100:.2f}%')
