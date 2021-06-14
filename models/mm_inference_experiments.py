@@ -71,8 +71,10 @@ def create_varying_inference_model(num_variables, max_input_length, ds):
                                        output_dim)
 
     encoder_mms, encoder_scores = encoder(encoder_inputs)
-    nn_flatten = tf.keras.layers.Reshape((max_sub_mental_models**2,output_dim))(encoder_mms)
-    nn_concat = tf.keras.layers.Concatenate()([nn_flatten, encoder_scores])
+    # tf.print(encoder_mms)
+    print(encoder_mms)
+    nn_flatten = tf.keras.layers.Reshape((encoder_mms.shape[-2]*encoder_mms.shape[-1],))(encoder_mms)
+    nn_concat = tf.keras.layers.Concatenate(axis=1)([nn_flatten, encoder_scores])
     encoder_states = [nn_concat, nn_concat]
 
     # Create decoder
