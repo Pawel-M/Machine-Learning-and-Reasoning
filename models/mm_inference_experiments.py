@@ -21,7 +21,7 @@ def create_multi_mm_inference_model(input,
     # input = kr.Input(shape=(2, max_length))
     split_layer = kr.layers.Lambda(lambda x: (x[:, 0], x[:, 1]))(input)
 
-    nn_input = kr.Input(num_variables) # TODO HEREEEE max_length -> num_variables
+    nn_input = kr.Input(max_length)
     nn_embedding_layer = kr.layers.Embedding(input_dim + 1, embedding_size)(nn_input)
     flatten_layer = kr.layers.Flatten()(nn_embedding_layer)
     nn_hidden = kr.layers.Dense(hidden_units, activation='relu')(flatten_layer)
@@ -55,12 +55,12 @@ def create_varying_inference_model(num_variables, max_input_length, ds):
     score_l1 = 0.0
     num_operators = 5  # and, or, not
     input_dim = num_variables + num_operators
-    max_length = 10
+    max_length = 5
     output_dim = 5
 
     print('max_input_length', max_input_length)
 
-    encoder_inputs = kr.Input(shape=(2, num_variables)) # TODO HERE num_variables
+    encoder_inputs = kr.Input(shape=(2, max_length))
     encoder = create_multi_mm_inference_model(encoder_inputs, hidden_units,
                                        embedding_size,
                                        max_sub_mental_models,
@@ -156,12 +156,14 @@ def decode_sequence(input_seq, encoder_model, decoder_model):
 
         # Save MMs
         pred = np.rint(output).astype(int)
-        decoded_output = np.concatenate((decoded_output, pred), axis=1)
 
         # Exit condition: hit max length
         # this padding, such that all arrays have the same size in decoded_output.
-        if decoded_output.shape[1] > num_variables:
+        # if decoded_output.shape[1] > num_variables:
+        if np.sum(pred) == 0:
             stop_condition = True
+        else:
+            decoded_output = np.concatenate((decoded_output, pred), axis=1)
 
         # Update the target sequence (of length 1).
         target_seq = pred
@@ -172,10 +174,10 @@ def decode_sequence(input_seq, encoder_model, decoder_model):
     return decoded_output[:,1:,:]
 
 def decode_sequences(data, encoder_model, decoder_model):
-    preds = decode_sequence(data[[0]], encoder_model, decoder_model)
-    for i in tqdm(range(1,ds.x_test.shape[0])):
+    preds = []
+    for i in tqdm(range(0,ds.x_test.shape[0])):
         pred = decode_sequence(data[[i]], encoder_model, decoder_model)
-        preds = np.concatenate((preds, pred), axis=0)
+        preds.append(pred)
 
     return preds
 
@@ -193,6 +195,11 @@ def same_MMs(true, pred):
 
 import dataset
 import matplotlib.pyplot as plt
+
+
+def remove_zero_rows(data):
+    return data[np.sum(data, axis=1) != 0]
+
 if __name__ == '__main__':
     ds = get_separated_sequences_mental_models_dataset('../data', 'encoded_and_trees_single_mms_type_I',
                                                        num_variables=5, max_depth=2,
@@ -207,6 +214,10 @@ if __name__ == '__main__':
     ds.y_valid = add_zero_row(ds.y_valid, 'last')
     ds.y_test_d = add_zero_row(ds.y_test, 'front')
     ds.y_test = add_zero_row(ds.y_test, 'last')
+
+    # num = 30
+    # ds.x_test = ds.x_test[:num]
+    # ds.y_test = ds.y_test[:num]
 
     num_variables = 5
     num_operators = 5  # and, or, not
@@ -228,22 +239,23 @@ if __name__ == '__main__':
     plt.show()
 
     preds = decode_sequences(ds.x_test, encoder_model, decoder_model)
-    for i in range(preds.shape[0]):
-        print(preds[i], ds.y_test[i])
+    for i in range(len(preds)):
+        y_preproc = remove_zero_rows(ds.y_test[i])
+        print('TRUE: ', y_preproc)
+        print('PREDICTED: ', preds[i],'\n')
 
     print('errors:')
     errors = 0
-    for i in range(preds.shape[0]):
-        if same_MMs(ds.y_test[i], preds[i]):
+    for i in range(len(preds)):
+        y_preproc = remove_zero_rows(ds.y_test[i])
+        if same_MMs(y_preproc, preds[i][0]):
             continue
         print(dataset.encoding.decode_sentence(ds.x_test[i][0], dec_in, ds.indexed_encoding))
         print(dataset.encoding.decode_sentence(ds.x_test[i][1], dec_in, ds.indexed_encoding))
-        print(ds.y_test[i])
-        print(preds[i])
-        print()
+        print('TRUE: ', y_preproc)
+        print('PREDICTED: ', preds[i],'\n')
 
         errors += 1
 
-    errors = np.count_nonzero(np.sum(np.abs(preds - ds.y_test), axis=-1))
     print('errors', int(errors))
     print(f'accuracy: {int((1 - int(errors)/ds.x_test.shape[0]) * 1000) / 10}%')
