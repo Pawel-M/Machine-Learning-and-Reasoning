@@ -1,78 +1,46 @@
-# def find_common_models(set_a, set_b):
-#     # the function simply returns all states that are possible in both mental models
-#     return set_a.intersection(set_b)
-
-# Model 1 represents the sentence (A or B).
-# This sentence can imply three different states:
-# 1) A = True, B = False
-# 2) A = False, B = True
-# 3) A = True, B = True
-# Representing these states in vectors:
-# 1) (1, 0)
-# 2) (0, 1)
-# 3) (1, 1)
-
-# Here, mm1 is the vector-representation of the sentence (A or B)
-# Here, mm2 is the vector-representation of the sentence (A or not B)
-
-# mm1 = {(1, 0), (0, 1), (1, 1)}
-# mm2 = {(1, 0), (1, 1), (0, 0)}
-# common_models = find_common_models(mm1, mm2)
-# print(common_models)
-
-# import warnings
-
 from dataset.common import get_separated_sequences_mental_models_dataset
-from models.mm_inference import create_inference_model_with_scores
+from models.mm_inference import MultiMMInferenceLayer
 
 # warnings.filterwarnings("ignore")
 import tensorflow as tf
 # import keras.backend as kb
 import numpy as np
-#
-# batch_size = 3
-# M = tf.random.uniform(shape=[batch_size,4,5])
-# S = tf.random.uniform(shape=[batch_size,4])
-# y_pred = (M,S)
-# y_actual = tf.random.uniform(shape=[batch_size, 2, 5])
-#
-# alpha = 1
-# beta = 1
-# M, S = y_pred
 
-# loss_value = kb.sum(
-#     alpha * (kb.sum(kb.prod(M, S), axis=1) / kb.max(np.array([1, kb.sum(S, axis=1)])) - y_actual) ** 2 + \
-#     beta * kb.max([0, 1 - kb.sum(S, axis=1)]))
+def create_multi_mm_inference_model(input,
+                                    hidden_units,
+                                    embedding_size,
+                                    max_sub_mental_models,
+                                    mm_l1,
+                                    score_l1,
+                                    max_length,
+                                    input_dim,
+                                    output_dim):
+    print('max_input_length', max_length)
+    # input = kr.Input(shape=(2, max_length))
+    split_layer = kr.layers.Lambda(lambda x: (x[:, 0], x[:, 1]))(input)
 
-# print(M * tf.expand_dims(S, axis=-1))
-# print(kb.sum(S, axis=1))
-# print(tf.ones(S.shape[0]))
-#
-# print(tf.stack([tf.ones(S.shape[0]), kb.sum(S, axis=1)], axis=1))
-# print(kb.max(tf.stack([tf.ones(S.shape[0]), kb.sum(S, axis=1)], axis=1), axis=1))
+    nn_input = kr.Input(max_length)
+    nn_embedding_layer = kr.layers.Embedding(input_dim + 1, embedding_size)(nn_input)
+    flatten_layer = kr.layers.Flatten()(nn_embedding_layer)
+    nn_hidden = kr.layers.Dense(hidden_units, activation='relu')(flatten_layer)
+    nn_output = kr.layers.Dense(output_dim * max_sub_mental_models,
+                                activation='tanh',
+                                activity_regularizer=kr.regularizers.L1(mm_l1))(nn_hidden)
+    score_output = kr.layers.Dense(max_sub_mental_models,
+                                   activation='sigmoid',
+                                   activity_regularizer=kr.regularizers.L1(score_l1))(nn_hidden)
+    nn_reshape = kr.layers.Reshape((max_sub_mental_models, output_dim))(nn_output)
+    sub_sequence_nn = kr.Model(inputs=nn_input, outputs=[nn_reshape, score_output], name='sub-sequence-NN')
+    sub_sequence_nn.summary()
 
+    mms_and_scores = sub_sequence_nn(split_layer[0]), sub_sequence_nn(split_layer[1])
+    mm_inference_layer = MultiMMInferenceLayer()(mms_and_scores)
 
-# A = kb.sum(M * tf.expand_dims(S, axis=-1), axis=1)
-# B = kb.max(tf.stack([tf.ones(S.shape[0]), kb.sum(S, axis=1)], axis=1), axis=1)
-# B = kb.maximum(1.0, kb.sum(S, axis=1))
+    model = kr.Model(inputs=input, outputs=mm_inference_layer)
+    model.summary()
 
+    return model
 
-# print(A.shape, B.shape)
-# print((A / tf.expand_dims(B, axis=-1) - y_actual))
-
-# MSE = ((A / tf.expand_dims(B, axis=-1)) - y_actual)**2
-# scores = 1 - kb.sum(S, axis=1)
-#
-# loss_value = alpha * MSE + beta * scores
-
-# print(A.shape, B.shape)
-# print(A / tf.expand_dims(B, axis=-1))
-#
-# print()
-
-# print(kb.sum(M * tf.expand_dims(S, axis=-1)) / kb.max(tf.stack([tf.ones(S.shape[0]), kb.sum(S, axis=1)], axis=1), axis=1))
-
-# print(1 - kb.sum(S, axis=1))
 
 import keras as kr
 def create_varying_inference_model(num_variables, max_input_length, ds):
@@ -93,7 +61,7 @@ def create_varying_inference_model(num_variables, max_input_length, ds):
     print('max_input_length', max_input_length)
 
     encoder_inputs = kr.Input(shape=(2, max_length))
-    encoder = create_inference_model_with_scores(hidden_units,
+    encoder = create_multi_mm_inference_model(encoder_inputs, hidden_units,
                                        embedding_size,
                                        max_sub_mental_models,
                                        mm_l1,
@@ -170,7 +138,7 @@ def add_zero_row(data, position):
 import dataset
 import matplotlib.pyplot as plt
 if __name__ == '__main__':
-    ds = get_separated_sequences_mental_models_dataset('../data', 'encoded_and_trees_single_mms_type_I',
+    ds = get_separated_sequences_mental_models_dataset('../data', 'encoded_and_trees_multiple_mms',
                                                        num_variables=5, max_depth=2,
                                                        test_size=.1, valid_size=.1,
                                                        indexed_encoding=True, pad_mental_models=True)
