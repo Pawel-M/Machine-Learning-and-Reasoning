@@ -1,5 +1,7 @@
 from dataset.common import get_separated_sequences_mental_models_dataset
 from models.mm_inference import MultiMMInferenceLayer
+import tensorflow.keras as kr
+from tqdm import tqdm
 
 # warnings.filterwarnings("ignore")
 import tensorflow as tf
@@ -19,7 +21,7 @@ def create_multi_mm_inference_model(input,
     # input = kr.Input(shape=(2, max_length))
     split_layer = kr.layers.Lambda(lambda x: (x[:, 0], x[:, 1]))(input)
 
-    nn_input = kr.Input(max_length)
+    nn_input = kr.Input(num_variables) # TODO HEREEEE max_length -> num_variables
     nn_embedding_layer = kr.layers.Embedding(input_dim + 1, embedding_size)(nn_input)
     flatten_layer = kr.layers.Flatten()(nn_embedding_layer)
     nn_hidden = kr.layers.Dense(hidden_units, activation='relu')(flatten_layer)
@@ -41,8 +43,6 @@ def create_multi_mm_inference_model(input,
 
     return model
 
-
-import keras as kr
 def create_varying_inference_model(num_variables, max_input_length, ds):
     # Without specific token for start of sequence (index 0) and end of sequence (index 1) - (0,0,0,0,0) equals end
     # Based on characters instead of subsentences
@@ -60,7 +60,7 @@ def create_varying_inference_model(num_variables, max_input_length, ds):
 
     print('max_input_length', max_input_length)
 
-    encoder_inputs = kr.Input(shape=(2, max_length))
+    encoder_inputs = kr.Input(shape=(2, num_variables)) # TODO HERE num_variables
     encoder = create_multi_mm_inference_model(encoder_inputs, hidden_units,
                                        embedding_size,
                                        max_sub_mental_models,
@@ -137,10 +137,64 @@ def add_zero_row(data, position):
 
     return temp
 
+def decode_sequence(input_seq, encoder_model, decoder_model):
+    # Encode the input as state vectors.
+    states_value = encoder_model.predict(input_seq)
+
+    # Generate empty target sequence of length 1.
+    target_seq = np.zeros((1, 1, num_variables))
+    # Populate the first character of target sequence with the start character.
+#     target_seq[0, 0, target_token_index['\t']] = 1.
+
+    # Sampling loop for a batch of sequences
+    # (to simplify, here we assume a batch of size 1).
+    stop_condition = False
+    decoded_output = target_seq
+    while not stop_condition:
+        output, h, c = decoder_model.predict(
+            [target_seq] + states_value)
+
+        # Save MMs
+        pred = np.rint(output).astype(int)
+        decoded_output = np.concatenate((decoded_output, pred), axis=1)
+
+        # Exit condition: hit max length
+        # this padding, such that all arrays have the same size in decoded_output.
+        if decoded_output.shape[1] > num_variables:
+            stop_condition = True
+
+        # Update the target sequence (of length 1).
+        target_seq = pred
+
+        # Update states
+        states_value = [h, c]
+
+    return decoded_output[:,1:,:]
+
+def decode_sequences(data, encoder_model, decoder_model):
+    preds = decode_sequence(data[[0]], encoder_model, decoder_model)
+    for i in tqdm(range(1,ds.x_test.shape[0])):
+        pred = decode_sequence(data[[i]], encoder_model, decoder_model)
+        preds = np.concatenate((preds, pred), axis=0)
+
+    return preds
+
+def same_MMs(true, pred):
+    true = true.tolist()
+    pred = pred.tolist()
+    # Check if all occur
+    for i in range(len(pred)):
+        if pred[i] in true:
+            # If occur, remove from true
+            true.remove(pred[i])
+
+    # If nothing in true, everything is predicted correctly
+    return true == []
+
 import dataset
 import matplotlib.pyplot as plt
 if __name__ == '__main__':
-    ds = get_separated_sequences_mental_models_dataset('../data', 'encoded_and_trees_multiple_mms',
+    ds = get_separated_sequences_mental_models_dataset('../data', 'encoded_and_trees_single_mms_type_I',
                                                        num_variables=5, max_depth=2,
                                                        test_size=.1, valid_size=.1,
                                                        indexed_encoding=True, pad_mental_models=True)
@@ -172,3 +226,24 @@ if __name__ == '__main__':
     plt.ylabel('loss')
     plt.legend()
     plt.show()
+
+    preds = decode_sequences(ds.x_test, encoder_model, decoder_model)
+    for i in range(preds.shape[0]):
+        print(preds[i], ds.y_test[i])
+
+    print('errors:')
+    errors = 0
+    for i in range(preds.shape[0]):
+        if same_MMs(ds.y_test[i], preds[i]):
+            continue
+        print(dataset.encoding.decode_sentence(ds.x_test[i][0], dec_in, ds.indexed_encoding))
+        print(dataset.encoding.decode_sentence(ds.x_test[i][1], dec_in, ds.indexed_encoding))
+        print(ds.y_test[i])
+        print(preds[i])
+        print()
+
+        errors += 1
+
+    errors = np.count_nonzero(np.sum(np.abs(preds - ds.y_test), axis=-1))
+    print('errors', int(errors))
+    print(f'accuracy: {int((1 - int(errors)/ds.x_test.shape[0]) * 1000) / 10}%')
