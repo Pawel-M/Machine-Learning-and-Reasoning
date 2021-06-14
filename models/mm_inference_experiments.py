@@ -8,6 +8,7 @@ import tensorflow as tf
 # import keras.backend as kb
 import numpy as np
 
+
 def create_multi_mm_inference_model(input,
                                     hidden_units,
                                     embedding_size,
@@ -43,60 +44,52 @@ def create_multi_mm_inference_model(input,
 
     return model
 
-def create_varying_inference_model(num_variables, max_input_length, ds):
+
+def create_varying_inference_model(epochs,
+                                   batch_size,
+                                   embedding_size,
+                                   encoder_hidden_units,
+                                   max_sub_mental_models,
+                                   mm_l1,
+                                   score_l1,
+                                   num_operators,  # and, or, not,
+                                   max_length,
+                                   output_dim,
+                                   num_variables,
+                                   max_input_length,
+                                   ds):
     # Without specific token for start of sequence (index 0) and end of sequence (index 1) - (0,0,0,0,0) equals end
     # Based on characters instead of subsentences
     # Initialise parameters
-    batch_size = 8
-    embedding_size = 10
-    hidden_units = 128
-    max_sub_mental_models = 3
-    mm_l1 = 0.0
-    score_l1 = 0.0
-    num_operators = 5  # and, or, not
-    input_dim = num_variables + num_operators
-    max_length = 5
-    output_dim = 5
 
+    input_dim = num_variables + num_operators
     print('max_input_length', max_input_length)
 
     encoder_inputs = kr.Input(shape=(2, max_length))
-    encoder = create_multi_mm_inference_model(encoder_inputs, hidden_units,
-                                       embedding_size,
-                                       max_sub_mental_models,
-                                       mm_l1,
-                                       score_l1,
-                                       max_length,
-                                       input_dim,
-                                       output_dim)
+    encoder = create_multi_mm_inference_model(encoder_inputs,
+                                              encoder_hidden_units,
+                                              embedding_size,
+                                              max_sub_mental_models,
+                                              mm_l1,
+                                              score_l1,
+                                              max_length,
+                                              input_dim,
+                                              output_dim)
 
     encoder_mms, encoder_scores = encoder(encoder_inputs)
     # tf.print(encoder_mms)
     print(encoder_mms)
-    nn_flatten = tf.keras.layers.Reshape((encoder_mms.shape[-2]*encoder_mms.shape[-1],))(encoder_mms)
+    nn_flatten = tf.keras.layers.Reshape((encoder_mms.shape[-2] * encoder_mms.shape[-1],))(encoder_mms)
     nn_concat = tf.keras.layers.Concatenate(axis=1)([nn_flatten, encoder_scores])
     encoder_states = [nn_concat, nn_concat]
 
     # Create decoder
-    # decoder = kr.layers.LSTM(hidden_units, return_sequences=True, return_state=True, activation='relu')
-    # decoder_outputs, _, _ = decoder(nn_concat)
-    # decoder_dense = kr.layers.Dense(num_variables, activation='tanh')
-    # output = decoder_dense(decoder_outputs)
-
-    #####################################################################################################
-    # encoder = kr.layers.LSTM(hidden_units, return_sequences=True, return_state=True, activation='relu')
-    # encoder_outputs, state_h, state_c = encoder(nn_flatten)
-    # encoder_states = [state_h, state_c]
-
-    # Create decoder
-    decoder_inputs = kr.Input(shape=(None,num_variables))
+    decoder_inputs = kr.Input(shape=(None, num_variables))
     decoder = kr.layers.LSTM(54, return_sequences=True, return_state=True, activation='relu')
     decoder_outputs, _, _ = decoder(decoder_inputs,
-                                         initial_state=encoder_states)
+                                    initial_state=encoder_states)
     decoder_dense = kr.layers.Dense(num_variables, activation='tanh')
     output = decoder_dense(decoder_outputs)
-
-#############################################################################################################
 
     ## Define training model
     model_train = kr.Model(inputs=[encoder_inputs, decoder_inputs], outputs=output)
@@ -104,11 +97,12 @@ def create_varying_inference_model(num_variables, max_input_length, ds):
 
     ## Train model
     model_train.compile(optimizer=kr.optimizers.Adam(learning_rate=1e-3),
-                  loss=kr.losses.mse)
+                        loss=kr.losses.mse)
 
     callbacks = [kr.callbacks.EarlyStopping(patience=20, min_delta=1e-5, restore_best_weights=True)]
-    history = model_train.fit([ds.x_train, ds.y_train_d], ds.y_train, validation_data=([ds.x_valid, ds.y_valid_d], ds.y_valid),
-                        epochs=1000, batch_size=batch_size, callbacks=callbacks)
+    history = model_train.fit([ds.x_train, ds.y_train_d], ds.y_train,
+                              validation_data=([ds.x_valid, ds.y_valid_d], ds.y_valid),
+                              epochs=epochs, batch_size=batch_size, callbacks=callbacks)
 
     ## Define testing models (no teacher forcing)
     encoder_model = kr.Model(encoder_inputs, encoder_states)
@@ -127,24 +121,26 @@ def create_varying_inference_model(num_variables, max_input_length, ds):
     # Returned trained models, and history of training
     return model_train, history, encoder_model, decoder_model
 
+
 def add_zero_row(data, position):
     if position == 'front':
-        temp = np.zeros((data.shape[0],data.shape[1]+1,data.shape[2]))
-        temp[:,1:,:] = data
+        temp = np.zeros((data.shape[0], data.shape[1] + 1, data.shape[2]))
+        temp[:, 1:, :] = data
     elif position == 'last':
-        temp = np.zeros((data.shape[0],data.shape[1]+1,data.shape[2]))
-        temp[:,:-1,:] = data
+        temp = np.zeros((data.shape[0], data.shape[1] + 1, data.shape[2]))
+        temp[:, :-1, :] = data
 
     return temp
 
-def decode_sequence(input_seq, encoder_model, decoder_model):
+
+def decode_sequence(input_seq, encoder_model, decoder_model, num_variables):
     # Encode the input as state vectors.
     states_value = encoder_model.predict(input_seq)
 
     # Generate empty target sequence of length 1.
     target_seq = np.zeros((1, 1, num_variables))
     # Populate the first character of target sequence with the start character.
-#     target_seq[0, 0, target_token_index['\t']] = 1.
+    #     target_seq[0, 0, target_token_index['\t']] = 1.
 
     # Sampling loop for a batch of sequences
     # (to simplify, here we assume a batch of size 1).
@@ -171,15 +167,17 @@ def decode_sequence(input_seq, encoder_model, decoder_model):
         # Update states
         states_value = [h, c]
 
-    return decoded_output[:,1:,:]
+    return decoded_output[:, 1:, :]
 
-def decode_sequences(data, encoder_model, decoder_model):
+
+def decode_sequences(data, encoder_model, decoder_model, num_variables):
     preds = []
-    for i in tqdm(range(0,ds.x_test.shape[0])):
-        pred = decode_sequence(data[[i]], encoder_model, decoder_model)
+    for i in tqdm(range(0, ds.x_test.shape[0])):
+        pred = decode_sequence(data[[i]], encoder_model, decoder_model, num_variables)
         preds.append(pred)
 
     return preds
+
 
 def same_MMs(true, pred):
     true = true.tolist()
@@ -193,6 +191,7 @@ def same_MMs(true, pred):
     # If nothing in true, everything is predicted correctly
     return true == []
 
+
 import dataset
 import matplotlib.pyplot as plt
 
@@ -200,12 +199,13 @@ import matplotlib.pyplot as plt
 def remove_zero_rows(data):
     return data[np.sum(data, axis=1) != 0]
 
-if __name__ == '__main__':
-    ds = get_separated_sequences_mental_models_dataset('../data', 'encoded_and_trees_single_mms_type_I',
-                                                       num_variables=5, max_depth=2,
-                                                       test_size=.1, valid_size=.1,
-                                                       indexed_encoding=True, pad_mental_models=True)
 
+def train_multi_mms_model(ds,
+                          epochs, batch_size,
+                          embedding_size, encoder_hidden_units,
+                          max_sub_mental_models,
+                          mm_l1,
+                          score_l1):
     dec_in, dec_out = dataset.encoding.create_decoding_dictionaries(ds.input_dictionary, ds.output_dictionary)
 
     ds.y_train_d = add_zero_row(ds.y_train, 'front')
@@ -215,17 +215,32 @@ if __name__ == '__main__':
     ds.y_test_d = add_zero_row(ds.y_test, 'front')
     ds.y_test = add_zero_row(ds.y_test, 'last')
 
-    # num = 30
-    # ds.x_test = ds.x_test[:num]
-    # ds.y_test = ds.y_test[:num]
-
     num_variables = 5
-    num_operators = 5  # and, or, not
-    num_symbols = num_variables + num_operators
     max_input_length = ds.x_train.shape[-1]
 
+    # epochs = 2
+    # batch_size = 8
+    # embedding_size = 10
+    # encoder_hidden_units = 128
+    # max_sub_mental_models = 3
+    # mm_l1 = 0.0
+    # score_l1 = 0.0
+    num_operators = 5  # and, or, not
+    max_length = 5
+    output_dim = 5
+
     # 1: subsentences no index, 2: subsentences index, 3: symbols no index
-    model_train, history, encoder_model, decoder_model = create_varying_inference_model(num_variables,
+    model_train, history, encoder_model, decoder_model = create_varying_inference_model(epochs,
+                                                                                        batch_size,
+                                                                                        embedding_size,
+                                                                                        encoder_hidden_units,
+                                                                                        max_sub_mental_models,
+                                                                                        mm_l1,
+                                                                                        score_l1,
+                                                                                        num_operators,  # and, or, not,
+                                                                                        max_length,
+                                                                                        output_dim,
+                                                                                        num_variables,
                                                                                         max_input_length,
                                                                                         ds)
 
@@ -238,11 +253,11 @@ if __name__ == '__main__':
     plt.legend()
     plt.show()
 
-    preds = decode_sequences(ds.x_test, encoder_model, decoder_model)
-    for i in range(len(preds)):
-        y_preproc = remove_zero_rows(ds.y_test[i])
-        print('TRUE: ', y_preproc)
-        print('PREDICTED: ', preds[i],'\n')
+    preds = decode_sequences(ds.x_test, encoder_model, decoder_model, num_variables)
+    # for i in range(len(preds)):
+    #     y_preproc = remove_zero_rows(ds.y_test[i])
+    #     print('TRUE: ', y_preproc)
+    #     print('PREDICTED: ', preds[i], '\n')
 
     print('errors:')
     errors = 0
@@ -253,9 +268,58 @@ if __name__ == '__main__':
         print(dataset.encoding.decode_sentence(ds.x_test[i][0], dec_in, ds.indexed_encoding))
         print(dataset.encoding.decode_sentence(ds.x_test[i][1], dec_in, ds.indexed_encoding))
         print('TRUE: ', y_preproc)
-        print('PREDICTED: ', preds[i],'\n')
+        print('PREDICTED: ', preds[i], '\n')
 
         errors += 1
 
+    accuracy = 1 - float(errors) / ds.x_test.shape[0]
     print('errors', int(errors))
-    print(f'accuracy: {int((1 - int(errors)/ds.x_test.shape[0]) * 1000) / 10}%')
+    print(f'accuracy: {accuracy * 100:.1f}%')
+
+    return accuracy
+
+
+def train_multiple_times(n, ds,
+                         epochs, batch_size,
+                         embedding_size, encoder_hidden_units,
+                         max_sub_mental_models,
+                         mm_l1,
+                         score_l1):
+    accuracies_str = ''
+    accuracies = []
+    for i in range(n):
+        accuracy = train_multi_mms_model(ds,
+                                         epochs, batch_size,
+                                         embedding_size, encoder_hidden_units,
+                                         max_sub_mental_models,
+                                         mm_l1,
+                                         score_l1)
+        accuracies.append(accuracy)
+        accuracies_str += f'{accuracy} '
+
+    print('Resulting accuracies:')
+    print(accuracies_str)
+    return accuracies
+
+
+if __name__ == '__main__':
+    ds = get_separated_sequences_mental_models_dataset('../data', 'encoded_and_trees_multiple_mms',
+                                                       num_variables=5, max_depth=2,
+                                                       test_size=.1, valid_size=.1,
+                                                       indexed_encoding=True, pad_mental_models=True)
+
+    n = 3
+    epochs = 2
+    batch_size = 8
+    embedding_size = 10
+    encoder_hidden_units = 128
+    max_sub_mental_models = 3
+    mm_l1 = 0.0
+    score_l1 = 0.0
+
+    accuracies = train_multiple_times(n, ds,
+                                      epochs, batch_size,
+                                      embedding_size, encoder_hidden_units,
+                                      max_sub_mental_models,
+                                      mm_l1,
+                                      score_l1)
