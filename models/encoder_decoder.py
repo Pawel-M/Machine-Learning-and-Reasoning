@@ -386,8 +386,8 @@ def train_encoder_decoder(type, start_index, ds,
         ds.x_valid = concat_subsentences(ds.x_valid)
         ds.x_test = concat_subsentences(ds.x_test)
 
-    ds.x_test = ds.x_test[:30]
-    ds.y_test = ds.y_test[:30]
+    # ds.x_test = ds.x_test[:30]
+    # ds.y_test = ds.y_test[:30]
 
     num_variables = 5
     num_operators = 5  # and, or, not
@@ -471,7 +471,7 @@ if __name__ == '__main__':
     batch_size = 8
     embedding_size = 10
     hidden_units = 128
-    epochs = 5
+    epochs = 1000
     acc = train_encoder_decoder(type, start_index, ds,
                                 num_variables,
                                 batch_size,
