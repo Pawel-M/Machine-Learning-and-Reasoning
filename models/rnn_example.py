@@ -91,6 +91,40 @@ def create_no_embedding_lstm2(num_layers, input_dim, output_dim, embedding_size,
   return model 
 
 
+def create_no_embedding_lstm3(num_layers, input_dim, output_dim, embedding_size, hidden_units, bidirectional=False,
+                             max_length=None):
+    model = kr.Sequential()
+    for i in range(num_layers):
+        if bidirectional:
+            if i == num_layers - 1:
+                if i == 0:
+                    model.add(kr.layers.Bidirectional(kr.layers.LSTM(units=hidden_units), input_shape=(max_length, input_dim)))
+                else:
+                    model.add(kr.layers.Bidirectional(kr.layers.LSTM(units=hidden_units)))
+            else:
+                if i == 0:
+                    model.add(kr.layers.Bidirectional(kr.layers.LSTM(units=hidden_units, return_sequences=True),
+                                                      input_shape=(max_length, input_dim)))
+                else:
+                    model.add(kr.layers.Bidirectional(kr.layers.LSTM(units=hidden_units, return_sequences=True)))
+        else:
+            if i == num_layers - 1:
+                if i == 0:
+                    model.add(kr.layers.LSTM(units=hidden_units), input_shape=(max_length, input_dim))
+                else:
+                    model.add(kr.layers.LSTM(units=hidden_units))
+            else:
+                if i == 0:
+                    model.add(kr.layers.LSTM(units=hidden_units, return_sequences=True,
+                                                      input_shape=(max_length, input_dim)))
+                else:
+                    model.add(kr.layers.LSTM(units=hidden_units, return_sequences=True))
+
+    model.add(kr.layers.Dense(output_dim, activation='softmax'))
+    model.summary()
+    return model
+
+
 def create_lstm_model(num_layers, input_dim, output_dim, embedding_size, hidden_units, bidirectional=False,
                       out_activation='softmax', max_length=None):
     return create_rnn_model(kr.layers.LSTM, num_layers,
