@@ -7,6 +7,7 @@ from tqdm import tqdm
 import dataset
 import dataset.encoding
 from dataset.common import get_separated_sequences_mental_models_dataset
+from models.mm_inference_experiments import randomize_MMs
 
 
 def create_varying_inference_model1(num_variables, max_input_length, num_symbols,
@@ -465,8 +466,10 @@ if __name__ == '__main__':
                                                        test_size=.1, valid_size=.1,
                                                        indexed_encoding=True, pad_mental_models=True)
 
-    type = 'subsentence'  # Could be "subsentence" or "symbol"
-    start_index = True  # True or false (True -> specific start and end index for Start / End of sequence)
+    # ds.y_train = randomize_MMs(ds.y_train)
+
+    type = 'symbol'  # Could be "subsentence" or "symbol"
+    start_index = False  # True or false (True -> specific start and end index for Start / End of sequence)
     num_variables = 5
     batch_size = 8
     embedding_size = 10
