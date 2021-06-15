@@ -22,8 +22,7 @@ def create_rnn_model(rnn_cls, num_layers, input_dim, output_dim, embedding_size,
     model.summary()
     return model
 
-####
-
+  
 def create_no_embedding_lstm(num_layers, input_dim, output_dim, embedding_size, hidden_units, bidirectional=False,
                              max_length=None):
     model = kr.Sequential()
