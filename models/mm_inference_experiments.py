@@ -1,12 +1,12 @@
-from dataset.common import get_separated_sequences_mental_models_dataset
-from models.mm_inference import MultiMMInferenceLayer
+# import keras.backend as kb
+import numpy as np
+# warnings.filterwarnings("ignore")
+import tensorflow as tf
 import tensorflow.keras as kr
 from tqdm import tqdm
 
-# warnings.filterwarnings("ignore")
-import tensorflow as tf
-# import keras.backend as kb
-import numpy as np
+from dataset.common import get_separated_sequences_mental_models_dataset
+from models.mm_inference import MultiMMInferenceLayer
 
 
 def create_multi_mm_inference_model(input,
@@ -156,7 +156,7 @@ def decode_sequence(input_seq, encoder_model, decoder_model, num_variables):
         # Exit condition: hit max length
         # this padding, such that all arrays have the same size in decoded_output.
         # if decoded_output.shape[1] > num_variables:
-        if np.sum(pred) == 0:
+        if np.sum(pred) == 0 or decoded_output.shape[1] > num_variables:
             stop_condition = True
         else:
             decoded_output = np.concatenate((decoded_output, pred), axis=1)
@@ -279,6 +279,86 @@ def train_multi_mms_model(ds,
     return accuracy
 
 
+def train_multi_mms_model_random(ds,
+                                 epochs, batch_size,
+                                 embedding_size, encoder_hidden_units,
+                                 max_sub_mental_models,
+                                 mm_l1,
+                                 score_l1):
+    dec_in, dec_out = dataset.encoding.create_decoding_dictionaries(ds.input_dictionary, ds.output_dictionary)
+
+    ds.y_train = randomize_MMs(ds.y_train)
+    ds.y_train_d = add_zero_row(ds.y_train, 'front')
+    ds.y_train = add_zero_row(ds.y_train, 'last')
+    ds.y_valid_d = add_zero_row(ds.y_valid, 'front')
+    ds.y_valid = add_zero_row(ds.y_valid, 'last')
+    ds.y_test_d = add_zero_row(ds.y_test, 'front')
+    ds.y_test = add_zero_row(ds.y_test, 'last')
+
+    num_variables = 5
+    max_input_length = ds.x_train.shape[-1]
+
+    # epochs = 2
+    # batch_size = 8
+    # embedding_size = 10
+    # encoder_hidden_units = 128
+    # max_sub_mental_models = 3
+    # mm_l1 = 0.0
+    # score_l1 = 0.0
+    num_operators = 5  # and, or, not
+    max_length = 5
+    output_dim = 5
+
+    # 1: subsentences no index, 2: subsentences index, 3: symbols no index
+    model_train, history, encoder_model, decoder_model = create_varying_inference_model(epochs,
+                                                                                        batch_size,
+                                                                                        embedding_size,
+                                                                                        encoder_hidden_units,
+                                                                                        max_sub_mental_models,
+                                                                                        mm_l1,
+                                                                                        score_l1,
+                                                                                        num_operators,  # and, or, not,
+                                                                                        max_length,
+                                                                                        output_dim,
+                                                                                        num_variables,
+                                                                                        max_input_length,
+                                                                                        ds)
+
+    loss = history.history['loss']
+    val_loss = history.history['val_loss']
+    plt.plot(range(len(loss)), loss, label='loss')
+    plt.plot(range(len(val_loss)), loss, label='val_loss')
+    plt.xlabel('epoch')
+    plt.ylabel('loss')
+    plt.legend()
+    plt.show()
+
+    preds = decode_sequences(ds.x_test, encoder_model, decoder_model, num_variables)
+    # for i in range(len(preds)):
+    #     y_preproc = remove_zero_rows(ds.y_test[i])
+    #     print('TRUE: ', y_preproc)
+    #     print('PREDICTED: ', preds[i], '\n')
+
+    print('errors:')
+    errors = 0
+    for i in range(len(preds)):
+        y_preproc = remove_zero_rows(ds.y_test[i])
+        if same_MMs(y_preproc, preds[i][0]):
+            continue
+        print(dataset.encoding.decode_sentence(ds.x_test[i][0], dec_in, ds.indexed_encoding))
+        print(dataset.encoding.decode_sentence(ds.x_test[i][1], dec_in, ds.indexed_encoding))
+        print('TRUE: ', y_preproc)
+        print('PREDICTED: ', preds[i], '\n')
+
+        errors += 1
+
+    accuracy = 1 - float(errors) / ds.x_test.shape[0]
+    print('errors', int(errors))
+    print(f'accuracy: {accuracy * 100:.1f}%')
+
+    return accuracy
+
+
 def train_multiple_times(n, ds,
                          epochs, batch_size,
                          embedding_size, encoder_hidden_units,
@@ -302,14 +382,36 @@ def train_multiple_times(n, ds,
     return accuracies
 
 
+def randomize_MMs(datas):
+    # Get size
+    n = datas.shape[1]
+    # For every set of MMS
+    for i in range(datas.shape[0]):
+        data = datas[i]
+
+        # Get indices with MMs (because of padding)
+        indxs = np.array(range(n))[np.sum(data, axis=1) != 0]
+
+        # If it has a MM, randomize the MMs
+        if indxs.size > 0:
+            rand_indxs = np.random.choice(indxs, size=indxs.size, replace=False)
+
+            # Add to new set
+            new_indx = np.concatenate([rand_indxs, np.arange(np.max(indxs) + 1, n)])
+            datas[i] = data[new_indx, :]
+
+    # Return randomized training data
+    return datas
+
+
 if __name__ == '__main__':
-    ds = get_separated_sequences_mental_models_dataset('../data', 'encoded_and_trees_multiple_mms',
+    ds = get_separated_sequences_mental_models_dataset('../data', 'encoded_and_trees_single_mms_type_I',
                                                        num_variables=5, max_depth=2,
                                                        test_size=.1, valid_size=.1,
                                                        indexed_encoding=True, pad_mental_models=True)
 
     n = 3
-    epochs = 2
+    epochs = 1000
     batch_size = 8
     embedding_size = 10
     encoder_hidden_units = 128
@@ -317,9 +419,20 @@ if __name__ == '__main__':
     mm_l1 = 0.0
     score_l1 = 0.0
 
-    accuracies = train_multiple_times(n, ds,
-                                      epochs, batch_size,
-                                      embedding_size, encoder_hidden_units,
-                                      max_sub_mental_models,
-                                      mm_l1,
-                                      score_l1)
+    # accuracies = train_multiple_times(n, ds,
+    #                                   epochs, batch_size,
+    #                                   embedding_size, encoder_hidden_units,
+    #                                   max_sub_mental_models,
+    #                                   mm_l1,
+    #                                   score_l1)
+
+    acc = train_multi_mms_model_random(ds,
+                                epochs, batch_size,
+                                embedding_size, encoder_hidden_units,
+                                max_sub_mental_models,
+                                mm_l1,
+                                score_l1)
+
+    print(acc)
+
+    # print(ds.y_train[:5])
