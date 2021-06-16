@@ -97,7 +97,7 @@ def create_varying_inference_model(epochs,
 
     ## Train model
     model_train.compile(optimizer=kr.optimizers.Adam(learning_rate=1e-3),
-                        loss=kr.losses.mse)
+                        loss=custom_loss)  # loss=kr.losses.mse)
 
     callbacks = [kr.callbacks.EarlyStopping(patience=20, min_delta=1e-5, restore_best_weights=True)]
     history = model_train.fit([ds.x_train, ds.y_train_d], ds.y_train,
@@ -156,7 +156,7 @@ def decode_sequence(input_seq, encoder_model, decoder_model, num_variables):
         # Exit condition: hit max length
         # this padding, such that all arrays have the same size in decoded_output.
         # if decoded_output.shape[1] > num_variables:
-        if np.sum(pred) == 0 or decoded_output.shape[1] > num_variables:
+        if np.sum(np.abs(pred)) == 0 or decoded_output.shape[1] > num_variables:
             stop_condition = True
         else:
             decoded_output = np.concatenate((decoded_output, pred), axis=1)
@@ -404,6 +404,73 @@ def randomize_MMs(datas):
     return datas
 
 
+import keras.backend as kb
+
+import itertools
+def custom_loss(y_actual, y_pred):
+    errors = []
+    shape = tf.shape(y_actual)
+    for l in range(shape[0]):
+        error = []
+        for perm in itertools.permutations(range(5)):
+            for i, p in enumerate(perm):
+                error.append(kb.square(y_actual[l,p,:] - y_pred[l,i,:]))
+        errors.append(kb.min(error))
+        # for i in range(y_actual.shape[1]):
+        #     max_zero = kb.sum(tf.cast(kb.sum(kb.abs(y_actual[l,:,:]), axis=1) == 0, tf.int32))
+        #     print("HEREEE")
+        #     tf.print(max_zero)
+        #     error = []
+        #     true = y_actual[l, i, :]
+        #     for j in range(y_pred.shape[1]):
+        #         pred = y_pred[l, j, :]
+        #         error.append(true - pred)
+
+            # errors.append(kb.square(error))
+
+    print(errors)
+    value = kb.mean(kb.concatenate(errors), axis=-1)
+
+    return value
+
+    # return K.mean(K.square(y_pred - y_true), axis=-1)
+
+def custom_loss1(y_actual, y_pred):
+    errors = []
+    for i in range(y_actual.shape[1]):
+        # max_zero = kb.sum(kb.sum(y_actual, axis=1) == 0)
+        # print(max_zero)
+        error = []
+        true = y_actual[:, i, :]
+        for j in range(y_pred.shape[1]):
+            pred = y_pred[:, j, :]
+            error.append(true - pred)
+
+        errors.append(kb.min(error, axis=1))
+
+    value = kb.mean(kb.square(errors), axis=-1)
+    # with a for loop, take min?
+    return value
+
+    # return K.mean(K.square(y_pred - y_true), axis=-1)
+
+def custom_loss2(y_actual, y_pred):
+    errors = []
+    for i in range(y_actual.shape[1]):
+        error = []
+        true = y_actual[:, i, :]
+        if kb.sum(true) == 0:
+            for j in range(y_pred.shape[1]):
+                pred = y_pred[:, j, :]
+                error.append(true - pred)
+
+        errors.append(kb.min(error, axis=1))
+
+    value = kb.mean(kb.square(errors), axis=-1)
+    # with a for loop, take min?
+    return value
+
+
 if __name__ == '__main__':
     ds = get_separated_sequences_mental_models_dataset('../data', 'encoded_and_trees_single_mms_type_I',
                                                        num_variables=5, max_depth=2,
@@ -427,11 +494,11 @@ if __name__ == '__main__':
     #                                   score_l1)
 
     acc = train_multi_mms_model_random(ds,
-                                epochs, batch_size,
-                                embedding_size, encoder_hidden_units,
-                                max_sub_mental_models,
-                                mm_l1,
-                                score_l1)
+                                       epochs, batch_size,
+                                       embedding_size, encoder_hidden_units,
+                                       max_sub_mental_models,
+                                       mm_l1,
+                                       score_l1)
 
     print(acc)
 

@@ -214,7 +214,7 @@ def decode_sequence1(input_seq, encoder_model, decoder_model, num_variables):
 
         # Exit condition: hit max length
         # this padding, such that all arrays have the same size in decoded_output.
-        if np.sum(pred) == 0 or decoded_output.shape[1] > num_variables:
+        if np.sum(np.abs(pred)) == 0 or decoded_output.shape[1] > num_variables:
             stop_condition = True
         else:
             decoded_output = np.concatenate((decoded_output, pred), axis=1)
@@ -250,7 +250,7 @@ def decode_sequence2(input_seq, encoder_model, decoder_model, num_variables):
 
         # Exit condition: hit max length
         # this padding, such that all arrays have the same size in decoded_output.
-        if (pred[0, 0, 1] == 1 and np.sum(pred) == 1) or decoded_output.shape[1] > num_variables:
+        if (pred[0, 0, 1] == 1 and np.sum(np.abs(pred)) == 1) or decoded_output.shape[1] > num_variables:
             stop_condition = True
         else:
             decoded_output = np.concatenate((decoded_output, pred), axis=1)
