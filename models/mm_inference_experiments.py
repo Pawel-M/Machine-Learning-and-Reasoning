@@ -97,7 +97,7 @@ def create_varying_inference_model(epochs,
 
     ## Train model
     model_train.compile(optimizer=kr.optimizers.Adam(learning_rate=1e-3),
-                        loss=kr.losses.mse) #loss=custom_loss)
+                        loss=kr.losses.mse) #loss=custom_loss)  # loss=kr.losses.mse)
 
     callbacks = [kr.callbacks.EarlyStopping(patience=20, min_delta=1e-5, restore_best_weights=True)]
     history = model_train.fit([ds.x_train, ds.y_train_d], ds.y_train,
@@ -172,7 +172,7 @@ def decode_sequence(input_seq, encoder_model, decoder_model, num_variables):
 
 def decode_sequences(data, encoder_model, decoder_model, num_variables):
     preds = []
-    for i in tqdm(range(0, ds.x_test.shape[0])):
+    for i in tqdm(range(0, data.shape[0])):
         pred = decode_sequence(data[[i]], encoder_model, decoder_model, num_variables)
         preds.append(pred)
 
@@ -404,10 +404,42 @@ def randomize_MMs(datas):
     return datas
 
 
-import keras.backend as kb
+def getitems_by_indices(values, indices):
+    return tf.gather(values, indices)
 
+
+def sort_MMs(a):
+    for i in range(a.shape[1] - 1, -1, -1):
+        #     if i == num_variables - 1:
+        #         # a = tf.argsort(a[:, i], direction='ASCENDING')
+        #         a = a[(a[:, i]).argsort()]
+        #     else:
+        #         a = a[(-a[:, i]).argsort(kind='mergesort')]
+
+        # print("Sort", tf.argsort(a[..., i], direction='ASCENDING'))
+        # print("a", a)
+        # a = a[tf.argsort(a[:, i], direction='ASCENDING'), :]
+        a = getitems_by_indices(a, tf.argsort(a[:, i], direction='ASCENDING'))
+
+    return a
+
+
+def sort_multiple_MMs(data):
+    return tf.map_fn(sort_MMs, data)
+
+
+import keras.backend as kb
 import itertools
+
+
 def custom_loss(y_actual, y_pred):
+    y_actual = sort_multiple_MMs(y_actual)
+    y_pred = sort_multiple_MMs(y_pred)
+    print(kb.mean(kb.square(y_pred - y_actual), axis=-1))
+    return kb.mean(kb.square(y_pred - y_actual), axis=-1)
+
+
+def custom_loss3(y_actual, y_pred):
     errors = 0.0
     shape = tf.shape(y_actual)
     for l in range(shape[0]):
@@ -415,7 +447,7 @@ def custom_loss(y_actual, y_pred):
         for perm in itertools.permutations(range(5)):
             for i, p in enumerate(perm):
                 # error.append(kb.mean(kb.square(y_actual[l,p,:] - y_pred[l,i,:])))
-                errors += kb.mean(kb.square(y_actual[l,p,:] - y_pred[l,i,:]), axis=-1)
+                errors += kb.mean(kb.square(y_actual[l, p, :] - y_pred[l, i, :]), axis=-1)
         # errors += error
 
     print(errors)
@@ -424,6 +456,7 @@ def custom_loss(y_actual, y_pred):
     return errors
 
     # return K.mean(K.square(y_pred - y_true), axis=-1)
+
 
 def custom_loss1(y_actual, y_pred):
     errors = []
@@ -443,6 +476,7 @@ def custom_loss1(y_actual, y_pred):
     return value
 
     # return K.mean(K.square(y_pred - y_true), axis=-1)
+
 
 def custom_loss2(y_actual, y_pred):
     errors = []
@@ -469,9 +503,9 @@ if __name__ == '__main__':
 
     n = 3
     epochs = 1000
-    batch_size = 8
-    embedding_size = 10
-    encoder_hidden_units = 128
+    batch_size = 8  # 8 16 32
+    embedding_size = 10  # 10 40
+    encoder_hidden_units = 128  # 128 256 512 1024
     max_sub_mental_models = 3
     mm_l1 = 0.0
     score_l1 = 0.0
@@ -484,12 +518,62 @@ if __name__ == '__main__':
     #                                   score_l1)
 
     acc = train_multi_mms_model(ds,
-                                       epochs, batch_size,
-                                       embedding_size, encoder_hidden_units,
-                                       max_sub_mental_models,
-                                       mm_l1,
-                                       score_l1)
+                                epochs, batch_size,
+                                embedding_size, encoder_hidden_units,
+                                max_sub_mental_models,
+                                mm_l1,
+                                score_l1)
 
     print(acc)
+
+    # print(ds.y_train[-1])
+    # print("Two",ds.y_train[-1][0])
+    # print("Three",ds.y_train[-1][0].nonzero())
+
+    # print(np.sort(ds.y_train[-1], axis=1))
+    # a = ds.y_train[-1].copy()
+    # b = a.copy()
+    # b[0,:] = a[1,:]
+    # b[1,:] = a[0,:]
+    # print("A",a)
+    # print("B",b)
+    # print("A sorted",a[a[:, 0].argsort()])
+    # print("B sorted",b[b[:, 0].argsort()])
+
+    # print("MULTISORTED A",a)
+    # print("MULTISORTED B",b)
+
+    # num_variables = 5
+    # count = 0
+    # a = np.random.randint(-1,2,size=ds.y_train[0].shape)
+    # b = a[np.random.choice(range(num_variables-1), size=num_variables-1, replace=False),:]
+    # a = np.concatenate([a,np.zeros([1,num_variables])])
+    # b = np.concatenate([b,np.zeros([1,num_variables])])
+
+    # a = np.array([[-1, 0, 0, 0, 0],
+    #               [1, 0, 0, 0, 0],
+    #               [0, 0, 0, 0, 0],
+    #               [0, 0, 0, 0, 0],
+    #               [0, 0, 0, 0, 0]])
+    # b = np.array([[1, 0, 0, 0, 0],
+    #               [-1, 0, 0, 0, 0],
+    #               [0, 0, 0, 0, 0],
+    #               [0, 0, 0, 0, 0],
+    #               [0, 0, 0, 0, 0]])
+
+    # run = True
+    # while run:
+    #     r = int(np.random.randint(0,a.shape[0]))
+    #     c = int(np.random.randint(0,a.shape[1]))
+    #
+    #     if a[r,c] == 1:
+    #         b[r,c] = -1
+    #         run = False
+
+    # print('A', a)
+    # print('B', b)
+    # print('Sorted A', sort_MMs(a, num_variables))
+    # print('Sorted B', sort_MMs(b, num_variables))
+    # print('Exactly the same: ', np.all([sort_MMs(a, num_variables) == sort_MMs(b, num_variables)]))
 
     # print(ds.y_train[:5])
