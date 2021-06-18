@@ -48,9 +48,7 @@ class CombineMentalModelsLayer(kr.layers.Layer):
         result = tf.expand_dims(mms * tf.expand_dims(scores, axis=-1), axis=-3)
         combined = tf.reduce_sum(result * tf.expand_dims(scores_prime, axis=-1), axis=-2)
         normalization = tf.reduce_sum(tf.expand_dims(scores, axis=-2) * scores_prime, axis=-1, keepdims=True)
-        print(normalization)
         normalized = combined / tf.maximum(1.0, normalization)
-        print(combined, scores, scores_prime)
         return normalized
 
 
@@ -295,7 +293,7 @@ import matplotlib.pyplot as plt
 
 
 def remove_zero_rows(data):
-    return data[np.sum(data, axis=1) != 0]
+    return data[np.sum(np.abs(data), axis=1) != 0]
 
 
 def train_multiple_times2(n, ds,
@@ -329,7 +327,7 @@ if __name__ == '__main__':
 
     # ds.x_test = ds.x_test[:30, ...]
     # ds.y_test = ds.y_test[:30, ...]
-    n = 2
+    n = 6
     epochs = 300
     batch_size = 8
     embedding_size = 10
