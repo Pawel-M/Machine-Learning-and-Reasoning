@@ -161,10 +161,11 @@ class MMInferenceScoresLayer(kr.layers.Layer):
 
         # sum and normalize to obtain a single mental model
         reshaped_value = tf.reshape(mms, (-1, mms.shape[-3] * mms.shape[-2], mms.shape[-1]))
-        reshaped_correctness = tf.reshape(correctness, (-1, correctness.shape[-2] * correctness.shape[-1]))
-        reshaped_scores = tf.reshape(scores, (-1, scores.shape[-2] * scores.shape[-1]))
         mm = tf.reduce_sum(reshaped_value, axis=-2)
+
         # normalization by correctness
+        # reshaped_correctness = tf.reshape(correctness, (-1, correctness.shape[-2] * correctness.shape[-1]))
+        reshaped_correctness = tf.reshape(correctness * scores, (-1, correctness.shape[-2] * correctness.shape[-1]))
         mm = mm / tf.reduce_sum(reshaped_correctness, axis=-1, keepdims=True)
 
         # mm = tf.clip_by_value(mm, -1, 1)
