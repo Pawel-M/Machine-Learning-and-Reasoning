@@ -47,7 +47,11 @@ class CombineMentalModelsLayer(kr.layers.Layer):
         mms, scores, scores_prime = inputs
         result = tf.expand_dims(mms * tf.expand_dims(scores, axis=-1), axis=-3)
         combined = tf.reduce_sum(result * tf.expand_dims(scores_prime, axis=-1), axis=-2)
-        return combined
+        normalization = tf.reduce_sum(tf.expand_dims(scores, axis=-2) * scores_prime, axis=-1, keepdims=True)
+        print(normalization)
+        normalized = combined / tf.maximum(1.0, normalization)
+        print(combined, scores, scores_prime)
+        return normalized
 
 
 def create_varying_inference_model2(epochs,
@@ -323,10 +327,10 @@ if __name__ == '__main__':
                                                        test_size=.1, valid_size=.1,
                                                        indexed_encoding=True, pad_mental_models=True)
 
-    ds.x_test = ds.x_test[:30, ...]
-    ds.y_test = ds.y_test[:30, ...]
+    # ds.x_test = ds.x_test[:30, ...]
+    # ds.y_test = ds.y_test[:30, ...]
     n = 2
-    epochs = 2
+    epochs = 300
     batch_size = 8
     embedding_size = 10
     encoder_hidden_units = 128
