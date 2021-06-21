@@ -48,8 +48,9 @@ class CombineMentalModelsLayer(kr.layers.Layer):
         result = tf.expand_dims(mms * tf.expand_dims(scores, axis=-1), axis=-3)
         combined = tf.reduce_sum(result * tf.expand_dims(scores_prime, axis=-1), axis=-2)
         # normalization = tf.reduce_sum(tf.expand_dims(scores, axis=-2) * scores_prime, axis=-1, keepdims=True)
-        # normalized = combined / tf.maximum(1.0, normalization)
-        return combined
+        normalization = tf.reduce_sum(scores_prime, axis=-1, keepdims=True)
+        normalized = combined / (normalization + 0.00001)
+        return normalized
 
 
 def create_varying_inference_model2(epochs,
