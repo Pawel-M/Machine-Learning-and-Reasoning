@@ -166,7 +166,7 @@ class MMInferenceScoresLayer(kr.layers.Layer):
         # normalization by correctness
         # reshaped_correctness = tf.reshape(correctness, (-1, correctness.shape[-2] * correctness.shape[-1]))
         reshaped_correctness = tf.reshape(correctness * scores, (-1, correctness.shape[-2] * correctness.shape[-1]))
-        mm = mm / tf.reduce_sum(reshaped_correctness, axis=-1, keepdims=True)
+        # mm = mm / tf.reduce_sum(reshaped_correctness, axis=-1, keepdims=True)
 
         # mm = tf.clip_by_value(mm, -1, 1)
         # mm = tf.tanh(mm)
