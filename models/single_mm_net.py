@@ -113,7 +113,7 @@ class MMInferenceLayer(kr.layers.Layer):
         reshaped_correctness = tf.reshape(correctness, (-1, correctness.shape[-2] * correctness.shape[-1]))
         mm = tf.reduce_sum(reshaped_value, axis=-2)
         # normalization by correctness
-        # mm = mm / tf.reduce_sum(reshaped_correctness, axis=-1, keepdims=True)
+        mm = mm / tf.reduce_sum(reshaped_correctness, axis=-1, keepdims=True)
 
         # mm = tf.clip_by_value(mm, -1, 1)
         # mm = tf.tanh(mm)
@@ -164,9 +164,9 @@ class MMInferenceScoresLayer(kr.layers.Layer):
         mm = tf.reduce_sum(reshaped_value, axis=-2)
 
         # normalization by correctness
-        # reshaped_correctness = tf.reshape(correctness, (-1, correctness.shape[-2] * correctness.shape[-1]))
-        reshaped_correctness = tf.reshape(correctness * scores, (-1, correctness.shape[-2] * correctness.shape[-1]))
-        # mm = mm / tf.reduce_sum(reshaped_correctness, axis=-1, keepdims=True)
+        reshaped_correctness = tf.reshape(correctness, (-1, correctness.shape[-2] * correctness.shape[-1]))
+        # reshaped_correctness = tf.reshape(correctness * scores, (-1, correctness.shape[-2] * correctness.shape[-1]))
+        mm = mm / tf.reduce_sum(reshaped_correctness, axis=-1, keepdims=True)
 
         # mm = tf.clip_by_value(mm, -1, 1)
         # mm = tf.tanh(mm)
@@ -345,41 +345,40 @@ def show_subsentence_inference(model, ds, decoding_dictionary, idxs):
 if __name__ == '__main__':
     import matplotlib.pyplot as plt
     from models.training import mental_model_accuracy
-
-    # xs, ys = create_ds()
+    import tensorflow as tf
 
     from dataset.common import get_separated_sequences_mental_models_dataset
     import dataset.encoding
 
+    physical_devices = tf.config.list_physical_devices('GPU')
+    tf.config.experimental.set_memory_growth(physical_devices[0], True)
+
     ds = get_separated_sequences_mental_models_dataset('./data', 'encoded_and_trees_single_mms',
                                                        num_variables=5, max_depth=2,
                                                        test_size=.1, valid_size=.1,
-                                                       indexed_encoding=True, pad_mental_models=True)
+                                                       indexed_encoding=True, pad_mental_models=False)
 
     dec_in, dec_out = dataset.encoding.create_decoding_dictionaries(ds.input_dictionary, ds.output_dictionary)
 
-    # ds.y_train = ds.y_train[..., 0, :]
-    # ds.y_valid = ds.y_valid[..., 0, :]
-    # ds.y_test = ds.y_test[..., 0, :]
-
     num_variables = 5
-    num_operators = 5  # and, or, not
+    num_operators = 5
     input_dim = num_variables + num_operators
     max_input_length = ds.x_train.shape[-1]
 
-    hidden_units = 1024
-    embedding_size = 64
+    hidden_units = 512
+    embedding_size = 40
     max_sub_mental_models = 3
     mm_l1 = 0.0
     score_l1 = 0.0
 
-    batch_size = 64
+    batch_size = 16
 
-    model = create_multi_mm_inference_model(hidden_units,
+    # create_inference_model, create_inference_model_with_scores
+    model = create_inference_model(hidden_units,
                                             embedding_size,
                                             max_sub_mental_models,
                                             mm_l1,
-                                            score_l1,
+                                            # score_l1,
                                             max_length=max_input_length,
                                             input_dim=input_dim,
                                             output_dim=num_variables)
@@ -387,34 +386,36 @@ if __name__ == '__main__':
     model.compile(optimizer=kr.optimizers.Adam(learning_rate=1e-3),
                   loss=kr.losses.mse, metrics=[mental_model_accuracy])
 
-    # callbacks = [kr.callbacks.EarlyStopping(patience=20, min_delta=1e-5, restore_best_weights=True)]
-    # history = model.fit(ds.x_train, ds.y_train, validation_data=(ds.x_valid, ds.y_valid),
-    #                     epochs=1000, batch_size=batch_size, callbacks=callbacks)
-    # loss = history.history['loss']
-    # val_loss = history.history['val_loss']
-    # plt.plot(range(len(loss)), loss, label='loss')
-    # plt.plot(range(len(val_loss)), loss, label='val_loss')
-    # plt.xlabel('epoch')
-    # plt.ylabel('loss')
-    # plt.legend()
-    # plt.show()
+    callbacks = [kr.callbacks.EarlyStopping(patience=20, min_delta=1e-4, restore_best_weights=True)]
+    history = model.fit(ds.x_train, ds.y_train, validation_data=(ds.x_valid, ds.y_valid),
+                        epochs=1000, batch_size=batch_size, callbacks=callbacks)
+    loss = history.history['loss']
+    val_loss = history.history['val_loss']
+    plt.plot(range(len(loss)), loss, label='loss')
+    plt.plot(range(len(val_loss)), loss, label='val_loss')
+    plt.xlabel('epoch')
+    plt.ylabel('loss')
+    plt.legend()
+    plt.show()
 
     preds = model.predict(ds.x_test)
-    preds_int = np.rint(preds[0])
-    for i in range(preds[0].shape[0]):
-        print(preds_int[i], preds[0][i], preds[1][i], ds.y_test[i])
+    preds_int = np.rint(preds)
+    for i in range(preds.shape[0]):
+        print(preds_int[i], preds[i], ds.y_test[i])
 
-    # print('errors:')
-    # for i in range(preds_int.shape[0]):
-    #     if np.sum(np.abs(preds_int[i] - ds.y_test[i])) == 0:
-    #         continue
-    #     print(dataset.encoding.decode_sentence(ds.x_test[i][0], dec_in, ds.indexed_encoding))
-    #     print(dataset.encoding.decode_sentence(ds.x_test[i][1], dec_in, ds.indexed_encoding))
-    #     print(preds_int[i], ds.y_test[i])
-    #     print(preds[i])
-    #     show_subsentence_inference(model, ds, dec_in, [i])
-    #     print()
+    show_subsentence_inference(model, ds, dec_in, range(20))
 
-    # errors = np.count_nonzero(np.sum(np.abs(preds_int - ds.y_test), axis=-1))
-    # print('errors', int(errors))
-    # print(f'accuracy: {mental_model_accuracy(ds.y_test, preds) * 100:.2f}%')
+    print('errors:')
+    for i in range(preds_int.shape[0]):
+        if np.sum(np.abs(preds_int[i] - ds.y_test[i])) == 0:
+            continue
+        print(dataset.encoding.decode_sentence(ds.x_test[i][0], dec_in, ds.indexed_encoding))
+        print(dataset.encoding.decode_sentence(ds.x_test[i][1], dec_in, ds.indexed_encoding))
+        print(preds_int[i], ds.y_test[i])
+        print(preds[i])
+        show_subsentence_inference(model, ds, dec_in, [i])
+        print()
+
+    errors = np.count_nonzero(np.sum(np.abs(preds_int - ds.y_test), axis=-1))
+    print('errors', int(errors))
+    print(f'accuracy: {mental_model_accuracy(ds.y_test, preds) * 100:.2f}%')

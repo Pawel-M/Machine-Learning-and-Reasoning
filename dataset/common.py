@@ -60,10 +60,10 @@ def get_dataset(folder, depth, num_variables, test_size, valid_size=None, indexe
     return ds
 
 
-def get_mental_models_dataset(folder, num_variables,
+def get_mental_models_dataset(folder, num_variables, max_depth,
                               test_size, valid_size=None,
                               indexed_encoding=False, pad_mental_models=False, random_state=1337):
-    data = dataset.encoding.load_sentences_and_conclusions(folder, 'encoded_mental_models', num_variables=num_variables)
+    data = dataset.encoding.load_sentences_and_conclusions(folder, 'encoded_mental_models', num_variables=num_variables, max_depth=max_depth)
     sentences, mental_models, input_dictionary, output_dictionary = data
 
     if indexed_encoding:

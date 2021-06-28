@@ -6,7 +6,7 @@ import tensorflow.keras as kr
 from tqdm import tqdm
 
 from dataset.common import get_separated_sequences_mental_models_dataset
-from models.mm_inference import MultiMMInferenceLayer
+from models.single_mm_net import MultiMMInferenceLayer
 
 
 def create_multi_mm_inference_model(input,
@@ -45,19 +45,19 @@ def create_multi_mm_inference_model(input,
     return model
 
 
-def create_varying_inference_model(epochs,
-                                   batch_size,
-                                   embedding_size,
-                                   encoder_hidden_units,
-                                   max_sub_mental_models,
-                                   mm_l1,
-                                   score_l1,
-                                   num_operators,  # and, or, not,
-                                   max_length,
-                                   output_dim,
-                                   num_variables,
-                                   max_input_length,
-                                   ds):
+def create_multi_mm_net_direct(epochs,
+                               batch_size,
+                               embedding_size,
+                               encoder_hidden_units,
+                               max_sub_mental_models,
+                               mm_l1,
+                               score_l1,
+                               num_operators,  # and, or, not,
+                               max_length,
+                               output_dim,
+                               num_variables,
+                               max_input_length,
+                               ds):
     # Without specific token for start of sequence (index 0) and end of sequence (index 1) - (0,0,0,0,0) equals end
     # Based on characters instead of subsentences
     # Initialise parameters
@@ -97,7 +97,7 @@ def create_varying_inference_model(epochs,
 
     ## Train model
     model_train.compile(optimizer=kr.optimizers.Adam(learning_rate=1e-3),
-                        loss=kr.losses.mse) #loss=custom_loss)  # loss=kr.losses.mse)
+                        loss=kr.losses.mse)  # loss=custom_loss)  # loss=kr.losses.mse)
 
     callbacks = [kr.callbacks.EarlyStopping(patience=20, min_delta=1e-5, restore_best_weights=True)]
     history = model_train.fit([ds.x_train, ds.y_train_d], ds.y_train,
@@ -205,7 +205,8 @@ def train_multi_mms_model(ds,
                           embedding_size, encoder_hidden_units,
                           max_sub_mental_models,
                           mm_l1,
-                          score_l1):
+                          score_l1,
+                          return_models=False):
     dec_in, dec_out = dataset.encoding.create_decoding_dictionaries(ds.input_dictionary, ds.output_dictionary)
 
     ds.y_train_d = add_zero_row(ds.y_train, 'front')
@@ -230,19 +231,19 @@ def train_multi_mms_model(ds,
     output_dim = 5
 
     # 1: subsentences no index, 2: subsentences index, 3: symbols no index
-    model_train, history, encoder_model, decoder_model = create_varying_inference_model(epochs,
-                                                                                        batch_size,
-                                                                                        embedding_size,
-                                                                                        encoder_hidden_units,
-                                                                                        max_sub_mental_models,
-                                                                                        mm_l1,
-                                                                                        score_l1,
-                                                                                        num_operators,  # and, or, not,
-                                                                                        max_length,
-                                                                                        output_dim,
-                                                                                        num_variables,
-                                                                                        max_input_length,
-                                                                                        ds)
+    model_train, history, encoder_model, decoder_model = create_multi_mm_net_direct(epochs,
+                                                                                    batch_size,
+                                                                                    embedding_size,
+                                                                                    encoder_hidden_units,
+                                                                                    max_sub_mental_models,
+                                                                                    mm_l1,
+                                                                                    score_l1,
+                                                                                    num_operators,  # and, or, not,
+                                                                                    max_length,
+                                                                                    output_dim,
+                                                                                    num_variables,
+                                                                                    max_input_length,
+                                                                                    ds)
 
     loss = history.history['loss']
     val_loss = history.history['val_loss']
@@ -276,7 +277,10 @@ def train_multi_mms_model(ds,
     print('errors', int(errors))
     print(f'accuracy: {accuracy * 100:.1f}%')
 
-    return accuracy
+    if return_models:
+        return accuracy, model_train, encoder_model, decoder_model
+    else:
+        return accuracy
 
 
 def train_multi_mms_model_random(ds,
@@ -310,19 +314,19 @@ def train_multi_mms_model_random(ds,
     output_dim = 5
 
     # 1: subsentences no index, 2: subsentences index, 3: symbols no index
-    model_train, history, encoder_model, decoder_model = create_varying_inference_model(epochs,
-                                                                                        batch_size,
-                                                                                        embedding_size,
-                                                                                        encoder_hidden_units,
-                                                                                        max_sub_mental_models,
-                                                                                        mm_l1,
-                                                                                        score_l1,
-                                                                                        num_operators,  # and, or, not,
-                                                                                        max_length,
-                                                                                        output_dim,
-                                                                                        num_variables,
-                                                                                        max_input_length,
-                                                                                        ds)
+    model_train, history, encoder_model, decoder_model = create_multi_mm_net_direct(epochs,
+                                                                                    batch_size,
+                                                                                    embedding_size,
+                                                                                    encoder_hidden_units,
+                                                                                    max_sub_mental_models,
+                                                                                    mm_l1,
+                                                                                    score_l1,
+                                                                                    num_operators,  # and, or, not,
+                                                                                    max_length,
+                                                                                    output_dim,
+                                                                                    num_variables,
+                                                                                    max_input_length,
+                                                                                    ds)
 
     loss = history.history['loss']
     val_loss = history.history['val_loss']
@@ -428,7 +432,7 @@ def sort_multiple_MMs(data):
     return tf.map_fn(sort_MMs, data)
 
 
-import keras.backend as kb
+import tensorflow.keras.backend as kb
 import itertools
 
 
@@ -495,17 +499,42 @@ def custom_loss2(y_actual, y_pred):
     return value
 
 
+def show_subsentence_inference(model, ds, decoding_dictionary, idxs):
+    sub_model = model.layers[1].layers[2]
+    for i in idxs:
+        xs = ds.x_test[i]
+        preds = model.predict(xs[np.newaxis, ...])
+        for j in range(2):
+            x = ds.x_test[i][j]
+            pred = sub_model.predict(x[np.newaxis, ...])
+            print(dataset.encoding.decode_sentence(x, decoding_dictionary, ds.indexed_encoding))
+            if type(pred) is list:
+                print(np.rint(pred[0]), np.rint(pred[1]))
+            else:
+                print(np.rint(pred))
+            print(pred)
+        print('combined prediction:')
+        print(np.rint(preds[0][0, :45].reshape((9, 5))), np.rint(preds[0][0, 45:]))
+        print(preds)
+        print()
+
+
 if __name__ == '__main__':
-    ds = get_separated_sequences_mental_models_dataset('../data', 'encoded_and_trees_single_mms_type_I',
+    import os
+    os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
+
+
+    ds = get_separated_sequences_mental_models_dataset('./data', 'encoded_and_trees_multiple_mms',
                                                        num_variables=5, max_depth=2,
                                                        test_size=.1, valid_size=.1,
                                                        indexed_encoding=True, pad_mental_models=True)
+    dec_in, dec_out = dataset.encoding.create_decoding_dictionaries(ds.input_dictionary, ds.output_dictionary)
 
     n = 3
-    epochs = 1000
+    epochs = 300
     batch_size = 8  # 8 16 32
     embedding_size = 10  # 10 40
-    encoder_hidden_units = 128  # 128 256 512 1024
+    encoder_hidden_units = 512  # 128 256 512 1024
     max_sub_mental_models = 3
     mm_l1 = 0.0
     score_l1 = 0.0
@@ -517,11 +546,13 @@ if __name__ == '__main__':
     #                                   mm_l1,
     #                                   score_l1)
 
-    acc = train_multi_mms_model(ds,
-                                epochs, batch_size,
-                                embedding_size, encoder_hidden_units,
-                                max_sub_mental_models,
-                                mm_l1,
-                                score_l1)
+    accuracy, model_train, encoder_model, decoder_model = train_multi_mms_model(ds,
+                                                                                epochs, batch_size,
+                                                                                embedding_size, encoder_hidden_units,
+                                                                                max_sub_mental_models,
+                                                                                mm_l1,
+                                                                                score_l1, return_models=True)
 
-    print(acc)
+    show_subsentence_inference(encoder_model, ds, dec_in, range(ds.x_test.shape[0]))
+
+    print(accuracy)

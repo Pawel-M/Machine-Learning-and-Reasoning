@@ -175,10 +175,10 @@ def encode_mental_models_separated_sentences(folder, max_depth, num_variables, i
 
 if __name__ == '__main__':
     encode_mental_models_separated_sentences('./data', 2, 5, 10,
-                                             'encoded_and_trees_single_mms',
-                                             'and_trees_single_mms')
+                                             'encoded_and_trees_multiple_mms',
+                                             'and_trees_multiple_mms')
     data = load_sentences_and_conclusions('./data', num_variables=5, max_depth=2,
-                                          base_name='encoded_and_trees_single_mms')
+                                          base_name='encoded_and_trees_multiple_mms')
     sentences, mental_models, input_dictionary, output_dictionary = data
 
     for i in range(10):

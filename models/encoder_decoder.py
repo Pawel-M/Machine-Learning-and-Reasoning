@@ -7,7 +7,7 @@ from tqdm import tqdm
 import dataset
 import dataset.encoding
 from dataset.common import get_separated_sequences_mental_models_dataset
-from models.mm_inference_experiments import randomize_MMs
+from models.multi_mm_net_direct import randomize_MMs
 
 
 def create_varying_inference_model1(num_variables, max_input_length, num_symbols,

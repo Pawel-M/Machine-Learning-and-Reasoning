@@ -168,7 +168,7 @@ def mental_model_accuracy(y_true, y_pred):
 if __name__ == '__main__':
     from dataset.common import get_dataset, get_joined_sequences_mental_models_dataset, \
         get_separated_sequences_mental_models_dataset
-    import models.mm_inference
+    import models.single_mm_net
     import models.rnn_example
     import models.transformer
 
@@ -178,7 +178,7 @@ if __name__ == '__main__':
                                                             test_size=.1, valid_size=.1,
                                                             indexed_encoding=True, pad_mental_models=False)
     # MM Inference
-    model_fn = models.mm_inference.create_inference_model
+    model_fn = models.single_mm_net.create_inference_model
     base_name = 'mm_inference'
 
     model_args = {

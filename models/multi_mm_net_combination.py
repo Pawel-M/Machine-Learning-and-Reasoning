@@ -1,5 +1,5 @@
 from dataset.common import get_separated_sequences_mental_models_dataset
-from models.mm_inference import MultiMMInferenceLayer
+from models.single_mm_net import MultiMMInferenceLayer
 import tensorflow.keras as kr
 from tqdm import tqdm
 
@@ -52,7 +52,7 @@ class CombineMentalModelsLayer(kr.layers.Layer):
         return normalized
 
 
-def create_varying_inference_model2(epochs,
+def create_multi_mm_net_combination(epochs,
                                     batch_size,
                                     embedding_size,
                                     encoder_hidden_units,
@@ -192,7 +192,8 @@ def train_multi_mms_model2(ds,
                            embedding_size, encoder_hidden_units,
                            max_sub_mental_models,
                            mm_l1,
-                           score_l1):
+                           score_l1,
+                           return_models=False):
     dec_in, dec_out = dataset.encoding.create_decoding_dictionaries(ds.input_dictionary, ds.output_dictionary)
 
     ds.y_train_d = add_zero_row(ds.y_train, 'front')
@@ -209,7 +210,7 @@ def train_multi_mms_model2(ds,
     max_length = 5
     output_dim = 5
 
-    model_train, history, encoder_model, decoder_model = create_varying_inference_model2(epochs,
+    model_train, history, encoder_model, decoder_model = create_multi_mm_net_combination(epochs,
                                                                                          batch_size,
                                                                                          embedding_size,
                                                                                          encoder_hidden_units,
@@ -261,7 +262,10 @@ def train_multi_mms_model2(ds,
     print('errors', int(errors))
     print(f'accuracy: {accuracy * 100:.1f}%')
 
-    return accuracy
+    if return_models:
+        return accuracy, model_train, encoder_model, decoder_model
+    else:
+        return accuracy
 
 
 def add_zero_row(data, position):
@@ -297,20 +301,20 @@ def remove_zero_rows(data):
 
 
 def train_multiple_times2(n, ds,
-                         epochs, batch_size,
-                         embedding_size, encoder_hidden_units,
-                         max_sub_mental_models,
-                         mm_l1,
-                         score_l1):
+                          epochs, batch_size,
+                          embedding_size, encoder_hidden_units,
+                          max_sub_mental_models,
+                          mm_l1,
+                          score_l1):
     accuracies_str = ''
     accuracies = []
     for i in range(n):
         accuracy = train_multi_mms_model2(ds,
-                                         epochs, batch_size,
-                                         embedding_size, encoder_hidden_units,
-                                         max_sub_mental_models,
-                                         mm_l1,
-                                         score_l1)
+                                          epochs, batch_size,
+                                          embedding_size, encoder_hidden_units,
+                                          max_sub_mental_models,
+                                          mm_l1,
+                                          score_l1)
         accuracies.append(accuracy)
         accuracies_str += f'{accuracy} '
 
@@ -319,26 +323,58 @@ def train_multiple_times2(n, ds,
     return accuracies
 
 
+def show_subsentence_inference(model, ds, decoding_dictionary, idxs):
+    sub_model = model.layers[2]
+    for i in idxs:
+        xs = ds.x_test[i]
+        preds = model.predict(xs[np.newaxis, ...])
+        for j in range(2):
+            x = ds.x_test[i][j]
+            pred = sub_model.predict(x[np.newaxis, ...])
+            print(dataset.encoding.decode_sentence(x, decoding_dictionary, ds.indexed_encoding))
+            if type(pred) is list:
+                print(np.rint(pred[0]), np.rint(pred[1]))
+            else:
+                print(np.rint(pred))
+            print(pred)
+        print('combined prediction:')
+        print(np.rint(preds[0]), np.rint(preds[1]))
+        print(preds[:2])
+        print()
+
+
 if __name__ == '__main__':
+    import os
+
+    os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
+    # physical_devices = tf.config.list_physical_devices('GPU')
+    # tf.config.experimental.set_memory_growth(physical_devices[0], True)
+
     ds = get_separated_sequences_mental_models_dataset('./data', 'encoded_and_trees_multiple_mms',
                                                        num_variables=5, max_depth=2,
                                                        test_size=.1, valid_size=.1,
                                                        indexed_encoding=True, pad_mental_models=True)
+    dec_in, dec_out = dataset.encoding.create_decoding_dictionaries(ds.input_dictionary, ds.output_dictionary)
 
     # ds.x_test = ds.x_test[:30, ...]
     # ds.y_test = ds.y_test[:30, ...]
     n = 6
     epochs = 300
     batch_size = 8
-    embedding_size = 10
+    embedding_size = 40
     encoder_hidden_units = 128
     max_sub_mental_models = 3
     mm_l1 = 0.0
     score_l1 = 0.0
 
-    accuracies = train_multiple_times2(n, ds,
-                                        epochs, batch_size,
-                                        embedding_size, encoder_hidden_units,
-                                        max_sub_mental_models,
-                                        mm_l1,
-                                        score_l1)
+    accuracy, model_train, encoder_model, decoder_model = train_multi_mms_model2(ds,
+                                                                                 epochs, batch_size,
+                                                                                 embedding_size, encoder_hidden_units,
+                                                                                 max_sub_mental_models,
+                                                                                 mm_l1,
+                                                                                 score_l1,
+                                                                                 return_models=True)
+
+    show_subsentence_inference(encoder_model, ds, dec_in, range(ds.x_test.shape[0]))
+
+    print(accuracy)
