@@ -31,3 +31,7 @@ Additionally, `analysis` and `visualization` folders contain scripts used for an
 
 The script `models/training.py` contain utility functions for training the models with specifying the varying 
 parameters as lists. 
+
+## Results
+In the 'Experiment results' folder the Excel file can be found with the results of all the experiments performed 
+during the project.
