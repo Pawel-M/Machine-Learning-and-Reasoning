@@ -9,7 +9,7 @@ import dataset.encoding
 from dataset.common import get_separated_sequences_mental_models_dataset
 from models.multi_mm_net_direct import randomize_MMs
 
-
+# Function to create encoder-decoder model with subsentence representation, without SOS/EOS tag
 def create_varying_inference_model1(num_variables, max_input_length, num_symbols,
                                     batch_size,
                                     embedding_size,
@@ -69,7 +69,7 @@ def create_varying_inference_model1(num_variables, max_input_length, num_symbols
     # Returned trained models, and history of training
     return model_train, history, encoder_model, decoder_model
 
-
+# Function to create encoder-decoder model with subsentence representation, with SOS/EOS tag
 def create_varying_inference_model2(num_variables, max_input_length, num_symbols,
                                     batch_size,
                                     embedding_size,
@@ -128,7 +128,7 @@ def create_varying_inference_model2(num_variables, max_input_length, num_symbols
     # Returned trained models, and history of training
     return model_train, history, encoder_model, decoder_model
 
-
+# Function to create encoder-decoder model with symbols, without SOS/EOS tag
 def create_varying_inference_model3(num_variables, max_input_length, num_symbols,
                                     batch_size,
                                     embedding_size,
@@ -191,7 +191,7 @@ def create_varying_inference_model3(num_variables, max_input_length, num_symbols
     # Returned trained models, and history of training
     return model_train, history, encoder_model, decoder_model
 
-
+# Function to decode without specific SOS/EOS tag
 def decode_sequence1(input_seq, encoder_model, decoder_model, num_variables):
     # Encode the input as state vectors.
     states_value = encoder_model.predict(input_seq)
@@ -227,7 +227,7 @@ def decode_sequence1(input_seq, encoder_model, decoder_model, num_variables):
 
     return decoded_output[:, 1:, :]
 
-
+# Function to decode with specific SOS/EOS tag
 def decode_sequence2(input_seq, encoder_model, decoder_model, num_variables):
     # Encode the input as state vectors.
     states_value = encoder_model.predict(input_seq)
@@ -263,7 +263,7 @@ def decode_sequence2(input_seq, encoder_model, decoder_model, num_variables):
 
     return decoded_output[:, 1:, :]
 
-
+# Decode the sequence of sentences (without specific EOS/SOS tag)
 def decode_sequences1(data, encoder_model, decoder_model, num_variables):
     preds = []
     for i in tqdm(range(0, ds.x_test.shape[0])):
@@ -272,7 +272,7 @@ def decode_sequences1(data, encoder_model, decoder_model, num_variables):
 
     return preds
 
-
+# Decode the sequence of sentences (with specific EOS/SOS tag)
 def decode_sequences2(data, encoder_model, decoder_model, num_variables):
     preds = []
     for i in tqdm(range(0, ds.x_test.shape[0])):
@@ -281,14 +281,14 @@ def decode_sequences2(data, encoder_model, decoder_model, num_variables):
 
     return preds
 
-
+# MSE function
 def two_way_mse(y_true, y_pred):
     y_true_float = tf.cast(y_true, y_pred.dtype)
     diff = (y_true_float - y_pred) ** 2
     print(diff)
     return tf.reduce_mean(diff)
 
-
+# Show subsentences of the encoder-decoder
 def show_subsentence_inference(model, ds, decoding_dictionary, idxs):
     sub_model = model.layers[2]
     for i in idxs:
@@ -298,7 +298,7 @@ def show_subsentence_inference(model, ds, decoding_dictionary, idxs):
             print(dataset.encoding.decode_sentence(x, decoding_dictionary, ds.indexed_encoding))
             print(np.rint(pred))
 
-
+# Add row of zeros as start or end (for teacher forcing) (without SOS/EOS tag)
 def add_zero_row1(data, position):
     if position == 'front':
         temp = np.zeros((data.shape[0], data.shape[1] + 1, data.shape[2]))
@@ -309,7 +309,7 @@ def add_zero_row1(data, position):
 
     return temp
 
-
+# Add row of zeros as start or end (for teacher forcing) (with SOS/EOS tag)
 def add_zero_row2(dst, position, num_variables):
     start_vec = np.array([1, 0] + [0] * (num_variables))
     end_vec = np.array([0, 1] + [0] * (num_variables))
@@ -328,8 +328,9 @@ def add_zero_row2(dst, position, num_variables):
 
     return data
 
-
+# Concatenate two subsentences (convert subsentences to one line (for symbols))
 def concat_subsentences(data):
+    # subsentence 1 + "and" + subsentence 2
     temp = np.array(data[0][0].tolist() + [10] + data[0][1].tolist())[np.newaxis, ...]
     for i in range(1, data.shape[0]):
         sentence = np.array(data[i][0].tolist() + [10] + data[i][1].tolist())[np.newaxis, ...]
@@ -337,7 +338,7 @@ def concat_subsentences(data):
 
     return temp[..., np.newaxis]
 
-
+# Check if MMs are the same between true and predicted (ignoring the order)
 def same_MMs(true, pred):
     true = true.tolist()
     pred = pred.tolist()
@@ -350,15 +351,15 @@ def same_MMs(true, pred):
     # If nothing in true, everything is predicted correctly
     return true == []
 
-
+# Remove zero rows (for decoder / printing) (without specific SOS/EOS tags)
 def remove_zero_rows1(data):
     return data[np.sum(data, axis=1) != 0]
 
-
+# Remove zero rows (for decoder / printing) (with specific SOS/EOS tags)
 def remove_zero_rows2(data):
     return data[np.logical_not(np.logical_and(data[:, 1] == 1, np.sum(data, axis=1) == 1))]
 
-
+# Train encoder-decoder
 def train_encoder_decoder(type, start_index, ds,
                           num_variables,
                           batch_size,
@@ -367,6 +368,7 @@ def train_encoder_decoder(type, start_index, ds,
                           epochs):
     dec_in, dec_out = dataset.encoding.create_decoding_dictionaries(ds.input_dictionary, ds.output_dictionary)
 
+    # If SOS/EOS tag is not included, only add rows
     if not start_index:
         ds.y_train_d = add_zero_row1(ds.y_train, 'front')
         ds.y_train = add_zero_row1(ds.y_train, 'last')
@@ -374,6 +376,7 @@ def train_encoder_decoder(type, start_index, ds,
         ds.y_valid = add_zero_row1(ds.y_valid, 'last')
         ds.y_test_d = add_zero_row1(ds.y_test, 'front')
         ds.y_test = add_zero_row1(ds.y_test, 'last')
+    # Else, also add SOS/EOS tag
     else:
         ds.y_train_d = add_zero_row2(ds.y_train, 'front', num_variables)
         ds.y_train = add_zero_row2(ds.y_train, 'last', num_variables)
@@ -382,6 +385,7 @@ def train_encoder_decoder(type, start_index, ds,
         ds.y_test_d = add_zero_row2(ds.y_test, 'front', num_variables)
         ds.y_test = add_zero_row2(ds.y_test, 'last', num_variables)
 
+    # If using sumbols, concatenate subsentences
     if type == 'symbol':
         ds.x_train = concat_subsentences(ds.x_train)
         ds.x_valid = concat_subsentences(ds.x_valid)
@@ -390,6 +394,7 @@ def train_encoder_decoder(type, start_index, ds,
     # ds.x_test = ds.x_test[:30]
     # ds.y_test = ds.y_test[:30]
 
+    # Fixed parameters (only change when dataset changes - not done in this project)
     num_variables = 5
     num_operators = 5  # and, or, not
     num_symbols = num_variables + num_operators
@@ -423,6 +428,7 @@ def train_encoder_decoder(type, start_index, ds,
     else:
         raise NotImplementedError()
 
+    # Plot training
     loss = history.history['loss']
     val_loss = history.history['val_loss']
     plt.plot(range(len(loss)), loss, label='loss')
@@ -432,11 +438,13 @@ def train_encoder_decoder(type, start_index, ds,
     plt.legend()
     plt.show()
 
+    # Get predictions by decoding
     if not start_index:
         preds = decode_sequences1(ds.x_test, encoder_model, decoder_model, num_variables)
     else:
         preds = decode_sequences2(ds.x_test, encoder_model, decoder_model, num_variables)
 
+    # Show results
     print('errors:')
     errors = 0
     for i in range(len(preds)):

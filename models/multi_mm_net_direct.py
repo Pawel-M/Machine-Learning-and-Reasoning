@@ -7,8 +7,10 @@ from tqdm import tqdm
 
 from dataset.common import get_separated_sequences_mental_models_dataset
 from models.single_mm_net import MultiMMInferenceLayer
+import dataset
+import matplotlib.pyplot as plt
 
-
+# Function to create multi-mmNet (direct) encoding layer
 def create_multi_mm_inference_model(input,
                                     hidden_units,
                                     embedding_size,
@@ -22,6 +24,7 @@ def create_multi_mm_inference_model(input,
     # input = kr.Input(shape=(2, max_length))
     split_layer = kr.layers.Lambda(lambda x: (x[:, 0], x[:, 1]))(input)
 
+    # Define model
     nn_input = kr.Input(max_length)
     nn_embedding_layer = kr.layers.Embedding(input_dim + 1, embedding_size)(nn_input)
     flatten_layer = kr.layers.Flatten()(nn_embedding_layer)
@@ -36,15 +39,17 @@ def create_multi_mm_inference_model(input,
     sub_sequence_nn = kr.Model(inputs=nn_input, outputs=[nn_reshape, score_output], name='sub-sequence-NN')
     sub_sequence_nn.summary()
 
+    # Get scores
     mms_and_scores = sub_sequence_nn(split_layer[0]), sub_sequence_nn(split_layer[1])
     mm_inference_layer = MultiMMInferenceLayer()(mms_and_scores)
 
+    # Make model and show
     model = kr.Model(inputs=input, outputs=mm_inference_layer)
     model.summary()
 
     return model
 
-
+# Function to create multi-mmNet (direct)
 def create_multi_mm_net_direct(epochs,
                                batch_size,
                                embedding_size,
@@ -62,9 +67,11 @@ def create_multi_mm_net_direct(epochs,
     # Based on characters instead of subsentences
     # Initialise parameters
 
+    # Get input
     input_dim = num_variables + num_operators
     print('max_input_length', max_input_length)
 
+    # Create encoding layer
     encoder_inputs = kr.Input(shape=(2, max_length))
     encoder = create_multi_mm_inference_model(encoder_inputs,
                                               encoder_hidden_units,
@@ -76,9 +83,12 @@ def create_multi_mm_net_direct(epochs,
                                               input_dim,
                                               output_dim)
 
+    # Get outputs
     encoder_mms, encoder_scores = encoder(encoder_inputs)
     # tf.print(encoder_mms)
     print(encoder_mms)
+
+    # Create conversion from encoder to decoder input
     nn_flatten = tf.keras.layers.Reshape((encoder_mms.shape[-2] * encoder_mms.shape[-1],))(encoder_mms)
     nn_concat = tf.keras.layers.Concatenate(axis=1)([nn_flatten, encoder_scores])
     encoder_states = [nn_concat, nn_concat]
@@ -121,7 +131,7 @@ def create_multi_mm_net_direct(epochs,
     # Returned trained models, and history of training
     return model_train, history, encoder_model, decoder_model
 
-
+# Add row of zeros
 def add_zero_row(data, position):
     if position == 'front':
         temp = np.zeros((data.shape[0], data.shape[1] + 1, data.shape[2]))
@@ -132,7 +142,7 @@ def add_zero_row(data, position):
 
     return temp
 
-
+# Decode sentences
 def decode_sequence(input_seq, encoder_model, decoder_model, num_variables):
     # Encode the input as state vectors.
     states_value = encoder_model.predict(input_seq)
@@ -169,7 +179,7 @@ def decode_sequence(input_seq, encoder_model, decoder_model, num_variables):
 
     return decoded_output[:, 1:, :]
 
-
+# Decode the whole sentence
 def decode_sequences(data, encoder_model, decoder_model, num_variables):
     preds = []
     for i in tqdm(range(0, data.shape[0])):
@@ -178,7 +188,7 @@ def decode_sequences(data, encoder_model, decoder_model, num_variables):
 
     return preds
 
-
+# Check if MMs between true and predicted are equal (ignoring the order)
 def same_MMs(true, pred):
     true = true.tolist()
     pred = pred.tolist()
@@ -191,15 +201,11 @@ def same_MMs(true, pred):
     # If nothing in true, everything is predicted correctly
     return true == []
 
-
-import dataset
-import matplotlib.pyplot as plt
-
-
+# Remove zero rows for decoding / printing
 def remove_zero_rows(data):
     return data[np.sum(data, axis=1) != 0]
 
-
+# Train multi-mmNet (direct)
 def train_multi_mms_model(ds,
                           epochs, batch_size,
                           embedding_size, encoder_hidden_units,
@@ -209,6 +215,7 @@ def train_multi_mms_model(ds,
                           return_models=False):
     dec_in, dec_out = dataset.encoding.create_decoding_dictionaries(ds.input_dictionary, ds.output_dictionary)
 
+    # Prepare data
     ds.y_train_d = add_zero_row(ds.y_train, 'front')
     ds.y_train = add_zero_row(ds.y_train, 'last')
     ds.y_valid_d = add_zero_row(ds.y_valid, 'front')
@@ -216,21 +223,15 @@ def train_multi_mms_model(ds,
     ds.y_test_d = add_zero_row(ds.y_test, 'front')
     ds.y_test = add_zero_row(ds.y_test, 'last')
 
+    # Fixed variables for dataset
     num_variables = 5
     max_input_length = ds.x_train.shape[-1]
 
-    # epochs = 2
-    # batch_size = 8
-    # embedding_size = 10
-    # encoder_hidden_units = 128
-    # max_sub_mental_models = 3
-    # mm_l1 = 0.0
-    # score_l1 = 0.0
     num_operators = 5  # and, or, not
     max_length = 5
     output_dim = 5
 
-    # 1: subsentences no index, 2: subsentences index, 3: symbols no index
+    # Train model
     model_train, history, encoder_model, decoder_model = create_multi_mm_net_direct(epochs,
                                                                                     batch_size,
                                                                                     embedding_size,
@@ -245,6 +246,7 @@ def train_multi_mms_model(ds,
                                                                                     max_input_length,
                                                                                     ds)
 
+    # Plot los
     loss = history.history['loss']
     val_loss = history.history['val_loss']
     plt.plot(range(len(loss)), loss, label='loss')
@@ -254,12 +256,14 @@ def train_multi_mms_model(ds,
     plt.legend()
     plt.show()
 
+    # Get predictions by decoding the sentence
     preds = decode_sequences(ds.x_test, encoder_model, decoder_model, num_variables)
     # for i in range(len(preds)):
     #     y_preproc = remove_zero_rows(ds.y_test[i])
     #     print('TRUE: ', y_preproc)
     #     print('PREDICTED: ', preds[i], '\n')
 
+    # Determine and print performances
     print('errors:')
     errors = 0
     for i in range(len(preds)):
@@ -282,7 +286,7 @@ def train_multi_mms_model(ds,
     else:
         return accuracy
 
-
+# Train model, but make the training MMs random order (see effect of random order MMs)
 def train_multi_mms_model_random(ds,
                                  epochs, batch_size,
                                  embedding_size, encoder_hidden_units,
@@ -291,6 +295,7 @@ def train_multi_mms_model_random(ds,
                                  score_l1):
     dec_in, dec_out = dataset.encoding.create_decoding_dictionaries(ds.input_dictionary, ds.output_dictionary)
 
+    # Preprocess data (randomize MMs and add rows of zeros)
     ds.y_train = randomize_MMs(ds.y_train)
     ds.y_train_d = add_zero_row(ds.y_train, 'front')
     ds.y_train = add_zero_row(ds.y_train, 'last')
@@ -299,21 +304,15 @@ def train_multi_mms_model_random(ds,
     ds.y_test_d = add_zero_row(ds.y_test, 'front')
     ds.y_test = add_zero_row(ds.y_test, 'last')
 
+    # Fixed variables for this dataset
     num_variables = 5
     max_input_length = ds.x_train.shape[-1]
 
-    # epochs = 2
-    # batch_size = 8
-    # embedding_size = 10
-    # encoder_hidden_units = 128
-    # max_sub_mental_models = 3
-    # mm_l1 = 0.0
-    # score_l1 = 0.0
     num_operators = 5  # and, or, not
     max_length = 5
     output_dim = 5
 
-    # 1: subsentences no index, 2: subsentences index, 3: symbols no index
+    # Train model
     model_train, history, encoder_model, decoder_model = create_multi_mm_net_direct(epochs,
                                                                                     batch_size,
                                                                                     embedding_size,
@@ -328,6 +327,7 @@ def train_multi_mms_model_random(ds,
                                                                                     max_input_length,
                                                                                     ds)
 
+    # Plot training
     loss = history.history['loss']
     val_loss = history.history['val_loss']
     plt.plot(range(len(loss)), loss, label='loss')
@@ -337,12 +337,14 @@ def train_multi_mms_model_random(ds,
     plt.legend()
     plt.show()
 
+    # Make predictions
     preds = decode_sequences(ds.x_test, encoder_model, decoder_model, num_variables)
     # for i in range(len(preds)):
     #     y_preproc = remove_zero_rows(ds.y_test[i])
     #     print('TRUE: ', y_preproc)
     #     print('PREDICTED: ', preds[i], '\n')
 
+    # Determine and print accuracy
     print('errors:')
     errors = 0
     for i in range(len(preds)):
@@ -362,7 +364,7 @@ def train_multi_mms_model_random(ds,
 
     return accuracy
 
-
+# Train model multiple times and return string of accuracies
 def train_multiple_times(n, ds,
                          epochs, batch_size,
                          embedding_size, encoder_hidden_units,
@@ -385,7 +387,7 @@ def train_multiple_times(n, ds,
     print(accuracies_str)
     return accuracies
 
-
+# Randomize the MMs of the trainingdata
 def randomize_MMs(datas):
     # Get size
     n = datas.shape[1]
@@ -407,11 +409,11 @@ def randomize_MMs(datas):
     # Return randomized training data
     return datas
 
-
+# Get items by indices
 def getitems_by_indices(values, indices):
     return tf.gather(values, indices)
 
-
+# Sort MMs (to get MMs from predictions and true in same order, to compare) (for custom loss function)
 def sort_MMs(a):
     for i in range(a.shape[1] - 1, -1, -1):
         #     if i == num_variables - 1:
@@ -427,22 +429,23 @@ def sort_MMs(a):
 
     return a
 
-
+# Sort multiple rows in dataset
 def sort_multiple_MMs(data):
     return tf.map_fn(sort_MMs, data)
 
-
+# Imports for custom loss function
 import tensorflow.keras.backend as kb
 import itertools
 
-
+# Tried different custom loss functions (None of them worked)
+# Custom loss that sorts predictions and true, to use MSE afterwards (ignoring the order)
 def custom_loss(y_actual, y_pred):
     y_actual = sort_multiple_MMs(y_actual)
     y_pred = sort_multiple_MMs(y_pred)
     print(kb.mean(kb.square(y_pred - y_actual), axis=-1))
     return kb.mean(kb.square(y_pred - y_actual), axis=-1)
 
-
+# Custom loss that looks at a lot of permutations, using MSE
 def custom_loss3(y_actual, y_pred):
     errors = 0.0
     shape = tf.shape(y_actual)
@@ -461,7 +464,7 @@ def custom_loss3(y_actual, y_pred):
 
     # return K.mean(K.square(y_pred - y_true), axis=-1)
 
-
+# Custom loss that uses the minimum error - variant 1
 def custom_loss1(y_actual, y_pred):
     errors = []
     for i in range(y_actual.shape[1]):
@@ -481,7 +484,7 @@ def custom_loss1(y_actual, y_pred):
 
     # return K.mean(K.square(y_pred - y_true), axis=-1)
 
-
+# # Custom loss that uses the minimum error - variant 2
 def custom_loss2(y_actual, y_pred):
     errors = []
     for i in range(y_actual.shape[1]):
@@ -498,7 +501,7 @@ def custom_loss2(y_actual, y_pred):
     # with a for loop, take min?
     return value
 
-
+# Show inference layer of model
 def show_subsentence_inference(model, ds, decoding_dictionary, idxs):
     sub_model = model.layers[1].layers[2]
     for i in idxs:
